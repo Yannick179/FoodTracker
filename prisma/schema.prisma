@@ -1,0 +1,44 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Food {
+  id        Int      @id @default(autoincrement())
+  name      String
+  calories  Int
+  protein   Int
+  carbs     Int
+  fats      Int
+  createdAt DateTime @default(now())
+  foodEntries FoodEntry[]
+
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  foodEntries FoodEntry[]
+}
+
+model FoodEntry {
+  id        Int      @id @default(autoincrement())
+
+  userId    Int
+  foodId    Int
+
+  amount    Int
+  eatenAt   DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  food      Food     @relation(fields: [foodId], references: [id])
+
+  @@index([userId])
+  @@index([foodId])
+  @@index([eatenAt])
+}
