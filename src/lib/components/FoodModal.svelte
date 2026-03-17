@@ -1,17 +1,22 @@
 <script lang="ts">
     // let { inflate, deflate } = $props();
+    export let onClose: () => void;
 
     export let selectedFood: any;
     let amount = 0;
 
     async function submit() {
-
-        await fetch('/api/trackfood', {
+    if (amount > 0) {
+        await fetch('/api/trackFood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({foodid: selectedFood.id, amount: amount, userid: 1}) //to add: person.id or something
-        });
-        close();
+            });
+        onClose();
+        }
+    else {
+        console.log("Please enter a valid amount of food")
+    }
     }
 </script>
 
@@ -28,7 +33,7 @@
             <input type="number" bind:value={amount} required />
         </label>
         <button on:click={submit}>Enter</button>
-        <button on:click={close}>Cancel</button>
+        <button on:click={onClose}>Cancel</button>
     </div>
 </div>
 

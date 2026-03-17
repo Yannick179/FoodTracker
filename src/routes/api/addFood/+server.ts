@@ -5,20 +5,20 @@ const prisma = new PrismaClient();
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
-        const { name, calories, protein, carbs, fats } = await request.json();
+        const { name, Calories, Protein, Carbohydrates, Fat } = await request.json();
 
         // Basic validation
-        if (!name || (!calories && calories != 0) || (!protein && protein != 0) || (!carbs && carbs != 0) || (!fats && fats != 0)) {
+        if (!name || (!Calories && Calories != 0) || (!Protein && Protein != 0) || (!Carbohydrates && Carbohydrates != 0) || (!Fat && Fat != 0)) {
             return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400 });
         }
-        console.log(name, calories, protein, carbs, fats);
+        console.log(name, Calories, Protein, Carbohydrates, Fat);
         const food = await prisma.food.create({
             data: {
                 name,
-                calories,
-                protein,
-                carbs,
-                fats
+                Calories,
+                Protein,
+                Carbohydrates,
+                Fat
             }
         });
 

@@ -2,10 +2,10 @@
     import { onMount } from 'svelte';
 
     let name = '';
-    let calories: number | '' = '';
-    let fats: number | '' = '';
-    let protein: number | '' = '';
-    let carbs: number | '' = '';
+    let calories: number = 0;
+    let fats: number  = 0;
+    let protein: number  = 0;
+    let carbs: number  = 0;
 
     let loading = false;
     let error = '';
@@ -16,25 +16,27 @@
         error = '';
         success = false;
 
-        const res = await fetch('/api/addfood', {
+        const res = await fetch('/api/addFood', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name,
-                calories: Number(calories),
-                fats: Number(fats),
-                protein: Number(protein),
-                carbs: Number(carbs)
+                Calories: Number(calories),
+                Protein: Number(protein),
+                Carbohydrates: Number(carbs),
+                Fat: Number(fats)
             })
         });
+        console.log(name, calories, protein, carbs, fats);
 
         if (!res.ok) {
             error = 'Failed to save meal';
         } else {
             success = true;
-            name = calories = fats = protein = carbs = '';
+            name = "";
+            calories = fats = protein = carbs = 0;
         }
 
         loading = false;

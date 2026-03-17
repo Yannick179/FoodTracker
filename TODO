@@ -1,4 +1,18 @@
-Add closing of the Foodmodal on save or cancel
-add a overview of food ate on day x(eg the day today)
-add dashboard for this in the ui on home
-add real user and get rid of dummy
+
+Done:
+
+    Add closing of the Foodmodal on save or cancel - for now works! CHECK
+    add a overview of food ate on day x(eg the day today)
+
+Still todo:
+
+    add dashboard for this in the ui on home
+    add real user and get rid of dummy
+    change the Api routing to camelCase
+    make foodentry default list work for each day i want
+    make query smaller for foodentry/let it not return as much
+    fix food entries that were return to show correct data
+    make add food entries protein carbs fats and calories entry float
+    think about which ui tools to use - make ui look more beautiful
+    fix calender import
+    add date to the when track food to not just get current day - think about where to save the date

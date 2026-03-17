@@ -24,8 +24,7 @@ export const POST: RequestHandler = async ({ request }) => {
                 amount: amount
             }
         });
-
-        return new Response({ status: 201 });
+        return new Response(null, { status: 201 });
     } catch (err) {
         console.error(err);
         return new Response(JSON.stringify({ error: 'Failed to save food entry' }), { status: 500 });

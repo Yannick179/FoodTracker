@@ -13,7 +13,7 @@
         loading = true;
         error = '';
         try {
-            const url = q ? `/api/searchfood?q=${encodeURIComponent(q)}` : '/api/searchfood';
+            const url = q ? `/api/searchFood?q=${encodeURIComponent(q)}` : '/api/searchFood';
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch foods');
             foods = await res.json();
@@ -28,7 +28,7 @@
         showModal = true;
     }
 
-    function close() {
+    function handleClose() {
         showModal = false;
         selectedFood = null;
         loadFoods(); // refresh after submit
@@ -69,7 +69,7 @@
     </ul>
 {/if}
 {#if showModal}
-    <FoodModal {selectedFood} on:close={close} />
+    <FoodModal onClose={handleClose} {selectedFood}/>
 {/if}
 
 

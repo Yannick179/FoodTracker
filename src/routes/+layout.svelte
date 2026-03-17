@@ -10,8 +10,8 @@
 
 <nav>
 	<a href="/">Home</a>
-	<a href="/addfood">Add a new food</a>
-	<a href="/trackfood">track food</a>
+	<a href="/addFood">Add a new food</a>
+	<a href="/trackFood">track food</a>
 </nav>
 
 {@render children()}
