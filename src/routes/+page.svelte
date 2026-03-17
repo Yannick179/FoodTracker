@@ -24,7 +24,7 @@
         }
     }
 
-    $: console.log(selectedDate);
+    $: console.log("Homepage: selected Data:" + selectedDate);
     $: if (selectedDate) {
         LoadFoodEntriesFromDateX(selectedDate);
     }
@@ -51,7 +51,7 @@
 {#if loadingFoodEntries}
     <p>Loading food entries...</p>
 {:else}
-    <h1>Foodlist of today:</h1>
+    <h1>Foodlist of {selectedDate.toDateString()}:</h1>
     <ul>
         {#each foodEntries as foodEntry}
             <li>
