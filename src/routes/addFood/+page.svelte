@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-
     let name = '';
     let calories: number = 0;
     let fats: number = 0;
@@ -11,16 +9,42 @@
     let error = '';
     let success = false;
 
+    function validate() {
+        const values = [calories, protein, carbs, fats];
+
+        if (!name.trim()) {
+            return 'Name is required';
+        }
+
+        for (const v of values) {
+            if (v < 0) return 'Values cannot be negative';
+            if (v > 100) return 'Each value must be ≤ 100g';
+        }
+
+        const total = protein + carbs + fats;
+
+        if (total > 100) {
+            return 'Total macros (protein + carbs + fats) must be ≤ 100g';
+        }
+
+        return '';
+    }
+
     async function submitFood() {
-        loading = true;
         error = '';
         success = false;
 
+        const validationError = validate();
+        if (validationError) {
+            error = validationError;
+            return;
+        }
+
+        loading = true;
+
         const res = await fetch('/api/addFood', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name,
                 Calories: Number(calories),
@@ -34,62 +58,93 @@
             error = 'Failed to save meal';
         } else {
             success = true;
-            name = "";
+            name = '';
             calories = fats = protein = carbs = 0;
         }
 
         loading = false;
     }
-
-    onMount(() => {});
 </script>
 
-<div class="min-h-screen flex items-center justify-center p-4">
+<!-- Layout -->
+<div class="min-h-screen flex items-center justify-center bg-zinc-800 text-zinc-100 p-6">
 
-    <div class="w-full max-w-md border rounded-lg p-4 space-y-4">
+    <div class="w-full max-w-md rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
 
-        <h1 class="text-xl font-medium">Tracker</h1>
+        <!-- Header -->
+        <div>
+            <h1 class="text-lg">Add food</h1>
+            <p class="text-xs text-zinc-500">Track macros per 100g</p>
+        </div>
 
-        <form on:submit|preventDefault={submitFood} class="space-y-3">
+        <form on:submit|preventDefault={submitFood} class="space-y-4">
 
-            <div class="space-y-1">
-                <label>Food name</label>
-                <input class="w-full border px-2 py-1 rounded" bind:value={name} required />
+            <!-- Name -->
+            <div>
+                <label class="text-xs text-zinc-400">Food name</label>
+                <input
+                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2
+					focus:outline-none focus:ring-2 focus:ring-zinc-500/40"
+                        bind:value={name}
+                        required
+                />
             </div>
 
-            <div class="space-y-1">
-                <label>Calories</label>
-                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={calories} required />
+            <!-- Grid inputs -->
+            <div class="grid grid-cols-2 gap-3">
+
+                <div>
+                    <label class="text-xs text-zinc-400">Calories</label>
+                    <input type="number"
+                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           bind:value={calories} />
+                </div>
+
+                <div>
+                    <label class="text-xs text-zinc-400">Protein</label>
+                    <input type="number"
+                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           bind:value={protein} />
+                </div>
+
+                <div>
+                    <label class="text-xs text-zinc-400">Carbs</label>
+                    <input type="number"
+                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           bind:value={carbs} />
+                </div>
+
+                <div>
+                    <label class="text-xs text-zinc-400">Fats</label>
+                    <input type="number"
+                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           bind:value={fats} />
+                </div>
+
             </div>
 
-            <div class="space-y-1">
-                <label>Protein (g)</label>
-                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={protein} required />
-            </div>
+            <!-- Error / success -->
+            {#if error}
+                <p class="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+                    {error}
+                </p>
+            {/if}
 
-            <div class="space-y-1">
-                <label>Carbs (g)</label>
-                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={carbs} required />
-            </div>
+            {#if success}
+                <p class="text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2">
+                    Meal saved ✔
+                </p>
+            {/if}
 
-            <div class="space-y-1">
-                <label>Fats (g)</label>
-                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={fats} required />
-            </div>
-
-            <button class="w-full border rounded py-1" disabled={loading}>
+            <!-- Button -->
+            <button
+                    class="w-full rounded-xl py-2 transition
+				bg-white text-zinc-900 hover:bg-zinc-200 disabled:opacity-50"
+                    disabled={loading}
+            >
                 {loading ? 'Saving…' : 'Add Meal'}
             </button>
 
         </form>
-
-        {#if error}
-            <p>{error}</p>
-        {/if}
-
-        {#if success}
-            <p>Meal saved ✔</p>
-        {/if}
-
     </div>
 </div>

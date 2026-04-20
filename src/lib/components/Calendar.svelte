@@ -1,11 +1,12 @@
 <script lang="ts">
     import '$lib/../app.css';
 
-    export let selectedDate: Date = new Date();
+    import { globalDate } from '$lib/dataStore.svelte';
+
 
     let currentMonth = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
+        globalDate.val.getFullYear(),
+        globalDate.val.getMonth(),
         1
     );
 
@@ -22,7 +23,7 @@
     function selectDay(day: number, isCurrentMonth: boolean) {
         if (!isCurrentMonth) return;
 
-        selectedDate = new Date(
+        globalDate.val = new Date(
             currentMonth.getFullYear(),
             currentMonth.getMonth(),
             day
@@ -122,9 +123,9 @@
                     class="p-1 rounded-xl text-center font-mono w-10
             {cell.currentMonth ? 'hover:bg-zinc-800' : 'text-zinc-600 cursor-default'}
             {cell.currentMonth &&
-             selectedDate.getDate() === cell.day &&
-             selectedDate.getMonth() === currentMonth.getMonth() &&
-             selectedDate.getFullYear() === currentMonth.getFullYear()
+             globalDate.val.getDate() === cell.day &&
+             globalDate.val.getMonth() === currentMonth.getMonth() &&
+             globalDate.val.getFullYear() === currentMonth.getFullYear()
               ? 'bg-blue-500 text-white'
               : ''}"
                     on:click={() => selectDay(cell.day, cell.currentMonth)}

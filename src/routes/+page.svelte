@@ -1,16 +1,10 @@
 <script lang="ts">
     import Calendar from '$lib/components/Calendar.svelte';
-    import {onMount, tick} from "svelte";
+    import {onMount} from "svelte";
     import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
     import ResultsBarKcals from "$lib/components/ResultsBarKcals.svelte";
     import FoodListEntry from "$lib/components/FoodListEntry.svelte";
-    type DayStats = {
-        calories: number;
-        protein: number;
-        carbs: number;
-        fat: number;
-    };
-
+    import {globalDate} from "$lib/dataStore.svelte";
     let foodEntries: any[] = [];
     let dayStats: DayStats = {
         calories: 0,
@@ -18,9 +12,16 @@
         carbs: 0,
         fat: 0
     };
+    type DayStats = {
+        calories: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+    };
+
+
     let error = '';
     let loadingFoodEntries = false;
-    let selectedDate = new Date();
 
     function getDateNicelyFormatted(selectedDate: Date) {
         let formattedDate = selectedDate.getDate() + " " + convertNumberToMonth(selectedDate.getMonth()) + " " + selectedDate.getFullYear() ;
@@ -76,17 +77,17 @@
         }
     }
 
-    async function LoadFoodEntriesFromDateX(selectedDate: Date) {
+    async function LoadFoodEntriesFromDateX() {
         try {
             loadingFoodEntries = true;
-            const res = await fetch(`/api/loadFoodEntriesFromDateX?date=${encodeURIComponent(selectedDate)}`);
+            const res = await fetch(`/api/loadFoodEntriesFromDateX?date=${encodeURIComponent(globalDate.val)}`);
 
             if (!res.ok) {
                 throw new Error('failed to fetch food entries');
             }
             let resJson = await res.json();
             foodEntries = resJson.foodEntries;
-            dayStats = resJson.dayStats;
+            // dayStats = resJson.dayStats;
 
         } catch (err: any) {
             error = err.message;
@@ -95,14 +96,11 @@
         }
     }
 
-    $: console.log("Homepage: selected Data:" + selectedDate);
-    $: if (selectedDate) {
-        LoadFoodEntriesFromDateX(selectedDate);
-    }
     onMount(() => {
-        LoadFoodEntriesFromDateX(selectedDate);
+        LoadFoodEntriesFromDateX();
     });
 </script>
+
 
 <div class="p-6">
 
@@ -114,17 +112,17 @@
                 <!-- date -->
                 <div class="mb-6 grid-rows-2">
                     <div class="text-sm text-zinc-400 mb-1 flex">
-                        {convertNumberToDay(selectedDate.getDay())}
+                        {convertNumberToDay(globalDate.val.getDay())}
                     </div>
 
                     <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">
-                        {getDateNicelyFormatted(selectedDate)}
+                        {getDateNicelyFormatted(globalDate.val)}
                     </div>
                 </div>
 
                 <!-- Calender -->
                 <div class="flex">
-                    <Calendar bind:selectedDate />
+                    <Calendar/>
 
                 </div>
             </div>
@@ -184,8 +182,7 @@
     </div>
 
 
-    <!-- rest of your content -->
-
+    <!--{@render data()}-->
 
 </div>
 

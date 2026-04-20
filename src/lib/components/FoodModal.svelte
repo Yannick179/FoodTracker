@@ -1,52 +1,88 @@
 <script lang="ts">
-    // let { inflate, deflate } = $props();
     export let onClose: () => void;
-
     export let selectedFood: any;
+
     let amount = 0;
 
     async function submit() {
-    if (amount > 0) {
-        await fetch('/api/trackFood', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({foodid: selectedFood.id, amount: amount, userid: 1}) //to add: person.id or something
+        if (amount > 0) {
+            await fetch('/api/trackFood', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    foodid: selectedFood.id,
+                    amount: amount,
+                    userid: 1
+                })
             });
-        onClose();
+
+            onClose();
+        } else {
+            console.log("Please enter a valid amount of food");
         }
-    else {
-        console.log("Please enter a valid amount of food")
-    }
     }
 </script>
 
-<div class="backdrop">
-    <div class="modal">
-        <h2>{selectedFood.name} per 100g</h2>
-        <div>Calories: {selectedFood.calories}g</div>
-        <div>Protein: {selectedFood.protein}g</div>
-        <div>Carbohydrates: {selectedFood.carbs}g</div>
-        <div>Fats: {selectedFood.fats}g</div>
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
 
-        <label>
-            Amount (g)
-            <input type="number" bind:value={amount} required />
+    <div class="w-full max-w-md rounded-2xl bg-zinc-900/90 border border-zinc-800 shadow-2xl p-6">
+
+        <!-- Title -->
+        <h2 class="text-lg font-semibold text-zinc-100 mb-1">
+            {selectedFood.name}
+        </h2>
+        <p class="text-xs text-zinc-500 mb-5">Nutrition per 100g</p>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-3 text-sm mb-6">
+            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+                <div class="text-zinc-400 text-xs">Calories</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.calories}</div>
+            </div>
+
+            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+                <div class="text-zinc-400 text-xs">Protein</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.protein}g</div>
+            </div>
+
+            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+                <div class="text-zinc-400 text-xs">Carbs</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.carbs}g</div>
+            </div>
+
+            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+                <div class="text-zinc-400 text-xs">Fats</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.fats}g</div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <label class="block mb-5">
+            <span class="text-xs text-zinc-400">Amount (g)</span>
+            <input
+                    type="number"
+                    bind:value={amount}
+                    class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2 text-zinc-100
+				focus:outline-none focus:ring-2 focus:ring-zinc-500/50"
+            />
         </label>
-        <button on:click={submit}>Enter</button>
-        <button on:click={onClose}>Cancel</button>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-2">
+            <button
+                    on:click={onClose}
+                    class="px-4 py-2 rounded-xl text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition"
+            >
+                Cancel
+            </button>
+
+            <button
+                    on:click={submit}
+                    class="px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
+            >
+                Add
+            </button>
+        </div>
     </div>
 </div>
-
-<!--<style>-->
-<!--    .backdrop {-->
-<!--        position: fixed;-->
-<!--        inset: 0;-->
-<!--        background: rgba(0,0,0,0.5);-->
-<!--    }-->
-<!--    .modal {-->
-<!--        background: white;-->
-<!--        padding: 1rem;-->
-<!--        margin: 10% auto;-->
-<!--        width: 300px;-->
-<!--    }-->
-<!--</style>-->
