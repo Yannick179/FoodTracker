@@ -14,10 +14,14 @@
     }
 
     function firstDayOfMonth(date: Date) {
-        return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+        // Monday = 0, Sunday = 6
+        const day = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+        return (day + 6) % 7;
     }
 
-    function selectDay(day: number) {
+    function selectDay(day: number, isCurrentMonth: boolean) {
+        if (!isCurrentMonth) return;
+
         selectedDate = new Date(
             currentMonth.getFullYear(),
             currentMonth.getMonth(),
@@ -41,56 +45,92 @@
         );
     }
 
-    $: days = Array.from(
-        { length: daysInMonth(currentMonth) },
-        (_, i) => i + 1
-    );
+    const TOTAL_CELLS = 42;
 
-    $: offset = firstDayOfMonth(currentMonth);
+    $: {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+
+        const firstDayIndex = firstDayOfMonth(currentMonth);
+        const daysInCurr = daysInMonth(currentMonth);
+
+        const prevMonth = new Date(year, month - 1, 1);
+        const daysInPrev = daysInMonth(prevMonth);
+
+        const grid = [];
+
+        // Previous month filler
+        for (let i = firstDayIndex - 1; i >= 0; i--) {
+            grid.push({
+                day: daysInPrev - i,
+                currentMonth: false
+            });
+        }
+
+        // Current month
+        for (let d = 1; d <= daysInCurr; d++) {
+            grid.push({
+                day: d,
+                currentMonth: true
+            });
+        }
+
+        // Next month filler
+        let nextDay = 1;
+        while (grid.length < TOTAL_CELLS) {
+            grid.push({
+                day: nextDay++,
+                currentMonth: false
+            });
+        }
+
+        daysGrid = grid;
+    }
+
+    let daysGrid: { day: number; currentMonth: boolean }[] = [];
 </script>
 
-<div class="border max-w-xs mx-auto">
+<div class="p-2 bg-zinc-900 rounded-2xl max-w-xs ">
 
     <!-- Header -->
-    <div class="flex justify-between items-center mb-2">
-        <button on:click={prevMonth} class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200">
+    <div class="flex justify-between items-center mb-1">
+        <button on:click={prevMonth} class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
             <span class="transform -translate-y-[1px] -translate-x-[1px]">&lt;</span>
         </button>
         <strong>
             {currentMonth.toLocaleString('default', { month: 'long' })}
             {currentMonth.getFullYear()}
         </strong>
-        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200">
-            <span on:click={nextMonth} class="transform -translate-y-[1px] -translate-x-[1px]">&gt;</span>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
+            <span on:click={nextMonth} class="transform -translate-y-[1px] -translate-x-[-1px]">&gt;</span>
         </button>
     </div>
     <!-- weekdays -->
-    <div class="grid grid-cols-7 gap-2 ">
-        <div class="p-2">Mon</div>
-        <div class="p-2">Tue</div>
-        <div class="p-2">Wed</div>
-        <div class="p-2">Thu</div>
-        <div class="p-2">Fri</div>
-        <div class="p-2">Sat</div>
-        <div class="p-2">Sun</div>
+    <div class="grid grid-cols-7 gap-0.5 ">
+        <div class="p-1 font-mono w-10 text-center">Mon</div>
+        <div class="p-1 font-mono w-10 text-center">Tue</div>
+        <div class="p-1 font-mono w-10 text-center">Wed</div>
+        <div class="p-1 font-mono w-10 text-center">Thu</div>
+        <div class="p-1 font-mono w-10 text-center">Fri</div>
+        <div class="p-1 font-mono w-10 text-center">Sat</div>
+        <div class="p-1 font-mono w-10 text-center">Sun</div>
     </div>
     <!-- Days -->
-    <div class="grid grid-cols-7 gap-1">
-        {#each Array(offset) as _}
-            <div></div>
-        {/each}
-
-        {#each days as day}
+    <div class="grid grid-cols-7 gap-0.5">
+        {#each daysGrid as cell}
             <button
-                    class="p-2 rounded hover:bg-blue-100
-            {selectedDate.getDate() === day &&
+                    class="p-1 rounded-xl text-center font-mono w-10
+            {cell.currentMonth ? 'hover:bg-zinc-800' : 'text-zinc-600 cursor-default'}
+            {cell.currentMonth &&
+             selectedDate.getDate() === cell.day &&
              selectedDate.getMonth() === currentMonth.getMonth() &&
              selectedDate.getFullYear() === currentMonth.getFullYear()
               ? 'bg-blue-500 text-white'
               : ''}"
-                    on:click={() => selectDay(day)}
+                    on:click={() => selectDay(cell.day, cell.currentMonth)}
+                    disabled={!cell.currentMonth}
             >
-                {day}
+                {cell.day}
             </button>
         {/each}
     </div>

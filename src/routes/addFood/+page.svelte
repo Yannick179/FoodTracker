@@ -3,9 +3,9 @@
 
     let name = '';
     let calories: number = 0;
-    let fats: number  = 0;
-    let protein: number  = 0;
-    let carbs: number  = 0;
+    let fats: number = 0;
+    let protein: number = 0;
+    let carbs: number = 0;
 
     let loading = false;
     let error = '';
@@ -29,7 +29,6 @@
                 Fat: Number(fats)
             })
         });
-        console.log(name, calories, protein, carbs, fats);
 
         if (!res.ok) {
             error = 'Failed to save meal';
@@ -45,56 +44,52 @@
     onMount(() => {});
 </script>
 
-<h1>Tracker</h1>
+<div class="min-h-screen flex items-center justify-center p-4">
 
-<form on:submit|preventDefault={submitFood}>
-    <label>
-        Food name
-        <input bind:value={name} required />
-    </label>
+    <div class="w-full max-w-md border rounded-lg p-4 space-y-4">
 
-    <label>
-        Calories
-        <input type="number" bind:value={calories} required />
-    </label>
+        <h1 class="text-xl font-medium">Tracker</h1>
 
-    <label>
-        Protein (g)
-        <input type="number" bind:value={protein} required />
-    </label>
+        <form on:submit|preventDefault={submitFood} class="space-y-3">
 
-    <label>
-        Carbs (g)
-        <input type="number" bind:value={carbs} required />
-    </label>
+            <div class="space-y-1">
+                <label>Food name</label>
+                <input class="w-full border px-2 py-1 rounded" bind:value={name} required />
+            </div>
 
-    <label>
-        Fats (g)
-        <input type="number" bind:value={fats} required />
-    </label>
+            <div class="space-y-1">
+                <label>Calories</label>
+                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={calories} required />
+            </div>
 
-    <button disabled={loading}>
-        {loading ? 'Saving…' : 'Add Meal'}
-    </button>
-</form>
+            <div class="space-y-1">
+                <label>Protein (g)</label>
+                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={protein} required />
+            </div>
 
-{#if error}
-    <p style="color:red">{error}</p>
-{/if}
+            <div class="space-y-1">
+                <label>Carbs (g)</label>
+                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={carbs} required />
+            </div>
 
-{#if success}
-    <p style="color:green">Meal saved ✔</p>
-{/if}
+            <div class="space-y-1">
+                <label>Fats (g)</label>
+                <input type="number" class="w-full border px-2 py-1 rounded" bind:value={fats} required />
+            </div>
 
-<style>
-    form {
-        max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    label {
-        display: flex;
-        flex-direction: column;
-    }
-</style>
+            <button class="w-full border rounded py-1" disabled={loading}>
+                {loading ? 'Saving…' : 'Add Meal'}
+            </button>
+
+        </form>
+
+        {#if error}
+            <p>{error}</p>
+        {/if}
+
+        {#if success}
+            <p>Meal saved ✔</p>
+        {/if}
+
+    </div>
+</div>

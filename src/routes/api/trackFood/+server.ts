@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
         let user = await getDummyUser();
         const { foodid, amount, userid } = await request.json();
 
-        // DONT US USER FROM THE REQUEST ITS PLACEHOLDER
+        // DONT USE USER FROM THE REQUEST ITS PLACEHOLDER
 
         // Basic validation
         if ((!foodid && foodid != 0) || (!amount && amount != 0) || (!user.id && user.id != 0) ) {
