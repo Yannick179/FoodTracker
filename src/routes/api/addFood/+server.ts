@@ -1,7 +1,5 @@
-import type { RequestHandler } from './$types';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
+import { prisma } from "$lib/prisma";
 
 export const POST: RequestHandler = async ({ request }) => {
     try {

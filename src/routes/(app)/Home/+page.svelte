@@ -4,7 +4,8 @@
     import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
     import ResultsBarKcals from "$lib/components/ResultsBarKcals.svelte";
     import FoodListEntry from "$lib/components/FoodListEntry.svelte";
-    import {globalDate} from "$lib/dataStore.svelte";
+    import {globalDate} from "$lib/dataStore.svelte.js";
+    export let data;
     let foodEntries: any[] = [];
     let dayStats: DayStats = {
         calories: 0,
@@ -97,7 +98,7 @@
     }
 
     onMount(() => {
-        LoadFoodEntriesFromDateX();
+        // LoadFoodEntriesFromDateX();
     });
 </script>
 
@@ -130,7 +131,7 @@
             <!-- col-2 -->
             <div class="grid  justify-items-center">
                 <!-- Grid for the tracking -->
-                <div class="w-150 h-95 bg-zinc-900 rounded-2xl grid grid-rows-[70%_30%] p-4">
+                <div class="w-150 h-90 bg-zinc-900 rounded-2xl grid grid-rows-[70%_30%] p-4">
                     <!-- Top (70%) -->
                     <div class="flex items-center justify-center">
                         <div class="grid grid-cols-3 items-center place-items-center">
@@ -187,8 +188,11 @@
 </div>
 
 
-<h1>Hello (User)</h1>
-<div>today is xyz</div>
+{#if data.user}
+    <p>Logged in as {data.user.email}</p>
+{:else}
+    <p>Not logged in</p>
+{/if}<div>today is xyz</div>
 
 
 {#if loadingFoodEntries}

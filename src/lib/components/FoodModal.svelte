@@ -72,14 +72,14 @@
         <div class="flex justify-end gap-2">
             <button
                     on:click={onClose}
-                    class="px-4 py-2 rounded-xl text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition"
+                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition"
             >
                 Cancel
             </button>
 
             <button
                     on:click={submit}
-                    class="px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
+                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
             >
                 Add
             </button>

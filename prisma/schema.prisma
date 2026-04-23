@@ -1,41 +1,52 @@
 // prisma/schema.prisma
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
+
 model Food {
-  id                Int      @id @default(autoincrement())
-  name              String
-  Calories          Float
-  Protein           Float
-  Carbohydrates     Float
-  Fat               Float
-  createdAt         DateTime @default(now())
-  foodEntries       FoodEntry[]
+  id            Int         @id @default(autoincrement())
+  name          String
+  Calories      Float
+  Protein       Float
+  Carbohydrates Float
+  Fat           Float
+  createdAt     DateTime    @default(now())
+  foodEntries   FoodEntry[]
+}
+
+model Session {
+  id      Int      @id @default(autoincrement())
+  token   String   @unique
+  userId  Int
+  user    User     @relation(fields: [userId], references: [id])
+  expires DateTime
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  email       String       @unique
-  foodEntries FoodEntry[]
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
+  passwordHash String
+  foodEntries  FoodEntry[]
+  sessions     Session[]
 }
 
 model FoodEntry {
-  id        Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  userId    Int
-  foodId    Int
+  userId Int
+  foodId Int
 
-  amount    Int
-  eatenAt   DateTime @default(now())
+  amount  Int
+  eatenAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
-  food      Food     @relation(fields: [foodId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  food Food @relation(fields: [foodId], references: [id])
 
   @@index([userId])
   @@index([foodId])

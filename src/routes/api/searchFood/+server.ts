@@ -1,8 +1,6 @@
-import type { RequestHandler } from './$types';
-import { PrismaClient } from '@prisma/client';
+import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
 import {json} from "@sveltejs/kit";
-
-const prisma = new PrismaClient();
+import { prisma } from "$lib/prisma";
 
 export const GET: RequestHandler = async ({ url }) => {
     const query = url.searchParams.get('q');

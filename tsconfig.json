@@ -4,13 +4,16 @@
 		"rewriteRelativeImportExtensions": true,
 		"allowJs": true,
 		"checkJs": true,
-		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"types": ["node"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"target": "ES2023",
 		"strict": true,
-		"moduleResolution": "bundler"
+		"esModuleInterop": true
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

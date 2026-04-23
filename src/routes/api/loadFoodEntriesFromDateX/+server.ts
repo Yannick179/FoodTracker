@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
 import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
 import {json} from "@sveltejs/kit";
 import {getDummyUser} from "$lib/server/DummyUser";
+import { prisma } from "$lib/prisma";
 
-const prisma = new PrismaClient();
 
 export const GET: RequestHandler = async ({ url }) => {
     let user = await getDummyUser();
@@ -41,7 +40,7 @@ export const GET: RequestHandler = async ({ url }) => {
     });
 };
 
-function combineFoodEntries(foodEntriesJsonList: PrismaClient[]) {}
+// function combineFoodEntries(foodEntriesJsonList: PrismaClient[]) {}
 
 async function getDataBaseFoodEntriesForDateX(date: Date, userid: number) {
     const start = new Date(date);

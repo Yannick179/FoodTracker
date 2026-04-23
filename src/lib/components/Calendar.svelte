@@ -95,14 +95,14 @@
 
     <!-- Header -->
     <div class="flex justify-between items-center mb-1">
-        <button on:click={prevMonth} class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
+        <button on:click={prevMonth} class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
             <span class="transform -translate-y-[1px] -translate-x-[1px]">&lt;</span>
         </button>
         <strong>
             {currentMonth.toLocaleString('default', { month: 'long' })}
             {currentMonth.getFullYear()}
         </strong>
-        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
+        <button class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
             <span on:click={nextMonth} class="transform -translate-y-[1px] -translate-x-[-1px]">&gt;</span>
         </button>
     </div>
@@ -120,7 +120,7 @@
     <div class="grid grid-cols-7 gap-0.5">
         {#each daysGrid as cell}
             <button
-                    class="p-1 rounded-xl text-center font-mono w-10
+                    class="cursor-pointer p-1 rounded-xl text-center font-mono w-10
             {cell.currentMonth ? 'hover:bg-zinc-800' : 'text-zinc-600 cursor-default'}
             {cell.currentMonth &&
              globalDate.val.getDate() === cell.day &&

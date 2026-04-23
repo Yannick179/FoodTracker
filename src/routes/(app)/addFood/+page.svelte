@@ -10,21 +10,26 @@
     let success = false;
 
     function validate() {
-        const values = [calories, protein, carbs, fats];
-
         if (!name.trim()) {
             return 'Name is required';
         }
 
-        for (const v of values) {
+        const macros = [protein, carbs, fats];
+
+        // check negatives for all numeric inputs
+        const allValues = [calories, ...macros];
+        for (const v of allValues) {
             if (v < 0) return 'Values cannot be negative';
-            if (v > 100) return 'Each value must be ≤ 100g';
         }
 
-        const total = protein + carbs + fats;
+        if (calories > 900) {
+            return 'Calories must be ≤ 900 kcal';
+        }
 
-        if (total > 100) {
-            return 'Total macros (protein + carbs + fats) must be ≤ 100g';
+        for (const v of macros) {
+            if (v > 100) {
+                return 'Protein, carbs, and fats must be ≤ 100g each';
+            }
         }
 
         return '';
@@ -138,7 +143,7 @@
 
             <!-- Button -->
             <button
-                    class="w-full rounded-xl py-2 transition
+                    class="cursor-pointer w-full rounded-xl py-2 transition
 				bg-white text-zinc-900 hover:bg-zinc-200 disabled:opacity-50"
                     disabled={loading}
             >
