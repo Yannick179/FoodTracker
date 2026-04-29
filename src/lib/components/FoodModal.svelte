@@ -1,8 +1,10 @@
 <script lang="ts">
     export let onClose: () => void;
     export let selectedFood: any;
+    import { createDate } from '$lib/dataStore.svelte';
 
     let amount = 0;
+    const globalDate = createDate();
 
     async function submit() {
         if (amount > 0) {
@@ -10,9 +12,10 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    foodid: selectedFood.id,
+                    foodId: selectedFood.id,
                     amount: amount,
-                    userid: 1
+                    userid: 1,
+                    date: globalDate.date
                 })
             });
 
@@ -47,13 +50,13 @@
             </div>
 
             <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Carbs</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.carbs}g</div>
+                <div class="text-zinc-400 text-xs">Carbohydrates</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.carbohydrates}g</div>
             </div>
 
             <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Fats</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.fats}g</div>
+                <div class="text-zinc-100 font-medium">{selectedFood.fat}g</div>
             </div>
         </div>
 

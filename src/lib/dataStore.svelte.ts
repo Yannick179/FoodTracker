@@ -1,14 +1,8 @@
-import { writable } from 'svelte/store';
+let date = $state(new Date());
 
-let _date = $state(new Date());
-
-export const globalDate = {
-    get val() {
-        // console.log("get: " + _date)
-        return _date;
-        },
-    set val(n) {
-        // console.log("set: " + _date + " to: " + n);
-        _date = n;
-    }
-};
+export function createDate() {
+    return {
+        get date() { return date },
+        update: (newDate: Date) => date = newDate,
+    };
+}

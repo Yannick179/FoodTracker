@@ -1,8 +1,12 @@
 import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
 import {json} from "@sveltejs/kit";
 import { prisma } from "$lib/prisma";
+import {requireUser} from "$lib/server/authHelper";
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, locals }) => {
+    const user = requireUser(locals);
+
+
     const query = url.searchParams.get('q');
 
     if (query) {
@@ -14,9 +18,18 @@ export const GET: RequestHandler = async ({ url }) => {
     }
 };
 
+
 async function getDefaultFoods() {
     return prisma.food.findMany({
-        orderBy: { createdAt: 'desc' },
+        select: {
+            id: true,
+            name: true,
+            calories: true,
+            protein: true,
+            carbohydrates: true,
+            fat: true,
+        },
+        orderBy: { createdAt: "desc" },
         take: 10
     });
 }

@@ -4,25 +4,26 @@
     import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
     import ResultsBarKcals from "$lib/components/ResultsBarKcals.svelte";
     import FoodListEntry from "$lib/components/FoodListEntry.svelte";
-    import {globalDate} from "$lib/dataStore.svelte.js";
-    export let data;
-    let foodEntries: any[] = [];
-    let dayStats: DayStats = {
+    import { createDate } from "$lib/dataStore.svelte.js";
+    let { data } = $props();
+    let foodEntries: any[] = $state([]);
+    let dayStats: DayStats = $state({
         calories: 0,
         protein: 0,
-        carbs: 0,
+        carbohydrates: 0,
         fat: 0
-    };
+    });
     type DayStats = {
         calories: number;
         protein: number;
-        carbs: number;
+        carbohydrates: number;
         fat: number;
     };
 
+    const globalDate = createDate();
 
     let error = '';
-    let loadingFoodEntries = false;
+    let loadingFoodEntries = $state(false);
 
     function getDateNicelyFormatted(selectedDate: Date) {
         let formattedDate = selectedDate.getDate() + " " + convertNumberToMonth(selectedDate.getMonth()) + " " + selectedDate.getFullYear() ;
@@ -81,24 +82,36 @@
     async function LoadFoodEntriesFromDateX() {
         try {
             loadingFoodEntries = true;
-            const res = await fetch(`/api/loadFoodEntriesFromDateX?date=${encodeURIComponent(globalDate.val)}`);
-
+            const res = await fetch(`/api/loadFoodEntriesFromDateX?date=${encodeURIComponent(globalDate.date)}`);
             if (!res.ok) {
                 throw new Error('failed to fetch food entries');
             }
             let resJson = await res.json();
+            console.log(globalDate.date);
+            console.log("loaded food for homepage in LoadFoodEntriesFromDateX: " + JSON.stringify(resJson));
+
             foodEntries = resJson.foodEntries;
-            // dayStats = resJson.dayStats;
+            dayStats = resJson.dayStats;
 
         } catch (err: any) {
             error = err.message;
         } finally {
             loadingFoodEntries = false;
         }
+        console.log(loadingFoodEntries);
+        console.log(dayStats);
     }
 
-    onMount(() => {
-        // LoadFoodEntriesFromDateX();
+    onMount( async () => {
+        await LoadFoodEntriesFromDateX();
+    });
+
+    $effect(() => {
+
+        LoadFoodEntriesFromDateX();
+    });
+    $effect(() => {
+        console.log("foodentries: " + foodEntries);
     });
 </script>
 
@@ -113,11 +126,11 @@
                 <!-- date -->
                 <div class="mb-6 grid-rows-2">
                     <div class="text-sm text-zinc-400 mb-1 flex">
-                        {convertNumberToDay(globalDate.val.getDay())}
+                        {convertNumberToDay(globalDate.date.getDay())}
                     </div>
 
                     <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">
-                        {getDateNicelyFormatted(globalDate.val)}
+                        {getDateNicelyFormatted(globalDate.date)}
                     </div>
                 </div>
 
@@ -159,9 +172,9 @@
 
                         <!-- Carbohydrates -->
                         <div class=" grid items-center grid-rows-3 place-items-center">
-                            <div class="flex">Carbs</div>
-                            <ResultBarMacros value={dayStats.carbs} max={400} />
-                            <div class="flex">{dayStats.carbs}/400</div>
+                            <div class="flex">Carbohydrates</div>
+                            <ResultBarMacros value={dayStats.carbohydrates} max={400} />
+                            <div class="flex">{dayStats.carbohydrates}/400</div>
                         </div>
 
                         <!-- Fats -->
@@ -192,8 +205,7 @@
     <p>Logged in as {data.user.email}</p>
 {:else}
     <p>Not logged in</p>
-{/if}<div>today is xyz</div>
-
+{/if}
 
 {#if loadingFoodEntries}
     <p>Loading food entries...</p>
@@ -205,7 +217,7 @@
                     amount={foodEntry.amount}
                     calories={foodEntry.calories}
                     protein={foodEntry.protein}
-                    carbs={foodEntry.carbs}
+                    carbohydrates={foodEntry.carbohydrates}
                     fats={foodEntry.fat}
             />
         {/each}

@@ -3,7 +3,7 @@
     let calories: number = 0;
     let fats: number = 0;
     let protein: number = 0;
-    let carbs: number = 0;
+    let carbohydrates: number = 0;
 
     let loading = false;
     let error = '';
@@ -14,7 +14,7 @@
             return 'Name is required';
         }
 
-        const macros = [protein, carbs, fats];
+        const macros = [protein, carbohydrates, fats];
 
         // check negatives for all numeric inputs
         const allValues = [calories, ...macros];
@@ -28,7 +28,7 @@
 
         for (const v of macros) {
             if (v > 100) {
-                return 'Protein, carbs, and fats must be ≤ 100g each';
+                return 'Protein, carbohydrates, and fats must be ≤ 100g each';
             }
         }
 
@@ -46,16 +46,17 @@
         }
 
         loading = true;
+        //TODO: implement kommazahlen in prot carb and fat
 
         const res = await fetch('/api/addFood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name,
-                Calories: Number(calories),
-                Protein: Number(protein),
-                Carbohydrates: Number(carbs),
-                Fat: Number(fats)
+                calories: Number(calories),
+                protein: Number(protein),
+                carbohydrates: Number(carbohydrates),
+                fat: Number(fats)
             })
         });
 
@@ -64,7 +65,7 @@
         } else {
             success = true;
             name = '';
-            calories = fats = protein = carbs = 0;
+            calories = fats = protein = carbohydrates = 0;
         }
 
         loading = false;
@@ -113,10 +114,10 @@
                 </div>
 
                 <div>
-                    <label class="text-xs text-zinc-400">Carbs</label>
+                    <label class="text-xs text-zinc-400">Carbohydrates</label>
                     <input type="number"
                            class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
-                           bind:value={carbs} />
+                           bind:value={carbohydrates} />
                 </div>
 
                 <div>

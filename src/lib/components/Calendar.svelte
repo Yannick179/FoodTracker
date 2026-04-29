@@ -1,14 +1,15 @@
 <script lang="ts">
     import '$lib/../app.css';
 
-    import { globalDate } from '$lib/dataStore.svelte';
+    import { createDate } from '$lib/dataStore.svelte';
 
+    const globalDate = createDate();
 
-    let currentMonth = new Date(
-        globalDate.val.getFullYear(),
-        globalDate.val.getMonth(),
+    let currentMonth = $state(new Date(
+        globalDate.date.getFullYear(),
+        globalDate.date.getMonth(),
         1
-    );
+    ));
 
     function daysInMonth(date: Date) {
         return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -21,13 +22,13 @@
     }
 
     function selectDay(day: number, isCurrentMonth: boolean) {
+        console.log(day, isCurrentMonth);
         if (!isCurrentMonth) return;
-
-        globalDate.val = new Date(
+        globalDate.update(new Date(
             currentMonth.getFullYear(),
             currentMonth.getMonth(),
-            day
-        );
+            day));
+        console.log(globalDate.date);
     }
 
     function prevMonth() {
@@ -48,7 +49,52 @@
 
     const TOTAL_CELLS = 42;
 
-    $: {
+    // $: {
+    //     const year = currentMonth.getFullYear();
+    //     const month = currentMonth.getMonth();
+    //
+    //     const firstDayIndex = firstDayOfMonth(currentMonth);
+    //     const daysInCurr = daysInMonth(currentMonth);
+    //
+    //     const prevMonth = new Date(year, month - 1, 1);
+    //     const daysInPrev = daysInMonth(prevMonth);
+    //
+    //     const grid = [];
+    //
+    //     // Previous month filler
+    //     for (let i = firstDayIndex - 1; i >= 0; i--) {
+    //         grid.push({
+    //             day: daysInPrev - i,
+    //             currentMonth: false
+    //         });
+    //     }
+    //
+    //     // Current month
+    //     for (let d = 1; d <= daysInCurr; d++) {
+    //         grid.push({
+    //             day: d,
+    //             currentMonth: true
+    //         });
+    //     }
+    //
+    //     // Next month filler
+    //     let nextDay = 1;
+    //     while (grid.length < TOTAL_CELLS) {
+    //         grid.push({
+    //             day: nextDay++,
+    //             currentMonth: false
+    //         });
+    //     }
+    //
+    //     daysGrid = grid;
+    // }
+    // let daysGrid: { day: number; currentMonth: boolean }[] = $state([]);
+
+    // Assuming currentMonth is state (e.g., from a prop or local state)
+    // let currentMonth = $state(new Date());
+
+    // Use $derived.by for complex logic calculation
+    let daysGrid = $derived.by(() => {
         const year = currentMonth.getFullYear();
         const month = currentMonth.getMonth();
 
@@ -58,7 +104,7 @@
         const prevMonth = new Date(year, month - 1, 1);
         const daysInPrev = daysInMonth(prevMonth);
 
-        const grid = [];
+        const grid: { day: number; currentMonth: boolean }[] = [];
 
         // Previous month filler
         for (let i = firstDayIndex - 1; i >= 0; i--) {
@@ -85,10 +131,9 @@
             });
         }
 
-        daysGrid = grid;
-    }
+        return grid;
+    });
 
-    let daysGrid: { day: number; currentMonth: boolean }[] = [];
 </script>
 
 <div class="p-2 bg-zinc-900 rounded-2xl max-w-xs ">
@@ -123,9 +168,9 @@
                     class="cursor-pointer p-1 rounded-xl text-center font-mono w-10
             {cell.currentMonth ? 'hover:bg-zinc-800' : 'text-zinc-600 cursor-default'}
             {cell.currentMonth &&
-             globalDate.val.getDate() === cell.day &&
-             globalDate.val.getMonth() === currentMonth.getMonth() &&
-             globalDate.val.getFullYear() === currentMonth.getFullYear()
+             globalDate.date.getDate() === cell.day &&
+             globalDate.date.getMonth() === currentMonth.getMonth() &&
+             globalDate.date.getFullYear() === currentMonth.getFullYear()
               ? 'bg-blue-500 text-white'
               : ''}"
                     on:click={() => selectDay(cell.day, cell.currentMonth)}

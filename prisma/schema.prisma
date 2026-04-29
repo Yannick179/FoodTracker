@@ -12,10 +12,11 @@ generator client {
 model Food {
   id            Int         @id @default(autoincrement())
   name          String
-  Calories      Float
-  Protein       Float
-  Carbohydrates Float
-  Fat           Float
+  calories      Float
+  protein       Float
+  carbohydrates Float
+  fat           Float
+  usageCount    BigInt  @default(0)
   createdAt     DateTime    @default(now())
   foodEntries   FoodEntry[]
 }
@@ -43,7 +44,7 @@ model FoodEntry {
   foodId Int
 
   amount  Int
-  eatenAt DateTime @default(now())
+  eatenAt DateTime
 
   user User @relation(fields: [userId], references: [id])
   food Food @relation(fields: [foodId], references: [id])

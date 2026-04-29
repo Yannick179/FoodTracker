@@ -76,10 +76,11 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const FoodScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  Calories: 'Calories',
-  Protein: 'Protein',
-  Carbohydrates: 'Carbohydrates',
-  Fat: 'Fat',
+  calories: 'calories',
+  protein: 'protein',
+  carbohydrates: 'carbohydrates',
+  fat: 'fat',
+  usageCount: 'usageCount',
   createdAt: 'createdAt'
 } as const
 

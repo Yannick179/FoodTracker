@@ -6,13 +6,12 @@ Done:
 
 Still todo:
 
-    add dashboard for this in the ui on home
-    add real user and get rid of dummy
-    change the Api routing to camelCase
-    make foodentry default list work for each day i want
-    make query smaller for foodentry/let it not return as much
-    fix food entries that were return to show correct data
-    make add food entries protein carbs fats and calories entry float
-    think about which ui tools to use - make ui look more beautiful
-    fix calender import
-    add date to the when track food to not just get current day - think about where to save the date
+    improve ui/ux in trackfood - button enter, show foods i tracked and not just the ones that exist
+    fix search in trackfood
+    improve ui for the foodlist
+    start creating a page for goals that shows how much calories etc
+    create a weight page that shows trends
+    make complex food datatype - a meal
+    create delete for entries
+    add fotos for food and barcodes and extra information
+

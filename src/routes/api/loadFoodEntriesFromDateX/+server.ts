@@ -1,12 +1,16 @@
 import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
 import {json} from "@sveltejs/kit";
-import {getDummyUser} from "$lib/server/DummyUser";
 import { prisma } from "$lib/prisma";
+import {requireUser} from "$lib/server/authHelper";
 
 
-export const GET: RequestHandler = async ({ url }) => {
-    let user = await getDummyUser();
+export const GET: RequestHandler = async ({ url, locals }) => {
+    const user = requireUser(locals);
+
+
+
     const date = url.searchParams.get('date');
+    console.log("date in serverside loadFoodEntries: " + date);
 
     // let now = new Date().toString();
 
@@ -16,7 +20,7 @@ export const GET: RequestHandler = async ({ url }) => {
     let dayStats = result.totals;
     let dayCals = 0;
     let dayProtein = 0;
-    let dayCarbs = 0;
+    let dayCarbohydrates = 0;
     let dayFats = 0;
     let foodEntriesJsonList = [];
 
@@ -26,10 +30,10 @@ export const GET: RequestHandler = async ({ url }) => {
             name: databaseFoodEntry.food.name,
             amount: Math.round(databaseFoodEntry.amount),
             eatenAt: databaseFoodEntry.eatenAt,
-            calories: Math.round(databaseFoodEntry.food.Calories * factor),
-            protein: Math.round(databaseFoodEntry.food.Protein * factor),
-            carbs: Math.round(databaseFoodEntry.food.Carbohydrates * factor),
-            fat: Math.round(databaseFoodEntry.food.Fat * factor)
+            calories: Math.round(databaseFoodEntry.food.calories * factor),
+            protein: Math.round(databaseFoodEntry.food.protein * factor),
+            carbohydrates: Math.round(databaseFoodEntry.food.carbohydrates * factor),
+            fat: Math.round(databaseFoodEntry.food.fat * factor)
         };
         foodEntriesJsonList.push(foodEntryJson);
     }
@@ -62,13 +66,13 @@ async function getDataBaseFoodEntriesForDateX(date: Date, userid: number) {
 
     const totals = entries.reduce(
         (acc, entry) => {
-            acc.protein += Math.round(entry.food.Protein * entry.amount / 100);
-            acc.carbs += Math.round(entry.food.Carbohydrates * entry.amount / 100);
-            acc.fat += Math.round(entry.food.Fat * entry.amount / 100);
-            acc.calories += Math.round(entry.food.Calories * entry.amount / 100);
+            acc.protein += Math.round(entry.food.protein * entry.amount / 100);
+            acc.carbohydrates += Math.round(entry.food.carbohydrates * entry.amount / 100);
+            acc.fat += Math.round(entry.food.fat * entry.amount / 100);
+            acc.calories += Math.round(entry.food.calories * entry.amount / 100);
             return acc;
         },
-        { protein: 0, carbs: 0, fat: 0, calories: 0 }
+        { protein: 0, carbohydrates: 0, fat: 0, calories: 0 }
     );
 
     return {

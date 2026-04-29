@@ -1,6 +1,7 @@
 <script>
 
     import {redirect} from "@sveltejs/kit";
+    import {goto} from "$app/navigation";
 
     async function handleLogout() {
         // 1. Call logout endpoint (if using server session)
@@ -10,6 +11,7 @@
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
         });
+        goto('/');
         console.log(res);
         console.log("logged out");
 
@@ -30,9 +32,11 @@
 
     <!-- Center -->
     <div class="hidden md:flex gap-6 ">
-        <a href="/Home" class="hover:text-zinc-400">Home</a>
+        <a href="/home" class="hover:text-zinc-400">Home</a>
         <a href="/addFood" class="hover:text-zinc-400">new Food</a>
         <a href="/trackFood" class="hover:text-zinc-400">Tracker</a>
+        <a href="/stats" class="hover:text-zinc-400">Stats</a>
+
     </div>
 
     <!-- Right -->

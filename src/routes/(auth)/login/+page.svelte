@@ -1,4 +1,6 @@
 <script lang="ts">
+    import {goto} from "$app/navigation";
+
     let email = '';
     let password = '';
     let success = false;
@@ -34,7 +36,7 @@
 
 
         if (res.ok) {
-            window.location.href = '/Home';
+            goto('/home');
         } else {
             const data = await res.json();
             console.error(data.error);

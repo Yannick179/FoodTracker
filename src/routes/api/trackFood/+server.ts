@@ -1,25 +1,38 @@
 import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/addfood/$types";
-import {getDummyUser} from "$lib/server/DummyUser";
 import { prisma } from "$lib/prisma";
+import {requireUser} from "$lib/server/authHelper"
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
+    const user = requireUser(locals);
     try {
-        let user = await getDummyUser();
-        const { foodid, amount, userid } = await request.json();
+        const { foodId: foodId, amount: amount, userId: userid, date: date } =
+            await request.json();
 
         // DONT USE USER FROM THE REQUEST ITS PLACEHOLDER
 
         // Basic validation
-        if ((!foodid && foodid != 0) || (!amount && amount != 0) || (!user.id && user.id != 0) ) {
+        if ((!foodId && foodId != 0) || (!amount && amount != 0) || (!user.id && user.id != 0) || !date) {
             return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400 });
         }
-        console.log(foodid, amount, userid);
+        console.log(foodId, amount, userid, date);
 
         await prisma.foodEntry.create({
             data: {
                 userId: user.id,
-                foodId: foodid,
-                amount: amount
+                foodId: foodId,
+                amount: amount,
+                eatenAt: date,
+
+            }
+        });
+        await prisma.food.update({
+            where: {
+                id: foodId,
+            },
+            data: {
+                usageCount: {
+                    increment: 1
+                }
             }
         });
         return new Response(null, { status: 201 });

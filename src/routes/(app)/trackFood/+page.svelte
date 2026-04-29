@@ -1,10 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import FoodModal from "$lib/components/FoodModal.svelte";
-    import {globalDate} from "$lib/dataStore.svelte.js";
+    import {createDate } from "$lib/dataStore.svelte.js";
     import Calendar from "$lib/components/Calendar.svelte";
-    import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
-    import ResultsBarKcals from "$lib/components/ResultsBarKcals.svelte";
 
     let foods: any[] = [];
     let query = '';
@@ -12,6 +10,7 @@
     let error = '';
     let selectedFood: any = null;
     let showModal = false;
+    const globalDate = createDate();
 
     async function loadFoods(q: string = '') {
         loading = true;
@@ -110,11 +109,11 @@
                 <!-- date -->
                 <div class="mb-6 grid-rows-2">
                     <div class="text-sm text-zinc-400 mb-1 flex">
-                        {convertNumberToDay(globalDate.val.getDay())}
+                        {convertNumberToDay(globalDate.date.getDay())}
                     </div>
 
                     <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">
-                        {getDateNicelyFormatted(globalDate.val)}
+                        {getDateNicelyFormatted(globalDate.date)}
                     </div>
                 </div>
 

@@ -21,6 +21,7 @@ function isValidEmail(email: string) {
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
+        console.log("does this reach?");
         const {email, password} = await request.json();
         if (!isValidPassword(password)) return new Response(JSON.stringify({ error: 'Invalid Password' }), { status: 400 });
         let hashedPassword = await argon2.hash(password);
@@ -48,11 +49,12 @@ export const POST: RequestHandler = async ({ request }) => {
                     expires: new Date(Date.now() + 1000 * 60 * 60)
                 }
             });
+            console.log("log in Successfull");
             return new Response(null, {
                 status: 302,
                 headers: {
                     "Set-Cookie": `session=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Lax; Secure`,
-                    "Location": "/Home"
+                    "Location": "/home"
                 }
             });
         }

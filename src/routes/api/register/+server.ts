@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ request }) => {
                 expires: new Date(Date.now() + 1000 * 60 * 60) // 7 days
             }
         });
-
+        console.log("created new account");
         return new Response(JSON.stringify({ success: true }), {
             status: 200,
             headers: {

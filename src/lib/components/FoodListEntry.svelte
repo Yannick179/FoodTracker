@@ -3,7 +3,7 @@
     export let amount: number;
     export let calories: number;
     export let protein: number;
-    export let carbs: number;
+    export let carbohydrates: number;
     export let fats: number;
 </script>
 
@@ -17,7 +17,7 @@
 
     <div class="text-sm">
         <span>P: {protein}g</span>
-        <span> | C: {carbs}g</span>
+        <span> | C: {carbohydrates}g</span>
         <span> | F: {fats}g</span>
     </div>
 </div>
