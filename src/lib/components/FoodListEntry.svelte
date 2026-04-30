@@ -1,23 +1,44 @@
 <script lang="ts">
-    export let name: string;
-    export let amount: number;
-    export let calories: number;
-    export let protein: number;
-    export let carbohydrates: number;
-    export let fats: number;
+    let {
+        name = "Unknown Food",
+        amount = 0,
+        calories = 0,
+        protein = 0,
+        carbohydrates = 0,
+        fats = 0
+    } = $props();
 </script>
 
-<div class="border rounded">
-    <div class="font-medium">{name}</div>
-    <div class="text-sm">
-        <span>Calories: {calories}</span>
-        <span>Amount: {amount}g</span>
-
+<div class="group flex items-center justify-between p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-all duration-200">
+    <div class="flex flex-col gap-1">
+        <h3 class="font-semibold text-zinc-100 group-hover:text-white transition-colors">
+            {name}
+        </h3>
+        <div class="flex items-center gap-2 text-xs font-medium text-zinc-500">
+            <span class="bg-zinc-800 px-2 py-0.5 rounded text-zinc-300">{amount}g</span>
+            <span>•</span>
+            <span class="text-zinc-400">{calories} kcal</span>
+        </div>
     </div>
 
-    <div class="text-sm">
-        <span>P: {protein}g</span>
-        <span> | C: {carbohydrates}g</span>
-        <span> | F: {fats}g</span>
+    <div class="flex items-center gap-4">
+        <div class="flex flex-col items-center">
+            <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Prot</span>
+            <span class="text-sm font-medium text-blue-400">{protein}g</span>
+        </div>
+
+        <div class="h-8 w-px bg-zinc-800"></div>
+
+        <div class="flex flex-col items-center">
+            <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Carb</span>
+            <span class="text-sm font-medium text-amber-400">{carbohydrates}g</span>
+        </div>
+
+        <div class="h-8 w-px bg-zinc-800"></div>
+
+        <div class="flex flex-col items-center">
+            <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Fat</span>
+            <span class="text-sm font-medium text-rose-400">{fats}g</span>
+        </div>
     </div>
 </div>

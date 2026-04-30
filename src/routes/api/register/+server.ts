@@ -1,4 +1,3 @@
-import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/register/$types";
 import argon2 from 'argon2';
 import { randomUUID } from 'crypto';
 import { prisma } from "$lib/prisma";
@@ -19,7 +18,7 @@ function isValidEmail(email: string) {
 }
 
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST = async ({ request }) => {
     try {
         const {email, password} = await request.json();
         if (!isValidPassword(password)) return new Response(JSON.stringify({ error: 'Invalid Password' }), { status: 400 });

@@ -8,7 +8,7 @@
 
     async function submit() {
         if (amount > 0) {
-            await fetch('/api/trackFood', {
+            await fetch('/api/food/trackFood', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -16,7 +16,7 @@
         loading = true;
         error = '';
         try {
-            const url = q ? `/api/searchFood?q=${encodeURIComponent(q)}` : '/api/searchFood';
+            const url = q ? `/api/food/searchFood?q=${encodeURIComponent(q)}` : '/api/food/searchFood';
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch foods');
             foods = await res.json();
@@ -99,7 +99,7 @@
     };
 </script>
 
-<div class="p-6">
+<div class="p-10">
 
     <!-- left side-->
     <div>
@@ -170,8 +170,8 @@
             </div>
 
             <!-- col-3 -->
-            <div class="flex bg-red-950">
-                recommendations
+            <div class="flex rounded-2xl bg-zinc-900/20 border border-zinc-800/50 p-4">
+                <span class="text-zinc-500 text-sm">Recommendations</span>
             </div>
         </div>
     </div>

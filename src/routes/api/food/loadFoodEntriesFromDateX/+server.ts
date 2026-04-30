@@ -1,15 +1,12 @@
-import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/searchfood/$types";
 import {json} from "@sveltejs/kit";
 import { prisma } from "$lib/prisma";
 import {requireUser} from "$lib/server/authHelper";
 
 
-export const GET: RequestHandler = async ({ url, locals }) => {
+export const GET = async ({ url, locals }) => {
     const user = requireUser(locals);
-
-
-
-    const date = url.searchParams.get('date');
+    
+    const date  = url.searchParams.get('date');
     console.log("date in serverside loadFoodEntries: " + date);
 
     // let now = new Date().toString();

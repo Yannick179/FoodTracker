@@ -48,7 +48,7 @@
         loading = true;
         //TODO: implement kommazahlen in prot carb and fat
 
-        const res = await fetch('/api/addFood', {
+        const res = await fetch('/api/food/addFood', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -73,7 +73,7 @@
 </script>
 
 <!-- Layout -->
-<div class="min-h-screen flex items-center justify-center bg-zinc-800 text-zinc-100 p-6">
+<div class="flex items-center justify-center text-zinc-100 p-10">
 
     <div class="w-full max-w-md rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
 

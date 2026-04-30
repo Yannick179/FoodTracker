@@ -1,8 +1,7 @@
-import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/addfood/$types";
 import { prisma } from "$lib/prisma";
 import {requireUser} from "$lib/server/authHelper"
 
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST = async ({ request, locals }) => {
     const user = requireUser(locals);
     try {
         const { foodId: foodId, amount: amount, userId: userid, date: date } =

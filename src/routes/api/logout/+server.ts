@@ -1,4 +1,3 @@
-import type {RequestHandler} from "../../../../.svelte-kit/types/src/routes/api/login/$types";
 import argon2 from "argon2";
 import {prisma} from "$lib/prisma";
 import {randomUUID} from "crypto";

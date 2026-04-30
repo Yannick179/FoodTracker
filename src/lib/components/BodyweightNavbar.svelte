@@ -15,38 +15,28 @@
         console.log(res);
         console.log("logged out");
 
-
-        // 3. Remove stored tokens (if using localStorage/sessionStorage)
-        // localStorage.removeItem("token")
-
-        // 4. Redirect user to login or home page
-        // window.location.href = "/login"
     }
 </script>
 
 <nav class="w-full h-16 bg-zinc-900 shadow-sm flex items-center justify-between px-6">
     <!-- Left -->
-    <div class="font-bold text-lg">
-        Logo
+    <div class="hidden md:flex gap-6 font-bold text-lg ">
+        <a href="/home" class="hover:text-zinc-400">Logo</a>
     </div>
 
     <!-- Center -->
     <div class="hidden md:flex gap-6 ">
-        <a href="/home" class="hover:text-zinc-400">Home</a>
-        <a href="/addFood" class="hover:text-zinc-400">new Food</a>
-        <a href="/trackFood" class="hover:text-zinc-400">Tracker</a>
-        <a href="/stats" class="hover:text-zinc-400">Stats</a>
-
+        <a href="/bodyweight/dashboard" class="hover:text-zinc-400">Dashboard</a>
+<!--        <a href="/food/addFood" class="hover:text-zinc-400">new Food</a>-->
+<!--        <a href="/food/trackFood" class="hover:text-zinc-400">Tracker</a>-->
+<!--        <a href="/food/stats" class="hover:text-zinc-400">Stats</a>-->
+        <a href="/bodyweight/weight" class="hover:text-zinc-400">Weight</a>
+        <a href="/bodyweight/goals" class="hover:text-zinc-400">Goals</a>
+        <a href="/bodyweight/settings" class="hover:text-zinc-400">Settings</a>
     </div>
 
     <!-- Right -->
     <div>
-<!--        <a href="/login" class="inline-block px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition">-->
-<!--            Login-->
-<!--        </a>-->
-<!--        <a href="/register" class="inline-block px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition">-->
-<!--            Register-->
-<!--        </a>-->
         <button type="button"
                 class="cursor-pointer inline-block px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
                 on:click={handleLogout}>
