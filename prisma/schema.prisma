@@ -18,6 +18,8 @@ model Food {
   usageCount    BigInt      @default(0)
   createdAt     DateTime    @default(now())
   foodEntries   FoodEntry[]
+  recipes     RecipeFood[]
+
 }
 
 model Session {
@@ -26,6 +28,24 @@ model Session {
   userId  Int
   user    User     @relation(fields: [userId], references: [id])
   expires DateTime
+}
+
+model Recipe {
+  id          Int            @id @default(autoincrement())
+  name        String
+  ingredients RecipeFood[]
+}
+
+model RecipeFood {
+  id        Int    @id @default(autoincrement())
+
+  recipeId  Int
+  foodId    Int
+
+  recipe    Recipe @relation(fields: [recipeId], references: [id])
+  food      Food   @relation(fields: [foodId], references: [id])
+
+  quantity  Int
 }
 
 model KcalGoal {
