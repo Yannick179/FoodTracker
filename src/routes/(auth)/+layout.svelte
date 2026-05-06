@@ -5,7 +5,7 @@
 
 
 
-<div class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+<div class="min-h-screen bg-neutral-900 text-zinc-100 antialiased">
 <!--	<Navbar />-->
 
 	<main class="text-zinc-100">

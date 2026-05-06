@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Food: 'Food',
   Session: 'Session',
+  KcalGoal: 'KcalGoal',
   User: 'User',
   FoodEntry: 'FoodEntry'
 } as const
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "food" | "session" | "user" | "foodEntry"
+    modelProps: "food" | "session" | "kcalGoal" | "user" | "foodEntry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -552,6 +553,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SessionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    KcalGoal: {
+      payload: Prisma.$KcalGoalPayload<ExtArgs>
+      fields: Prisma.KcalGoalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KcalGoalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KcalGoalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        findFirst: {
+          args: Prisma.KcalGoalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KcalGoalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        findMany: {
+          args: Prisma.KcalGoalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>[]
+        }
+        create: {
+          args: Prisma.KcalGoalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        createMany: {
+          args: Prisma.KcalGoalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KcalGoalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>[]
+        }
+        delete: {
+          args: Prisma.KcalGoalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        update: {
+          args: Prisma.KcalGoalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        deleteMany: {
+          args: Prisma.KcalGoalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KcalGoalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KcalGoalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>[]
+        }
+        upsert: {
+          args: Prisma.KcalGoalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KcalGoalPayload>
+        }
+        aggregate: {
+          args: Prisma.KcalGoalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKcalGoal>
+        }
+        groupBy: {
+          args: Prisma.KcalGoalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KcalGoalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KcalGoalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KcalGoalCountAggregateOutputType> | number
         }
       }
     }
@@ -766,6 +841,19 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+export const KcalGoalScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kcal: 'kcal',
+  protein: 'protein',
+  carbohydrates: 'carbohydrates',
+  fats: 'fats',
+  createdAt: 'createdAt'
+} as const
+
+export type KcalGoalScalarFieldEnum = (typeof KcalGoalScalarFieldEnum)[keyof typeof KcalGoalScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -974,6 +1062,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   food?: Prisma.FoodOmit
   session?: Prisma.SessionOmit
+  kcalGoal?: Prisma.KcalGoalOmit
   user?: Prisma.UserOmit
   foodEntry?: Prisma.FoodEntryOmit
 }

@@ -103,7 +103,7 @@
 
     <!-- left side-->
     <div>
-        <div class="grid grid-cols-[4fr_11fr_4fr] ">
+        <div class="grid h-96 grid-cols-[4fr_8fr_5fr] gap-x-8 ">
             <!-- col-1 -->
             <div class="grid justify-items-center">
                 <!-- date -->
@@ -136,7 +136,7 @@
                                 bind:value={query}
                                 placeholder="Search..."
                                 on:input={() => handleSearch(query)}
-                                class="mt-1 w-full rounded-xl bg-zinc-900/70 border border-zinc-800 px-4 py-2 text-zinc-100
+                                class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
 				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
                         />
                     </div>
@@ -156,8 +156,8 @@
                             {#each foods as food}
                                 <button
                                         on:click={() => open(food)}
-                                        class="cursor-pointer w-full text-left rounded-xl border border-zinc-800 bg-zinc-900/40
-						px-4 py-3 hover:bg-zinc-800/50 transition flex justify-between items-center"
+                                        class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
+						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
                                 >
                                     <span class="text-zinc-100">{food.name}</span>
                                     <span class="text-zinc-500 text-sm">Add</span>
@@ -170,7 +170,7 @@
             </div>
 
             <!-- col-3 -->
-            <div class="flex rounded-2xl bg-zinc-900/20 border border-zinc-800/50 p-4">
+            <div class="flex rounded-2xl rounded-2xl border-2 border border-neutral-400 p-4">
                 <span class="text-zinc-500 text-sm">Recommendations</span>
             </div>
         </div>

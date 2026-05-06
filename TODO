@@ -1,11 +1,13 @@
 
-Done:
+todo:
 
-    Add closing of the Foodmodal on save or cancel - for now works! CHECK
-    add a overview of food ate on day x(eg the day today)
-
-Still todo:
-
+    create force of first setting goal before being able to use the rest of the foodtracking app
+    change date for goal creation to global date on client side not date.now
+    session db cleanup worker to remove outdated sessions that werent deleted by logout
+    add default success/error handling ui for api request
+    differenciate between border of button thats clickable and border of a textfield
+    improve border on small stuff, make it default border-2, bg neutral 400 and same hover change
+    add Ballaststoffe/fiber
     improve ui/ux in trackfood - button enter, show foods i tracked and not just the ones that exist
     fix search in trackfood
     improve ui for the foodlist
@@ -16,4 +18,11 @@ Still todo:
     add fotos for food and barcodes and extra information
     make ui "boxes" look similar and the same
     make the date not just for one window session but every window session
+    find correct background color
+    choose button click and hover color
+    border color and width
+    make text thick
+    check hover and transitions
+    refactor navbar component into one and just insert middle things
+    for bodyweight history list add sorting orders reverse or not reverse etc
 

@@ -75,7 +75,7 @@
 <!-- Layout -->
 <div class="flex items-center justify-center text-zinc-100 p-10">
 
-    <div class="w-full max-w-md rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
+    <div class="w-full max-w-md rounded-2xl border-2 border border-neutral-400 shadow-xl p-6 space-y-5">
 
         <!-- Header -->
         <div>
@@ -89,7 +89,7 @@
             <div>
                 <label class="text-xs text-zinc-400">Food name</label>
                 <input
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2
+                        class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-3 py-2
 					focus:outline-none focus:ring-2 focus:ring-zinc-500/40"
                         bind:value={name}
                         required
@@ -102,28 +102,28 @@
                 <div>
                     <label class="text-xs text-zinc-400">Calories</label>
                     <input type="number"
-                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-3 py-2"
                            bind:value={calories} />
                 </div>
 
                 <div>
                     <label class="text-xs text-zinc-400">Protein</label>
                     <input type="number"
-                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-3 py-2"
                            bind:value={protein} />
                 </div>
 
                 <div>
                     <label class="text-xs text-zinc-400">Carbohydrates</label>
                     <input type="number"
-                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-3 py-2"
                            bind:value={carbohydrates} />
                 </div>
 
                 <div>
                     <label class="text-xs text-zinc-400">Fats</label>
                     <input type="number"
-                           class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                           class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-3 py-2"
                            bind:value={fats} />
                 </div>
 

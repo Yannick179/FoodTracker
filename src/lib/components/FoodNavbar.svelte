@@ -1,44 +1,13 @@
 <script>
+    import NavbarLayout from "$lib/components/NavbarLayout.svelte";
 
-    import {redirect} from "@sveltejs/kit";
-    import {goto} from "$app/navigation";
-
-    async function handleLogout() {
-        // 1. Call logout endpoint (if using server session)
-
-        const res = await fetch('/api/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-        goto('/');
-        console.log(res);
-        console.log("logged out");
-
-    }
+    const routesAndNamesFood = [
+        { name: "Dashboard", route: "/food/dashboard" },
+        { name: "New Food", route: "/food/addFood" },
+        { name: "Tracker", route: "/food/trackFood" },
+        { name: "Goals", route: "/food/goals" },
+        { name: "Recipes", route: "food/recipes"}
+    ];
 </script>
 
-<nav class="w-full h-16 bg-zinc-900 shadow-sm flex items-center justify-between px-6">
-    <!-- Left -->
-    <div class="hidden md:flex gap-6 font-bold text-lg ">
-        <a href="/home" class="hover:text-zinc-400">Logo</a>
-    </div>
-
-    <!-- Center -->
-    <div class="hidden md:flex gap-6 ">
-        <a href="/food/home" class="hover:text-zinc-400">Home</a>
-        <a href="/food/addFood" class="hover:text-zinc-400">new Food</a>
-        <a href="/food/trackFood" class="hover:text-zinc-400">Tracker</a>
-        <a href="/food/stats" class="hover:text-zinc-400">Stats</a>
-
-    </div>
-
-    <!-- Right -->
-    <div>
-        <button type="button"
-                class="cursor-pointer inline-block px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
-                on:click={handleLogout}>
-            Log out
-        </button>
-    </div>
-</nav>
+<NavbarLayout routesAndNames={routesAndNamesFood}></NavbarLayout>

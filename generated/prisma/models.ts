@@ -10,6 +10,7 @@
  */
 export type * from './models/Food.ts'
 export type * from './models/Session.ts'
+export type * from './models/KcalGoal.ts'
 export type * from './models/User.ts'
 export type * from './models/FoodEntry.ts'
 export type * from './commonInputTypes.ts'

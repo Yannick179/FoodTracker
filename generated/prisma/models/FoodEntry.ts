@@ -281,7 +281,7 @@ export type FoodEntryScalarWhereWithAggregatesInput = {
 
 export type FoodEntryCreateInput = {
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
   user: Prisma.UserCreateNestedOneWithoutFoodEntriesInput
   food: Prisma.FoodCreateNestedOneWithoutFoodEntriesInput
 }
@@ -291,7 +291,7 @@ export type FoodEntryUncheckedCreateInput = {
   userId: number
   foodId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryUpdateInput = {
@@ -314,7 +314,7 @@ export type FoodEntryCreateManyInput = {
   userId: number
   foodId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryUpdateManyMutationInput = {
@@ -464,7 +464,7 @@ export type FoodEntryUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type FoodEntryCreateWithoutFoodInput = {
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
   user: Prisma.UserCreateNestedOneWithoutFoodEntriesInput
 }
 
@@ -472,7 +472,7 @@ export type FoodEntryUncheckedCreateWithoutFoodInput = {
   id?: number
   userId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryCreateOrConnectWithoutFoodInput = {
@@ -514,7 +514,7 @@ export type FoodEntryScalarWhereInput = {
 
 export type FoodEntryCreateWithoutUserInput = {
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
   food: Prisma.FoodCreateNestedOneWithoutFoodEntriesInput
 }
 
@@ -522,7 +522,7 @@ export type FoodEntryUncheckedCreateWithoutUserInput = {
   id?: number
   foodId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryCreateOrConnectWithoutUserInput = {
@@ -555,7 +555,7 @@ export type FoodEntryCreateManyFoodInput = {
   id?: number
   userId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryUpdateWithoutFoodInput = {
@@ -582,7 +582,7 @@ export type FoodEntryCreateManyUserInput = {
   id?: number
   foodId: number
   amount: number
-  eatenAt?: Date | string
+  eatenAt: Date | string
 }
 
 export type FoodEntryUpdateWithoutUserInput = {

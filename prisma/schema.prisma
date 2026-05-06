@@ -8,7 +8,6 @@ generator client {
   output   = "../generated/prisma"
 }
 
-
 model Food {
   id            Int         @id @default(autoincrement())
   name          String
@@ -16,7 +15,7 @@ model Food {
   protein       Float
   carbohydrates Float
   fat           Float
-  usageCount    BigInt  @default(0)
+  usageCount    BigInt      @default(0)
   createdAt     DateTime    @default(now())
   foodEntries   FoodEntry[]
 }
@@ -29,12 +28,25 @@ model Session {
   expires DateTime
 }
 
+model KcalGoal {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  kcal          Int
+  protein       Int
+  carbohydrates Int
+  fats          Int
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
 model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
   passwordHash String
   foodEntries  FoodEntry[]
   sessions     Session[]
+  goals        KcalGoal[]
 }
 
 model FoodEntry {

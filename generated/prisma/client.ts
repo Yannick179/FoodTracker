@@ -52,6 +52,11 @@ export type Food = Prisma.FoodModel
  */
 export type Session = Prisma.SessionModel
 /**
+ * Model KcalGoal
+ * 
+ */
+export type KcalGoal = Prisma.KcalGoalModel
+/**
  * Model User
  * 
  */

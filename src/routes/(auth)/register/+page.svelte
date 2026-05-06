@@ -53,7 +53,7 @@
 
 <div class="min-h-screen flex items-center justify-center  text-zinc-100 p-6">
 
-    <div class="w-full max-w-sm rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
+    <div class="w-full max-w-sm rounded-2xl bg-neutral-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
 
         <div>
             <h1 class="text-lg font-semibold">Create account</h1>
@@ -69,7 +69,7 @@
                         type="email"
                         bind:value={email}
                         required
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2"
                 />
             </div>
 
@@ -80,7 +80,7 @@
                         type="password"
                         bind:value={password}
                         required
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2"
                 />
             </div>
 
@@ -91,7 +91,7 @@
                         type="password"
                         bind:value={confirmPassword}
                         required
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2"
                 />
             </div>
 
@@ -109,7 +109,7 @@
 
             <button
                     class="cursor-pointer w-full rounded-xl py-2 font-medium transition
-				bg-white text-zinc-900 hover:bg-zinc-200 disabled:opacity-50"
+				bg-white text-zinc-900 hover:bg-neutral-200 disabled:opacity-50"
                     disabled={loading}>
                 {loading ? 'Creating…' : 'Sign up'}
             </button>

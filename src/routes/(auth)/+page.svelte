@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="min-h-screen flex flex-col items-center bg-zinc-900 text-white px-6 pt-32 pb-16">
+<div class="min-h-screen flex flex-col items-center bg-neutral-900 text-white px-6 pt-32 pb-16">
     <!-- Hero -->
     <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-center">
         Track your food.<br />
@@ -16,12 +16,12 @@
     <!-- CTA -->
     <div class="flex gap-4 mb-16">
         <a href="/register"
-           class="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-zinc-200 transition">
+           class="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-neutral-200 transition">
             Get Started — Free
         </a>
 
         <a href="/login"
-           class="px-6 py-3 rounded-xl border border-zinc-700 text-white hover:bg-zinc-800 transition">
+           class="px-6 py-3 rounded-xl border border-zinc-700 text-white hover:bg-neutral-800 transition">
             Login
         </a>
     </div>
@@ -29,21 +29,21 @@
     <!-- Features -->
     <div class="grid md:grid-cols-3 gap-6 max-w-5xl w-full text-center">
 
-        <div class="p-6 rounded-2xl bg-zinc-800">
+        <div class="p-6 rounded-2xl bg-neutral-800">
             <h3 class="text-xl font-semibold mb-2">⚡ Fast logging</h3>
             <p class="text-zinc-400 text-sm">
                 Add meals in seconds. No clutter, no friction.
             </p>
         </div>
 
-        <div class="p-6 rounded-2xl bg-zinc-800">
+        <div class="p-6 rounded-2xl bg-neutral-800">
             <h3 class="text-xl font-semibold mb-2">📊 Smart insights</h3>
             <p class="text-zinc-400 text-sm">
                 See calories, macros, and trends over time.
             </p>
         </div>
 
-        <div class="p-6 rounded-2xl bg-zinc-800">
+        <div class="p-6 rounded-2xl bg-neutral-800">
             <h3 class="text-xl font-semibold mb-2">🔥 Stay consistent</h3>
             <p class="text-zinc-400 text-sm">
                 Build streaks and keep your habits on track.

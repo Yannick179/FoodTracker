@@ -27,9 +27,9 @@
 </script>
 
 <!-- Backdrop -->
-<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+<div class="fixed inset-0 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center z-50">
 
-    <div class="w-full max-w-md rounded-2xl bg-zinc-900/90 border border-zinc-800 shadow-2xl p-6">
+    <div class="w-full max-w-md rounded-2xl bg-neutral-900/90 border border-zinc-800 shadow-2xl p-6">
 
         <!-- Title -->
         <h2 class="text-lg font-semibold text-zinc-100 mb-1">
@@ -39,22 +39,22 @@
 
         <!-- Stats -->
         <div class="grid grid-cols-2 gap-3 text-sm mb-6">
-            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+            <div class="rounded-xl  border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Calories</div>
                 <div class="text-zinc-100 font-medium">{selectedFood.calories}</div>
             </div>
 
-            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+            <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Protein</div>
                 <div class="text-zinc-100 font-medium">{selectedFood.protein}g</div>
             </div>
 
-            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+            <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Carbohydrates</div>
                 <div class="text-zinc-100 font-medium">{selectedFood.carbohydrates}g</div>
             </div>
 
-            <div class="rounded-xl bg-zinc-800/50 border border-zinc-800 p-3">
+            <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Fats</div>
                 <div class="text-zinc-100 font-medium">{selectedFood.fat}g</div>
             </div>
@@ -66,7 +66,7 @@
             <input
                     type="number"
                     bind:value={amount}
-                    class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2 text-zinc-100
+                    class="mt-1 w-full rounded-xl border border-zinc-700 px-3 py-2 text-zinc-100
 				focus:outline-none focus:ring-2 focus:ring-zinc-500/50"
             />
         </label>
@@ -75,7 +75,7 @@
         <div class="flex justify-end gap-2">
             <button
                     on:click={onClose}
-                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition"
+                    class="cursor-pointer px-4 py-2 rounded-xl text-sm hover:bg-zinc-700 text-zinc-200 transition"
             >
                 Cancel
             </button>

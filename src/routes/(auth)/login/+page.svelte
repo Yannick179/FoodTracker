@@ -49,7 +49,7 @@
 
 <div class="min-h-screen flex items-center justify-center  text-zinc-100 p-6">
 
-    <div class="w-full max-w-sm rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
+    <div class="w-full max-w-sm rounded-2xl bg-neutral-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
 
         <div>
             <h1 class="text-lg font-semibold">Welcome back</h1>
@@ -65,7 +65,7 @@
                         type="email"
                         bind:value={email}
                         required
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2
+                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2
 					focus:outline-none focus:ring-2 focus:ring-zinc-500/40"
                 />
             </div>
@@ -77,7 +77,7 @@
                         type="password"
                         bind:value={password}
                         required
-                        class="mt-1 w-full rounded-xl bg-zinc-800/60 border border-zinc-700 px-3 py-2"
+                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2"
                 />
             </div>
             {#if error}
@@ -94,7 +94,7 @@
 
             <button
                     class="cursor-pointer w-full rounded-xl py-2 font-medium transition
-				bg-white text-zinc-900 hover:bg-zinc-200 disabled:opacity-50"
+				bg-white text-zinc-900 hover:bg-neutral-200 disabled:opacity-50"
                     disabled={loading}
             >
                 {loading ? 'Signing in…' : 'Sign in'}

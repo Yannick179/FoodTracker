@@ -9,16 +9,11 @@ export const GET = async ({ url, locals }) => {
     const date  = url.searchParams.get('date');
     console.log("date in serverside loadFoodEntries: " + date);
 
-    // let now = new Date().toString();
 
-    //default for today
+    // @ts-ignore
     let result = await getDataBaseFoodEntriesForDateX(date, user.id);
     let databaseFoodEntries = result.entries ? result.entries : [];
     let dayStats = result.totals;
-    let dayCals = 0;
-    let dayProtein = 0;
-    let dayCarbohydrates = 0;
-    let dayFats = 0;
     let foodEntriesJsonList = [];
 
     for (const databaseFoodEntry of databaseFoodEntries) {

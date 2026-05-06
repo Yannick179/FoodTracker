@@ -2,6 +2,7 @@
 
     import {redirect} from "@sveltejs/kit";
     import {goto} from "$app/navigation";
+    import NavbarLayout from "$lib/components/NavbarLayout.svelte";
 
     async function handleLogout() {
         // 1. Call logout endpoint (if using server session)
@@ -18,27 +19,29 @@
     }
 </script>
 
-<nav class="w-full h-16 bg-zinc-900 shadow-sm flex items-center justify-between px-6">
-    <!-- Left -->
-    <div class="hidden md:flex gap-6 font-bold text-lg ">
-        <a href="/home" class="hover:text-zinc-400">Logo</a>
-    </div>
+<!--<nav class="w-full bg-neutral-900 text-3xl shadow-sm flex items-center justify-between p-8">-->
+<!--    &lt;!&ndash; Left &ndash;&gt;-->
+<!--    <div class="hidden md:flex gap-6 ">-->
+<!--        <a href="/home" class="hover:text-zinc-400">Logo</a>-->
+<!--    </div>-->
 
-    <!-- Center -->
-    <div class="hidden md:flex gap-6 ">
-<!--        <a href="/food/home" class="hover:text-zinc-400">Home</a>-->
-        <!--        <a href="/food/addFood" class="hover:text-zinc-400">new Food</a>-->
-        <!--        <a href="/food/trackFood" class="hover:text-zinc-400">Tracker</a>-->
-        <!--        <a href="/food/stats" class="hover:text-zinc-400">Stats</a>-->
+<!--    &lt;!&ndash; Center &ndash;&gt;-->
+<!--    <div class="hidden md:flex gap-6 ">-->
+<!--&lt;!&ndash;        <a href="/food/home" class="hover:text-zinc-400">Home</a>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <a href="/food/addFood" class="hover:text-zinc-400">new Food</a>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <a href="/food/trackFood" class="hover:text-zinc-400">Tracker</a>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <a href="/food/stats" class="hover:text-zinc-400">Stats</a>&ndash;&gt;-->
 
-    </div>
+<!--    </div>-->
 
-    <!-- Right -->
-    <div>
-        <button type="button"
-                class="cursor-pointer inline-block px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
-                on:click={handleLogout}>
-            Log out
-        </button>
-    </div>
-</nav>
+<!--    &lt;!&ndash; Right &ndash;&gt;-->
+<!--    <div>-->
+<!--        <button type="button"-->
+<!--                class="cursor-pointer inline-block px-2 py-2 bg-red-700 text-lg text-white font-bold rounded-md hover:bg-red-600/70 transition"-->
+<!--                on:click={handleLogout}>-->
+<!--            Log out-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<NavbarLayout routesAndNames={[]} />

@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import Chart from 'chart.js/auto';
     import TrackingChart from "$lib/components/TrackingChart.svelte";
+    import Calendar from "$lib/components/Calendar.svelte";
+    import { createDate } from "$lib/dataStore.svelte";
+    let hoverValue: number | null = 0;
+    let hoverDate: string | null = "";
 
-    let canvas: HTMLCanvasElement;
-
+    const globalDate = createDate();
     let weights = [
         { date: "Apr 1", value: 83.4 },
         { date: "Apr 2", value: 83.2 },
@@ -51,107 +52,147 @@
     const current = weights.at(-1).value;
     const start = weights[0].value;
     const change = (start - current).toFixed(1);
+
+
+    function getDateNicelyFormatted(selectedDate: Date) {
+        let formattedDate = selectedDate.getDate() + " " + convertNumberToMonth(selectedDate.getMonth()) + " " + selectedDate.getFullYear() ;
+        return formattedDate;
+    }
+
+    function convertNumberToMonth(number: number) {
+        switch (number) {
+            case 0:
+                return "January";
+            case 1:
+                return "February";
+            case 2:
+                return "March";
+            case 3:
+                return "April";
+            case 4:
+                return "May";
+            case 5:
+                return "June";
+            case 6:
+                return "July";
+            case 7:
+                return "August";
+            case 8:
+                return "September";
+            case 9:
+                return "October";
+            case 10:
+                return "November";
+            case 11:
+                return "December";
+        }
+    }
+
+    function convertNumberToDay(number: number) {
+        //starts with 0 as sunday and 1-6 for monday-saturday
+        switch (number) {
+            case 1:
+                return "Monday";
+            case 2:
+                return "Tuesday";
+            case 3:
+                return "Wednesday";
+            case 4:
+                return "Thursday";
+            case 5:
+                return "Friday";
+            case 6:
+                return "Saturday";
+            case 0:
+                return "Sunday";
+        }
+    }
 </script>
 
+<!--<div class="h-full flex flex-col p-10">-->
 
-<!--<div class="p-10 h-full flex justify-center">-->
-<!--&lt;!&ndash;    <div class="h-1/3 w-4/5 ">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;        <canvas bind:this={canvas} class="w-full h-full"></canvas>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;        <TrackingChart entries={weights} />&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--    <div class="min-h-screen flex justify-center p-6">-->
+<!--    &lt;!&ndash; ROW 1: Chart &ndash;&gt;-->
+<!--    <div class="h-1/3">-->
+<!--        <TrackingChart entries={weights} />-->
+<!--    </div>-->
 
-<!--        <div class="w-full max-w-3xl space-y-8">-->
+<!--    &lt;!&ndash; ROW 2: Content &ndash;&gt;-->
+<!--    <div class="p-10 flex flex-col gap-8">-->
 
-<!--            &lt;!&ndash; Header &ndash;&gt;-->
-<!--            <div>-->
-<!--                <h1 class="text-3xl font-semibold">Weight Tracker</h1>-->
-<!--                <p class="text-sm">Track your progress consistently</p>-->
-<!--            </div>-->
+<!--        <div class="grid grid-cols-[4fr_11fr_4fr]">-->
 
-<!--            &lt;!&ndash; Stats &ndash;&gt;-->
-<!--            <div class="grid grid-cols-2 gap-4">-->
+<!--            &lt;!&ndash; LEFT COLUMN &ndash;&gt;-->
+<!--            <div class="justify-items-center">-->
+<!--                <div class="mb-6 grid-rows-2">-->
+<!--                    <div class="text-sm text-zinc-400 mb-1 flex">-->
+<!--                        {convertNumberToDay(globalDate.date.getDay())}-->
+<!--                    </div>-->
 
-<!--                <div class="rounded-2xl p-4">-->
-<!--                    <p class="text-sm">Current</p>-->
-<!--                    <p class="text-2xl font-semibold">81.0 kg</p>-->
+<!--                    <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">-->
+<!--                        {getDateNicelyFormatted(globalDate.date)}-->
+<!--                    </div>-->
 <!--                </div>-->
 
-<!--                <div class="rounded-2xl p-4 text-right">-->
-<!--                    <p class="text-sm">Change</p>-->
-<!--                    <p class="text-2xl font-semibold">-1.0 kg</p>-->
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Chart &ndash;&gt;-->
-<!--            <div class="rounded-2xl p-6">-->
-<!--                <h2 class="text-lg mb-4">Progress</h2>-->
-<!--&lt;!&ndash;                <TrackingChart entries={weights} />&ndash;&gt;-->
-
-
-<!--                <div class="w-full h-64">-->
-<!--                    &lt;!&ndash; line chart goes here &ndash;&gt;-->
+<!--                <div class="flex">-->
+<!--                    <Calendar />-->
 <!--                </div>-->
 <!--            </div>-->
 
-<!--            &lt;!&ndash; Quick add &ndash;&gt;-->
-<!--            <div class="rounded-2xl p-6 flex gap-3 items-center">-->
-<!--                <input-->
-<!--                        type="number"-->
-<!--                        placeholder="Enter weight (kg)"-->
-<!--                        class="flex-1 p-3 rounded-xl"-->
-<!--                />-->
-<!--                <button class="px-4 py-3 rounded-xl">-->
-<!--                    Add-->
-<!--                </button>-->
+<!--            &lt;!&ndash; MIDDLE COLUMN &ndash;&gt;-->
+<!--            <div class="flex flex-col gap-4 justify-center">-->
+<!--                &lt;!&ndash; your second row content columns go here &ndash;&gt;-->
 <!--            </div>-->
 
-<!--            &lt;!&ndash; Log &ndash;&gt;-->
-<!--            <div class="rounded-2xl p-6 space-y-3">-->
-<!--                <h2 class="text-lg">Recent entries</h2>-->
-
-<!--                <div class="flex justify-between">-->
-<!--                    <span>Apr 29</span>-->
-<!--                    <span>80.8 kg</span>-->
-<!--                </div>-->
-
-<!--                <div class="flex justify-between">-->
-<!--                    <span>Apr 28</span>-->
-<!--                    <span>81.0 kg</span>-->
-<!--                </div>-->
-
-<!--            </div>-->
+<!--            &lt;!&ndash; RIGHT COLUMN &ndash;&gt;-->
+<!--            <div></div>-->
 
 <!--        </div>-->
 
 <!--    </div>-->
 <!--</div>-->
 
-<!--<script>-->
-<!--    let weights = [-->
-<!--        { date: "Apr 23", value: 82 },-->
-<!--        { date: "Apr 24", value: 81.8 },-->
-<!--        { date: "Apr 25", value: 81.5 },-->
-<!--        { date: "Apr 26", value: 81.6 },-->
-<!--        { date: "Apr 27", value: 81.2 },-->
-<!--        { date: "Apr 28", value: 81.0 },-->
-<!--        { date: "Apr 29", value: 80.8 }-->
-<!--    ];-->
 
-<!--    const current = weights.at(-1).value;-->
-<!--    const start = weights[0].value;-->
-<!--    const change = (start - current).toFixed(1);-->
-<!--</script>-->
+<div class="pt-8 pl-10 pr-10 flex flex-col gap-y-6">
+    <div class="grid h-96 grid-cols-[4fr_13fr] gap-x-8 ">
+        <div class="grid justify-items-center">
+            <div class="mb-6 grid-rows-2">
+                <div class="text-sm text-zinc-400 mb-1 flex">
+                    {convertNumberToDay(globalDate.date.getDay())}
+                </div>
+                <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">
+                    {getDateNicelyFormatted(globalDate.date)}
+                </div>
+            </div>
+            <div class="flex">
+                <Calendar/>
+            </div>
+        </div>
 
-<div class="flex min-h-screen">
+        <div class="grid h-96 justify-items-center">
+            <div class="text-xl font-semibold">
+                {hoverValue ?? weights[weights.length - 1]?.value} kg
+            </div>
+            <TrackingChart entries={weights}
+                           onHoverValue={(value, date) => {
+            hoverValue = value;
+            hoverDate = date;
+            }}/>
+        </div>
 
-    <!-- Main -->
-    <main class="flex-1 p-10 space-y-8">
+    </div>
 
-        <!-- Top stats row -->
-        <div class="grid grid-cols-3 gap-4">
-
+    <div class="grid grid-cols-[4fr_13fr] gap-x-8 h-auto ">
+        <div class="w-full">
+            <div class="rounded-2xl p-4 flex gap-3 items-center">
+                <input
+                        type="number"
+                        placeholder="Enter weight"
+                        class="flex-1 p-3 rounded-xl"
+                />
+                <button class="px-4 py-3 rounded-xl">
+                    Add
+                </button>
+            </div>
             <div class="rounded-2xl p-4">
                 <p class="text-sm">Current</p>
                 <p class="text-2xl font-semibold">{current} kg</p>
@@ -166,57 +207,34 @@
                 <p class="text-sm">Entries</p>
                 <p class="text-2xl font-semibold">{weights.length}</p>
             </div>
-
         </div>
+        <div class="w-full flex flex-col gap-2 justify-items-center">
+            <div class="p-3 font-bold text-lg">History</div>
 
-        <!-- Chart section (wide) -->
-        <div class="rounded-2xl p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg">Progress</h2>
-                <span class="text-sm">7 day view</span>
-            </div>
+            <div class="rounded-2xl border-2 border border-neutral-400">
+                <div class="grid grid-cols-3 text-sm p-3 text-xl font-bold rounded-xl">
+                    <span>Date</span>
+                    <span>Weight</span>
+                    <span>Difference</span>
+                </div>
+                <div class="overflow-y-auto h-80">
+                    {#each weights.slice().reverse() as w}
 
-            <div class="w-full h-72">
-                <!-- chart goes here -->
-            </div>
-        </div>
+                        <div class="grid grid-cols-3 text-sm p-3 rounded-xl">
 
-        <!-- Input row -->
-        <div class="rounded-2xl p-4 flex gap-3 items-center">
-            <input
-                    type="number"
-                    placeholder="Enter weight"
-                    class="flex-1 p-3 rounded-xl"
-            />
-            <button class="px-4 py-3 rounded-xl">
-                Add
-            </button>
-        </div>
+                            <span>{w.date}</span>
+                            <span>{w.value} kg</span>
+                            <span>
+                        {w.value - start > 0 ? "+" : ""}
+                                {(w.value - start).toFixed(1)} kg
+                    </span>
 
-        <!-- Log table -->
-        <div class="rounded-2xl p-6">
-
-            <h2 class="text-lg mb-4">History</h2>
-
-            <div class="space-y-2">
-
-                {#each weights.slice().reverse() as w}
-                    <div class="grid grid-cols-3 text-sm p-3 rounded-xl">
-
-                        <span>{w.date}</span>
-                        <span>{w.value} kg</span>
-                        <span>
-                            {w.value - start > 0 ? "+" : ""}
-                            {(w.value - start).toFixed(1)} kg
-                        </span>
-
-                    </div>
-                {/each}
-
+                        </div>
+                    {/each}
+                </div>
             </div>
 
         </div>
-
-    </main>
-
+    </div>
 </div>
+
