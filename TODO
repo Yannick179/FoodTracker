@@ -1,6 +1,10 @@
 
 todo:
 
+    check if its good practice to handle onclick with {() => function()}
+    make date information independent of tab - inter tab communication for date
+    add esc and enter button use on ui
+    make logged food items grid fixed height and internal scroller
     create force of first setting goal before being able to use the rest of the foodtracking app
     change date for goal creation to global date on client side not date.now
     session db cleanup worker to remove outdated sessions that werent deleted by logout
@@ -13,7 +17,7 @@ todo:
     improve ui for the foodlist
     start creating a page for goals that shows how much calories etc
     create a weight page that shows trends
-    make complex food datatype - a meal
+    //make complex food datatype - a meal/recipes - also add information to it for creating it like order of food or so on
     create delete for entries
     add fotos for food and barcodes and extra information
     make ui "boxes" look similar and the same

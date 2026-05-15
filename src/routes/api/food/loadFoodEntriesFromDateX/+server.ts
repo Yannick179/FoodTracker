@@ -7,11 +7,11 @@ export const GET = async ({ url, locals }) => {
     const user = requireUser(locals);
     
     const date  = url.searchParams.get('date');
-    console.log("date in serverside loadFoodEntries: " + date);
 
 
     // @ts-ignore
     let result = await getDataBaseFoodEntriesForDateX(date, user.id);
+    console.log(result);
     let databaseFoodEntries = result.entries ? result.entries : [];
     let dayStats = result.totals;
     let foodEntriesJsonList = [];
@@ -19,6 +19,7 @@ export const GET = async ({ url, locals }) => {
     for (const databaseFoodEntry of databaseFoodEntries) {
         let factor = databaseFoodEntry.amount / 100;
         const foodEntryJson = {
+            id: databaseFoodEntry.foodId,
             name: databaseFoodEntry.food.name,
             amount: Math.round(databaseFoodEntry.amount),
             eatenAt: databaseFoodEntry.eatenAt,
@@ -29,7 +30,6 @@ export const GET = async ({ url, locals }) => {
         };
         foodEntriesJsonList.push(foodEntryJson);
     }
-    console.log(foodEntriesJsonList, dayStats)
     return json({
         foodEntries: foodEntriesJsonList,
         dayStats: dayStats
@@ -46,7 +46,7 @@ async function getDataBaseFoodEntriesForDateX(date: Date, userid: number) {
     end.setHours(23, 59, 59, 999); //end of the day
     end.setDate(end.getDate() + 1);
 
-    //TODO: make query smaller
+    //TODO: make query smaller - eg only fetch what is necessary, not everything
     const entries = await prisma.foodEntry.findMany({
         where: {
             userId: userid,

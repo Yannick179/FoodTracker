@@ -9,7 +9,6 @@ export const GET = async ({ url, locals }) => {
         // @ts-ignore
         const date: Date  = new Date(url.searchParams.get('date'));
 
-
         const res = await prisma.kcalGoal.findFirst({
             where: {
                 userId: user.id,
@@ -21,7 +20,6 @@ export const GET = async ({ url, locals }) => {
                 createdAt: 'desc'
             }
         });
-        console.log(res);
         return json({
             goal: res,
         });

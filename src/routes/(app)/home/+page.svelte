@@ -13,6 +13,12 @@
             href: '/bodyweight'
         },
         {
+            name: 'Workout Tracker',
+            description: 'Track your workout.',
+            icon: '🏋️',
+            href: '/workout/dashboard'
+        },
+        {
             name: 'Gym Program Creator',
             description: 'Build and manage custom workout programs easily.',
             icon: '🏋️',

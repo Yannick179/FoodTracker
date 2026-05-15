@@ -3,7 +3,7 @@
     export let selectedFood: any;
     import { createDate } from '$lib/dataStore.svelte';
 
-    let amount = 0;
+    let amount = 100;
     const globalDate = createDate();
 
     async function submit() {
@@ -14,7 +14,6 @@
                 body: JSON.stringify({
                     foodId: selectedFood.id,
                     amount: amount,
-                    userid: 1,
                     date: globalDate.date
                 })
             });
@@ -27,9 +26,9 @@
 </script>
 
 <!-- Backdrop -->
-<div class="fixed inset-0 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center z-50">
+<div class="fixed inset-0 bg-neutral-900/60 backdrop-blur-lg flex items-center justify-center z-50">
 
-    <div class="w-full max-w-md rounded-2xl bg-neutral-900/90 border border-zinc-800 shadow-2xl p-6">
+    <div class="w-full max-w-md bg-neutral-900 border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
 
         <!-- Title -->
         <h2 class="text-lg font-semibold text-zinc-100 mb-1">
@@ -41,22 +40,22 @@
         <div class="grid grid-cols-2 gap-3 text-sm mb-6">
             <div class="rounded-xl  border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Calories</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.calories}</div>
+                <div class="text-zinc-100 font-medium">{(selectedFood.calories * amount/100).toFixed(1)}</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Protein</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.protein}g</div>
+                <div class="text-zinc-100 font-medium">{(selectedFood.protein * amount/100).toFixed(1)}g</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Carbohydrates</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.carbohydrates}g</div>
+                <div class="text-zinc-100 font-medium">{(selectedFood.carbohydrates * amount/100).toFixed(1)}g</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Fats</div>
-                <div class="text-zinc-100 font-medium">{selectedFood.fat}g</div>
+                <div class="text-zinc-100 font-medium">{(selectedFood.fat * amount/100).toFixed(1)}g</div>
             </div>
         </div>
 

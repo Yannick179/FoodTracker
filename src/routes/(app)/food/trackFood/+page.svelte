@@ -89,7 +89,7 @@
     function handleClose() {
         showModal = false;
         selectedFood = null;
-        loadFoods();
+        // loadFoods();
     }
 
     onMount(() => loadFoods());

@@ -5,7 +5,9 @@
     import ResultsBarKcals from "$lib/components/ResultsBarKcals.svelte";
     import FoodListEntry from "$lib/components/FoodListEntry.svelte";
     import { createDate } from "$lib/dataStore.svelte.js";
-    let { data } = $props();
+    import EditFoodModal from "$lib/components/EditFoodModal.svelte";
+    let selectedFood = $state(null);
+    let showModal = $state(false);
     let foodEntries: any[] = $state([]);
     let dayStats: DayStats = $state({
         calories: 0,
@@ -30,6 +32,15 @@
     let loadingFoodEntries = $state(false);
     let loadingKcalGoal = $state(false);
 
+    function open(food: any) {
+        selectedFood = food;
+        showModal = true;
+    }
+
+    function handleClose() {
+        showModal = false;
+        selectedFood = null;
+    }
 
     function getDateNicelyFormatted(selectedDate: Date) {
         let formattedDate = selectedDate.getDate() + " " + convertNumberToMonth(selectedDate.getMonth()) + " " + selectedDate.getFullYear() ;
@@ -86,13 +97,11 @@
     }
 
     async function LoadKcalGoalFromDateX() {
-        console.log("trying to load goal");
         try {
             loadingKcalGoal = true;
             const res = await fetch(`/api/food/loadKcalGoalFromDateX?date=${encodeURIComponent(globalDate.date)}`);
             if (res.ok){
                 let resJson = await res.json();
-                console.log(resJson)
                 kcalGoal = resJson.goal.kcal;
                 proteinGoal = resJson.goal.protein;
                 carbohydrateGoal = resJson.goal.carbohydrates;
@@ -113,8 +122,8 @@
                 throw new Error('failed to fetch food entries');
             }
             let resJson = await res.json();
-            console.log(globalDate.date);
-            console.log("loaded food for homepage in LoadFoodEntriesFromDateX: " + JSON.stringify(resJson));
+            console.log(resJson.foodEntries);
+            console.log(resJson);
 
             foodEntries = resJson.foodEntries;
             dayStats = resJson.dayStats;
@@ -124,8 +133,6 @@
         } finally {
             loadingFoodEntries = false;
         }
-        console.log(loadingFoodEntries);
-        console.log(dayStats);
     }
 
     onMount( async () => {
@@ -136,9 +143,6 @@
     $effect(() => {
 
         LoadFoodEntriesFromDateX();
-    });
-    $effect(() => {
-        console.log("foodentries: " + foodEntries);
     });
 </script>
 
@@ -207,17 +211,14 @@
         <div class="w-full flex flex-col gap-4 justify-items-center">
             <div class="p-6 w-full rounded-2xl border-2 border border-neutral-400 justify-items-center">
                 <h3 class="font-medium mb-4">Logged Items</h3>
-                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>
-                {#each foodEntries as foodEntry}
-                    <FoodListEntry
-                            name={foodEntry.name}
-                            amount={foodEntry.amount}
-                            calories={foodEntry.calories}
-                            protein={foodEntry.protein}
-                            carbohydrates={foodEntry.carbohydrates}
-                            fats={foodEntry.fat}
-                    />
-                {/each}
+<!--                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>-->
+                <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
+                    {#each foodEntries as foodEntry}
+                        <FoodListEntry onClick={open}
+                                       foodEntry={foodEntry}
+                        />
+                    {/each}
+                </div>
             </div>
         </div>
         <div class="w-full">
@@ -227,12 +228,21 @@
 
 </div>
 
-
-{#if data.user}
-    <p>Logged in as {data.user.email}</p>
-{:else}
-    <p>Not logged in</p>
+{#if showModal}
+    <EditFoodModal onClose={handleClose} selectedFood={selectedFood}  />
 {/if}
+
+<!--{#if data.user}-->
+<!--    <p>Logged in as {data.user.email}</p>-->
+<!--{:else}-->
+<!--    <p>Not logged in</p>-->
+<!--{/if}-->
+
+<!--{#if data.user}-->
+<!--    <p>Logged in as {data.user.email}</p>-->
+<!--{:else}-->
+<!--    <p>Not logged in</p>-->
+<!--{/if}-->
 
 <!--{#if loadingFoodEntries}-->
 <!--    <p>Loading food entries...</p>-->
