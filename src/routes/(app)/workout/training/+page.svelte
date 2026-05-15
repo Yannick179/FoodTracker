@@ -1,10 +1,19 @@
 
 
 <script lang="ts">
+    // import DropdownAutocomplete from ;
+
+    import DropdownAutocomplete from "$lib/components/DropdownAutocomplete.svelte";
+
     let isCoach: boolean = true; //fetch this info on user
 
     let newExercise: string = $state("");
     let ExerciseList: string[] = $state([]);
+
+    let newColumnInformation: string = $state("");
+    let ColumnInformationList: string[] = $state([]);
+
+
 
     let tables: table[] = $state([]);
     type tableRow = {
@@ -17,14 +26,11 @@
         rows: tableRow[];
         columns: tableColumn[];
         InformationGrid: [string[]]; //rows x columns [0,1] is 0 row and 1 column
-
-
     };
-
 
     function addTable() {
 
-        let exercise: string = "Exercise...";
+        let exercise: string = "";
         let columnName = "Information...";
         let newTableColumn: tableColumn = {
             Name: columnName,
@@ -44,7 +50,7 @@
     }
 
     function addRowToTable(tableIndex: number, ) {
-        let exercise: string = "Exercise...";
+        let exercise: string = "";
         let newRow: tableRow = {
             Exercise: exercise,
         }
@@ -82,6 +88,15 @@
         ExerciseList.push(exercise);
         newExercise = "";
     }
+
+    function addColumnInformation() {
+        const columnInformation = newColumnInformation.trim();
+        if (!columnInformation) return;
+
+        ColumnInformationList.push(columnInformation);
+        newColumnInformation = "";
+    }
+
 </script>
 
 <input
@@ -97,6 +112,27 @@
 >
     Add Exercise
 </button>
+
+<input
+        type="text"
+        bind:value={newColumnInformation}
+        placeholder="New Column..."
+        class="border p-2 mt-2 "
+/>
+
+<button
+        onclick={addColumnInformation}
+        class="px-4 py-2 bg-blue-600 text-white rounded"
+>
+    Add Columninformation
+</button>
+
+<!-- TODO: Remove, just for visualisation of list-->
+<ul>
+    {#each ExerciseList as exercise}
+        <li>{exercise}</li>
+    {/each}
+</ul>
 
 {#if isCoach}
     <p>Coach</p>
@@ -116,10 +152,7 @@
                         <th class="p-2 border"> Exercise</th>
                         {#each table.columns as column, tableColumnIndex}
                             <th class="p-2 border">
-                                <input
-                                        type="text"
-                                        class="w-full p-1 outline-none bg-transparent"
-                                        bind:value={column.Name}/>
+                                <DropdownAutocomplete value={column.Name} autocompleteOptions={ColumnInformationList}/>
                             </th>
 
                         {/each}
@@ -129,11 +162,7 @@
                     {#each table.rows as row, rowIndex}
                         <tr>
                             <td class="border p-2">
-                                <input
-                                        type="text"
-                                        class="w-full p-1 outline-none bg-transparent"
-                                        bind:value={row.Exercise}
-                                />
+                                <DropdownAutocomplete value={row.Exercise} autocompleteOptions={ExerciseList}/>
                             </td>
                             {#each table.columns as column, columnIndex}
                                 <td class="border p-2">

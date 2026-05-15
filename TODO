@@ -1,6 +1,8 @@
 
 todo:
 
+
+    refactor Workout Creater dropdown to not be global but local
     check if its good practice to handle onclick with {() => function()}
     make date information independent of tab - inter tab communication for date
     add esc and enter button use on ui
