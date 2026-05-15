@@ -1,8 +1,6 @@
 
 
 <script lang="ts">
-    // import DropdownAutocomplete from ;
-
     import DropdownAutocomplete from "$lib/components/DropdownAutocomplete.svelte";
 
     let isCoach: boolean = true; //fetch this info on user
@@ -134,6 +132,13 @@
     {/each}
 </ul>
 
+
+<ul>
+    {#each ColumnInformationList as columnInformation}
+        <li>{columnInformation}</li>
+    {/each}
+</ul>
+
 {#if isCoach}
     <p>Coach</p>
 {:else}
@@ -168,7 +173,7 @@
                                 <td class="border p-2">
                                     <input
                                         type="text"
-                                        class="w-full p-1 outline-none bg-transparent"
+                                        class="w-full outline-none bg-transparent"
                                         bind:value={table.InformationGrid[rowIndex][columnIndex]}
                                     />
                                 </td>

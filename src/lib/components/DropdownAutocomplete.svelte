@@ -40,7 +40,7 @@
     }
 </script>
 
-<div class="relative">
+<div class="relative w-full">
     <input
             type="text"
             bind:value
@@ -52,9 +52,9 @@
     />
 
     {#if open && suggestions.length > 0}
-        <ul class="absolute left-0 right-0 border z-10 max-h-40 overflow-y-auto">
+        <ul class="absolute border w-full z-10 max-h-40 overflow-y-auto">
             {#each suggestions as s}
-                <li class="p-2 hover:bg-gray-200 bg-neutral-900 cursor-pointer">
+                <li class="w-full p-2 hover:bg-gray-200 bg-neutral-900 cursor-pointer">
                     <button
                             type="button"
                             class="w-full text-left"

@@ -3,7 +3,8 @@
 
     const routesAndNamesFood = [
         { name: "Dashboard", route: "/workout/dashboard" },
-        { name: "Training", route: "/workout/training" },
+        { name: "Edit Workout", route: "/workout/editWorkout" }, //change name and access so only coaches can access it
+
         // { name: "Tracker", route: "/food/trackFood" },
         // { name: "Goals", route: "/food/goals" },
         // { name: "Recipes", route: "food/recipes"}
