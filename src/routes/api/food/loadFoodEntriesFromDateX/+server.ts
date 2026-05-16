@@ -2,6 +2,18 @@ import {json} from "@sveltejs/kit";
 import { prisma } from "$lib/prisma";
 import {requireUser} from "$lib/server/authHelper";
 
+export type FoodEntryDto = {
+    foodEntryId: number;
+    foodId: number;
+    name: string;
+    amount: number;
+    eatenAt: Date;
+    calories: number;
+    protein: number;
+    carbohydrates: number;
+    fat: number;
+};
+
 
 export const GET = async ({ url, locals }) => {
     const user = requireUser(locals);
@@ -18,8 +30,9 @@ export const GET = async ({ url, locals }) => {
 
     for (const databaseFoodEntry of databaseFoodEntries) {
         let factor = databaseFoodEntry.amount / 100;
-        const foodEntryJson = {
-            id: databaseFoodEntry.foodId,
+        const foodEntryJson: FoodEntryDto = {
+            foodEntryId: databaseFoodEntry.id,
+            foodId: databaseFoodEntry.foodId,
             name: databaseFoodEntry.food.name,
             amount: Math.round(databaseFoodEntry.amount),
             eatenAt: databaseFoodEntry.eatenAt,
@@ -52,7 +65,9 @@ async function getDataBaseFoodEntriesForDateX(date: Date, userid: number) {
             userId: userid,
             eatenAt: { gte: start, lt: end }
         },
-        include: { food: true },
+        include: {
+            food: true,
+        },
         orderBy: { eatenAt: 'desc' }
     });
 

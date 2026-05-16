@@ -1,39 +1,82 @@
 <script lang="ts">
     import {onMount, tick} from "svelte";
+    import type {FoodEntryDto} from "../../routes/api/food/loadFoodEntriesFromDateX/+server";
+    import { Trash2 } from 'lucide-svelte';
+
+
     let caloriesPer100 = $state(0);
     let proteinPer100 = $state(0);
     let carbohydratesPer100 = $state(0);
     let fatPer100 = $state(0);
-    import { Trash2 } from 'lucide-svelte';
 
+    //TODO: implement more elegant solution that
+    function cloneFoodEntry(food: FoodEntryDto): FoodEntryDto {
+        return {
+            foodEntryId: food.foodEntryId,
+            foodId: food.foodId,
+            name: food.name,
+            amount: food.amount,
+            eatenAt: new Date(food.eatenAt),
+
+            calories: food.calories,
+            protein: food.protein,
+            carbohydrates: food.carbohydrates,
+            fat: food.fat
+        };
+    }
 
     let {
-        selectedFood,
-        onClose,
+        selectedFood = $bindable(),
+        onClose
+    }: {
+        selectedFood: FoodEntryDto;
+        onClose: () => void;
     } = $props();
-    import { createDate } from '$lib/dataStore.svelte';
 
-    let amount = 0;
-    const globalDate = createDate();
+    let editableFood: FoodEntryDto = $state({
+        foodEntryId: 0,
+        foodId: 0,
+        name: '',
+        amount: 0,
+        eatenAt: new Date(),
+        calories: 0,
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0
+    });
+
+    $effect(() => {
+        if (selectedFood) {
+            editableFood = cloneFoodEntry(selectedFood);
+        }
+    });
+
     //TODO: CHANGE THIS TO REFLECT USEFULL STUFF
     async function submit() {
-        // if (amount > 0) {
-        //     await fetch('/api/food/trackFood', {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({
-        //             foodId: selectedFood.id,
-        //             amount: amount,
-        //             userid: 1,
-        //             date: globalDate.date
-        //         })
-        //     });
-        //
-        //     onClose();
-        // } else {
-        //     console.log("Please enter a valid amount of food");
-        // }
-    }
+        //what I need: foodentry id and overwrite it simply (the macros and kcal
+        if (editableFood.amount > 0) {
+            const res = await fetch('/api/food/editFoodEntry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    foodEntryId: editableFood.foodEntryId,
+                    amount: editableFood.amount,
+                })
+            });
+            console.log(res);
+            console.log(editableFood.foodEntryId);
+            console.log(editableFood.foodId);
+            if (!res.ok) throw new Error('Failed to fetch foods');
+            //TODO: should a wait be here for users to notice?
+            // does the throw error stop the function? should imo
+            onClose();
+        }
+
+
+
+
+
+        }
     async function fetchFoodInformation(id: number) {
         const res = await fetch(`/api/food/getFoodInformationById/${id}`);
         if (!res.ok) {
@@ -48,8 +91,7 @@
     }
 
     onMount(() => {
-        console.log(selectedFood);
-        fetchFoodInformation(selectedFood.id)
+        fetchFoodInformation(editableFood.foodId)
         });
 
 </script>
@@ -83,7 +125,7 @@
 
         <!-- Title -->
         <h2 class="text-lg font-semibold text-zinc-100 mb-1">
-            {selectedFood.name}
+            {editableFood.name}
         </h2>
         <p class="text-xs text-zinc-500 mb-5">Nutrition per 100g</p>
 
@@ -91,22 +133,22 @@
         <div class="grid grid-cols-2 gap-3 text-sm mb-6">
             <div class="rounded-xl  border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Calories</div>
-                <div class="text-zinc-100 font-medium">{(caloriesPer100 * selectedFood.amount/100).toFixed(1)} kcal</div>
+                <div class="text-zinc-100 font-medium">{(caloriesPer100 * editableFood.amount/100).toFixed(1)} kcal</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Protein</div>
-                <div class="text-zinc-100 font-medium">{(proteinPer100 * selectedFood.amount/100).toFixed(1)}g</div>
+                <div class="text-zinc-100 font-medium">{(proteinPer100 * editableFood.amount/100).toFixed(1)}g</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Carbohydrates</div>
-                <div class="text-zinc-100 font-medium">{(carbohydratesPer100 * selectedFood.amount/100).toFixed(1)}g</div>
+                <div class="text-zinc-100 font-medium">{(carbohydratesPer100 * editableFood.amount/100).toFixed(1)}g</div>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
                 <div class="text-zinc-400 text-xs">Fats</div>
-                <div class="text-zinc-100 font-medium">{(fatPer100 * selectedFood.amount/100).toFixed(1)}g</div>
+                <div class="text-zinc-100 font-medium">{(fatPer100 * editableFood.amount/100).toFixed(1)}g</div>
             </div>
         </div>
 
@@ -115,7 +157,7 @@
             <span class="text-xs text-zinc-400">Amount (g)</span>
             <input
                     type="number"
-                    bind:value={selectedFood.amount}
+                    bind:value={editableFood.amount}
                     class="mt-1 w-full rounded-xl border border-zinc-700 px-3 py-2 text-zinc-100
 				focus:outline-none focus:ring-2 focus:ring-zinc-500/50"
             />
@@ -132,8 +174,7 @@
 
             <button
                     onclick={submit}
-                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
-            >
+                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium">
                 Save
             </button>
         </div>

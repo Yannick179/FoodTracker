@@ -1,7 +1,12 @@
 
 todo:
 
-
+    implement error handling?
+    add loading screen ui
+    clean api endpoints to reflect well defined datatypes.
+    refactor the usage of dateobject as a get parameter in the food dashbaord page
+    change food dashboard selected food to have a fixed datatype so its easier to understand what is passed along
+    check if some of the prisma db requests should be transactions
     refactor Workout Creater dropdown to not be global but local
     check if its good practice to handle onclick with {() => function()}
     make date information independent of tab - inter tab communication for date

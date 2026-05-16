@@ -3,27 +3,27 @@
         {
             name: 'Food Tracker',
             description: 'Log meals, track calories, and visualize your nutrition.',
-            icon: '🍎',
+            icon: 'Logo',
             href: '/food/dashboard'
         },
         {
             name: 'Bodyweight Tracker',
             description: 'Monitor your weight progress over time with clean charts.',
-            icon: '⚖️',
+            icon: 'Logo',
             href: '/bodyweight'
         },
         {
             name: 'Workout Tracker',
             description: 'Track your workout.',
-            icon: '🏋️',
+            icon: 'Logo',
             href: '/workout/dashboard'
         },
-        {
-            name: 'Gym Program Creator',
-            description: 'Build and manage custom workout programs easily.',
-            icon: '🏋️',
-            href: '/gym'
-        }
+        // {
+        //     name: 'Gym Program Creator',
+        //     description: 'Build and manage custom workout programs easily.',
+        //     icon: '',
+        //     href: '/gym'
+        // }
     ];
 </script>
 

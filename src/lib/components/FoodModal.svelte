@@ -8,7 +8,7 @@
 
     async function submit() {
         if (amount > 0) {
-            await fetch('/api/food/trackFood', {
+            const res = await fetch('/api/food/trackFood', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -17,6 +17,10 @@
                     date: globalDate.date
                 })
             });
+
+            if (!res.ok) throw new Error('Failed to track food');
+            //TODO: should a wait be here for users to notice?
+
 
             onClose();
         } else {

@@ -15,26 +15,28 @@ export const POST = async ({ request, locals }) => {
         }
         console.log(foodId, amount, userid, date);
 
-        await prisma.foodEntry.create({
-            data: {
-                userId: user.id,
-                foodId: foodId,
-                amount: amount,
-                eatenAt: date,
-
-            }
-        });
-        await prisma.food.update({
-            where: {
-                id: foodId,
-            },
-            data: {
-                usageCount: {
-                    increment: 1
+        await prisma.$transaction([
+            prisma.foodEntry.create({
+                data: {
+                    userId: user.id,
+                    foodId,
+                    amount,
+                    eatenAt: date
                 }
-            }
-        });
-        return new Response(null, { status: 201 });
+            }),
+
+            prisma.food.update({
+                where: {
+                    id: foodId
+                },
+                data: {
+                    usageCount: {
+                        increment: 1
+                    }
+                }
+            })
+        ]);
+        return new Response(null, { status: 204 });
     } catch (err) {
         console.error(err);
         return new Response(JSON.stringify({ error: 'Failed to save food entry' }), { status: 500 });

@@ -6,9 +6,21 @@
     import FoodListEntry from "$lib/components/FoodListEntry.svelte";
     import { createDate } from "$lib/dataStore.svelte.js";
     import EditFoodModal from "$lib/components/EditFoodModal.svelte";
-    let selectedFood = $state(null);
+    import type {FoodEntryDto} from "../../../api/food/loadFoodEntriesFromDateX/+server";
+
+    let selectedFood: FoodEntryDto = $state({
+        foodEntryId: 0,
+        foodId: 0,
+        name: '',
+        amount: 0,
+        eatenAt: new Date(),
+        calories: 0,
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0
+    });
     let showModal = $state(false);
-    let foodEntries: any[] = $state([]);
+    let foodEntries: FoodEntryDto[] = $state([]);
     let dayStats: DayStats = $state({
         calories: 0,
         protein: 0,
@@ -32,14 +44,19 @@
     let loadingFoodEntries = $state(false);
     let loadingKcalGoal = $state(false);
 
+    async function refetchPageInformation() {
+        await LoadFoodEntriesFromDateX();
+        await LoadKcalGoalFromDateX();
+    }
+
     function open(food: any) {
         selectedFood = food;
         showModal = true;
     }
 
-    function handleClose() {
+    async function handleClose() {
         showModal = false;
-        selectedFood = null;
+        await refetchPageInformation();
     }
 
     function getDateNicelyFormatted(selectedDate: Date) {
@@ -122,7 +139,7 @@
                 throw new Error('failed to fetch food entries');
             }
             let resJson = await res.json();
-            console.log(resJson.foodEntries);
+            console.log(resJson.Entries);
             console.log(resJson);
 
             foodEntries = resJson.foodEntries;
@@ -136,14 +153,9 @@
     }
 
     onMount( async () => {
-        await LoadFoodEntriesFromDateX();
-        await LoadKcalGoalFromDateX();
+        await refetchPageInformation();
     });
 
-    $effect(() => {
-
-        LoadFoodEntriesFromDateX();
-    });
 </script>
 
 <div class="p-10 flex flex-col gap-y-8">
@@ -229,7 +241,7 @@
 </div>
 
 {#if showModal}
-    <EditFoodModal onClose={handleClose} selectedFood={selectedFood}  />
+    <EditFoodModal onClose={handleClose} bind:selectedFood={selectedFood}  />
 {/if}
 
 <!--{#if data.user}-->
