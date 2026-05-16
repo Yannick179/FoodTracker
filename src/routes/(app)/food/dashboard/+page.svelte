@@ -227,6 +227,7 @@
                 <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
                     {#each foodEntries as foodEntry}
                         <FoodListEntry onClick={open}
+                                       onDelete={refetchPageInformation}
                                        foodEntry={foodEntry}
                         />
                     {/each}

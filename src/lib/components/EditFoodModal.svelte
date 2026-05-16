@@ -52,8 +52,7 @@
     });
 
     //TODO: CHANGE THIS TO REFLECT USEFULL STUFF
-    async function submit() {
-        //what I need: foodentry id and overwrite it simply (the macros and kcal
+    async function submitChange() {
         if (editableFood.amount > 0) {
             const res = await fetch('/api/food/editFoodEntry', {
                 method: 'POST',
@@ -63,20 +62,26 @@
                     amount: editableFood.amount,
                 })
             });
-            console.log(res);
-            console.log(editableFood.foodEntryId);
-            console.log(editableFood.foodId);
+
             if (!res.ok) throw new Error('Failed to fetch foods');
-            //TODO: should a wait be here for users to notice?
-            // does the throw error stop the function? should imo
             onClose();
         }
+    }
 
+    async function deleteEntry() {
+        const res = await fetch('/api/food/deleteFoodEntry', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                foodEntryId: editableFood.foodEntryId,
+            })
+        });
 
+        if (!res.ok) throw new Error('Failed to delete entry');
 
+        onClose();
+    }
 
-
-        }
     async function fetchFoodInformation(id: number) {
         const res = await fetch(`/api/food/getFoodInformationById/${id}`);
         if (!res.ok) {
@@ -113,7 +118,7 @@
 
             <!-- right action -->
             <div class="flex justify-end">
-                <button
+                <button onclick={deleteEntry}
                         class=" cursor-pointer p-2 rounded-xl text-zinc-400 hover:text-red-400 hover:bg-zinc-800 transition"
                 >
                     <Trash2 class="
@@ -173,7 +178,7 @@
             </button>
 
             <button
-                    onclick={submit}
+                    onclick={submitChange}
                     class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium">
                 Save
             </button>
