@@ -27,7 +27,7 @@
     ];
 </script>
 
-<div class=" bg-neutral-900 text-white p-6 flex flex-col items-center overflow-y-auto [scrollbar-gutter:stable]">
+<div class=" bg-background text-white p-6 flex flex-col items-center overflow-y-auto [scrollbar-gutter:stable]">
     <div class="w-full max-w-6xl">
 
         <header class="mb-12 mt-8 text-center">

@@ -54,7 +54,7 @@
     {#if open && suggestions.length > 0}
         <ul class="absolute border w-full z-10 max-h-40 overflow-y-auto">
             {#each suggestions as s}
-                <li class="w-full p-2 hover:bg-gray-200 bg-neutral-900 cursor-pointer">
+                <li class="w-full p-2 hover:bg-gray-200 bg-background cursor-pointer">
                     <button
                             type="button"
                             class="w-full text-left"

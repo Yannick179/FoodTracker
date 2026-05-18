@@ -10,7 +10,7 @@
     <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
         <!-- Fill -->
         <div
-                class="h-full bg-blue-500 transition-all duration-500"
+                class="h-full bg-brand transition-all duration-500"
                 style="width: {percent}%"
         ></div>
     </div>

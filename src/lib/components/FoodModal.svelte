@@ -27,12 +27,24 @@
             console.log("Please enter a valid amount of food");
         }
     }
+
+    function onKeyDown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            submit();
+        }
+        if (e.key === 'Escape') {
+            onClose();
+        }
+    }
 </script>
 
-<!-- Backdrop -->
-<div class="fixed inset-0 bg-neutral-900/60 backdrop-blur-lg flex items-center justify-center z-50">
+<svelte:window onkeydown={onKeyDown} />
 
-    <div class="w-full max-w-md bg-neutral-900 border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
+
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-background/60 backdrop-blur-lg flex items-center justify-center z-50">
+
+    <div class="w-full max-w-md bg-background border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
 
         <!-- Title -->
         <h2 class="text-lg font-semibold text-zinc-100 mb-1">

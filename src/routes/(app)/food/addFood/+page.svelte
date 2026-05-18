@@ -70,7 +70,16 @@
 
         loading = false;
     }
+    function onKeyDown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            submitFood();
+        }
+    }
+
 </script>
+
+<svelte:window onkeydown={onKeyDown} />
+
 
 <!-- Layout -->
 <div class="flex items-center justify-center text-zinc-100 p-10">

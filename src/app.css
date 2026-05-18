@@ -31,13 +31,18 @@
 
 
 @theme {
-    --color-background: #121212;
+    --color-navbar: #080C12;
+    --color-background: #090E14;
+    --color-line: #13171D;
     --color-surface: #111214;
-    --color-card: #18191b;
+    --color-card: #0F131A;
+    --color-card-border: #1a212b;
     --color-border: #232427;
     --color-muted: #9ca3af;
-    --color-brand: #c2106c;
+    /*--color-brand-text: #ff309b;*/
+    --color-brand: #E42A6E;
     --color-brand-hover: #a10e5a;
+    --color-brand-text-white: #F8F8F7;
 }
 
 
@@ -47,7 +52,7 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     -webkit-appearance: none;
-    background-color: #131314;
+    background-color: #090E14;
     background-image: none;
     border: 2px solid #747775;
     -webkit-border-radius: 20px;

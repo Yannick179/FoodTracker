@@ -99,12 +99,23 @@
         fetchFoodInformation(editableFood.foodId)
         });
 
+    function onKeyDown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            submitChange();
+        }
+        if (e.key === 'Escape') {
+            onClose();
+        }
+    }
 </script>
 
-<!-- Backdrop -->
-<div class="fixed inset-0 bg-neutral-900/60 backdrop-blur-lg flex items-center justify-center z-50">
+<svelte:window onkeydown={onKeyDown} />
 
-    <div class="w-full max-w-md bg-neutral-900 border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
+
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-background/60 backdrop-blur-lg flex items-center justify-center z-50">
+
+    <div class="w-full max-w-md bg-background border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
 
         <div class="grid grid-cols-3 items-center mb-4">
 

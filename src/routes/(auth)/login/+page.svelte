@@ -49,7 +49,7 @@
 
 <div class="min-h-screen flex justify-center text-zinc-100 py-6">
 
-    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-30">
+    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-20">
 
         <div class="text-center">Logo</div>
 

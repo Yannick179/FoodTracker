@@ -38,6 +38,7 @@ export const POST = async ({ request }) => {
             return new Response(JSON.stringify({ error: 'Invalid User' }), { status: 400 });
         }
 
+        // @ts-ignore
         const validPassword = await argon2.verify(existingUser.passwordHash, password);
         if (validPassword) {
             const token = await createSession(existingUser.id);

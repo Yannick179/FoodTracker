@@ -136,10 +136,10 @@
 
 </script>
 
-<div class="p-2 rounded-2xl border-2 border border-neutral-400 max-w-xs ">
+<div class="w-full rounded-2xl text-xl border-[2px] border-card-border  bg-card">
 
     <!-- Header -->
-    <div class="flex justify-between items-center mb-1">
+    <div class="flex justify-between items-center m-2">
         <button on:click={prevMonth} class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full hover:bg-neutral-800">
             <span class="transform -translate-y-[1px] -translate-x-[1px]">&lt;</span>
         </button>
@@ -152,7 +152,7 @@
         </button>
     </div>
     <!-- weekdays -->
-    <div class="grid grid-cols-7 gap-0.5 ">
+    <div class="grid grid-cols-7 mx-2 text-xl">
         <div class="p-1 font-mono w-10 text-center">Mon</div>
         <div class="p-1 font-mono w-10 text-center">Tue</div>
         <div class="p-1 font-mono w-10 text-center">Wed</div>
@@ -161,18 +161,23 @@
         <div class="p-1 font-mono w-10 text-center">Sat</div>
         <div class="p-1 font-mono w-10 text-center">Sun</div>
     </div>
+
     <!-- Days -->
-    <div class="grid grid-cols-7 gap-0.5">
+    <div class="grid grid-cols-7 mx-2 mb-2 text-xl">
         {#each daysGrid as cell}
             <button
-                    class="cursor-pointer p-1 rounded-xl text-center font-mono w-10
-            {cell.currentMonth ? 'hover:bg-neutral-800' : 'text-zinc-600 cursor-default'}
-            {cell.currentMonth &&
-             globalDate.date.getDate() === cell.day &&
-             globalDate.date.getMonth() === currentMonth.getMonth() &&
-             globalDate.date.getFullYear() === currentMonth.getFullYear()
-              ? 'bg-blue-500 text-white'
-              : ''}"
+                    class={`cursor-pointer px-1.5 py-2 rounded-xl text-center font-mono w-10
+    ${
+        cell.currentMonth
+            ? (
+                globalDate.date.getDate() === cell.day &&
+                globalDate.date.getMonth() === currentMonth.getMonth() &&
+                globalDate.date.getFullYear() === currentMonth.getFullYear()
+            )
+                ? 'bg-brand hover:bg-brand-hover text-white'
+                : 'hover:bg-neutral-800'
+            : 'text-zinc-600 cursor-default'
+    }`}
                     on:click={() => selectDay(cell.day, cell.currentMonth)}
                     disabled={!cell.currentMonth}
             >

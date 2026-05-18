@@ -53,7 +53,7 @@
 
         <div class="flex flex-col items-center">
             <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Fat</span>
-            <span class="text-sm font-medium text-rose-400">{foodEntry.fats}g</span>
+            <span class="text-sm font-medium text-rose-400">{foodEntry.fat}g</span>
         </div>
 
         <div class="flex flex-col items-center pl-2">

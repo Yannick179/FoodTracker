@@ -28,7 +28,7 @@
                     stroke="currentColor"
                     stroke-width="10"
                     fill="transparent"
-                    class="text-blue-500"
+                    class="text-brand"
             />
 
             <!-- remaining (shrinks like a clock but anticlockwise) -->

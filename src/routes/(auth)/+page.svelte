@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="min-h-screen flex flex-col items-center bg-neutral-900 text-white px-6 pt-32 pb-16">
+<div class="min-h-screen flex flex-col items-center bg-background text-white px-6 pt-32 pb-16">
 
     <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-center">
         Track your food.<br />

@@ -6,6 +6,8 @@ export const POST = async ({ request, locals }) => {
     try {
         const { calories, protein, carbohydrates, fats } =
             await request.json();
+        let now = new Date();
+        console.log(now);
         const goalEntry = await prisma.kcalGoal.create({
             data: {
                 userId: user.id,

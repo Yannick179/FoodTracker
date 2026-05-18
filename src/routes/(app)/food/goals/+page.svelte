@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     let protein = $state(150);
     let carbohydrates = $state(250);
     let fats = $state(70);
@@ -30,7 +30,15 @@ Fats: ${fats}g`);
             //
         }
     }
+
+    function onKeyDown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            handleSave();
+        }
+    }
 </script>
+
+<svelte:window onkeydown={onKeyDown} />
 
 <div class="min-h-screen p-10">
     <div class="max-w-3xl mx-auto space-y-6">
@@ -94,7 +102,7 @@ Fats: ${fats}g`);
             <div class="flex justify-end">
                 <button
                         on:click={handleSave}
-                        class=" hover:bg-blue-700 px-5 py-2 border-2 border-neutral-400 rounded-xl font-medium transition"
+                        class="cursor-pointer hover:brand-hover px-5 py-2 bg-brand rounded-xl font-medium transition"
                 >
                     Save Goals
                 </button>
