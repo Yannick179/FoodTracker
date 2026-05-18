@@ -1,6 +1,7 @@
 import argon2 from 'argon2';
 import { randomUUID } from 'crypto';
 import { prisma } from "$lib/prisma";
+import {createSession} from "../auth/sessionCreater";
 
 function isValidPassword(password: string): boolean {
     if (password.length < 10) return false;
@@ -40,15 +41,7 @@ export const POST = async ({ request }) => {
 
         const validPassword = await argon2.verify(existingUser.passwordHash, password);
         if (validPassword) {
-            const token = randomUUID();
-            await prisma.session.create({
-                data: {
-                    token,
-                    userId: existingUser.id,
-                    expires: new Date(Date.now() + 1000 * 60 * 60)
-                }
-            });
-            console.log("log in Successfull");
+            const token = await createSession(existingUser.id);
             return new Response(null, {
                 status: 302,
                 headers: {

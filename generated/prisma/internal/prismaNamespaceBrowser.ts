@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Food: 'Food',
   Session: 'Session',
+  Recipe: 'Recipe',
+  RecipeFood: 'RecipeFood',
   KcalGoal: 'KcalGoal',
   User: 'User',
   FoodEntry: 'FoodEntry'
@@ -98,6 +100,24 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+export const RecipeScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type RecipeScalarFieldEnum = (typeof RecipeScalarFieldEnum)[keyof typeof RecipeScalarFieldEnum]
+
+
+export const RecipeFoodScalarFieldEnum = {
+  id: 'id',
+  recipeId: 'recipeId',
+  foodId: 'foodId',
+  quantity: 'quantity'
+} as const
+
+export type RecipeFoodScalarFieldEnum = (typeof RecipeFoodScalarFieldEnum)[keyof typeof RecipeFoodScalarFieldEnum]
+
+
 export const KcalGoalScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -114,7 +134,8 @@ export type KcalGoalScalarFieldEnum = (typeof KcalGoalScalarFieldEnum)[keyof typ
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  passwordHash: 'passwordHash'
+  passwordHash: 'passwordHash',
+  googleId: 'googleId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -145,4 +166,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

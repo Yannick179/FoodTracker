@@ -1,6 +1,7 @@
 
 todo:
 
+    design the unauthenticated welcome page
     should a try be used for evert request in frontend and on backend?
     implement error handling?
     add loading screen ui

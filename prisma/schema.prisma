@@ -63,7 +63,8 @@ model KcalGoal {
 model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
-  passwordHash String
+  passwordHash String?
+  googleId     String?  @unique
   foodEntries  FoodEntry[]
   sessions     Session[]
   goals        KcalGoal[]

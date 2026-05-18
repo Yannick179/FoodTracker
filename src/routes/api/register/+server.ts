@@ -51,7 +51,7 @@ export const POST = async ({ request }) => {
             data: {
                 token: token,
                 userId: user.id,
-                expires: new Date(Date.now() + 1000 * 60 * 60) // 7 days
+                expires: new Date(Date.now() + 1000 * 60 * 60)
             }
         });
         console.log("created new account");

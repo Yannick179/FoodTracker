@@ -38,18 +38,21 @@ export type UserMinAggregateOutputType = {
   id: number | null
   email: string | null
   passwordHash: string | null
+  googleId: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: number | null
   email: string | null
   passwordHash: string | null
+  googleId: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
   passwordHash: number
+  googleId: number
   _all: number
 }
 
@@ -66,18 +69,21 @@ export type UserMinAggregateInputType = {
   id?: true
   email?: true
   passwordHash?: true
+  googleId?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
   passwordHash?: true
+  googleId?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
   passwordHash?: true
+  googleId?: true
   _all?: true
 }
 
@@ -170,7 +176,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: number
   email: string
-  passwordHash: string
+  passwordHash: string | null
+  googleId: string | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -199,7 +206,8 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.IntFilter<"User"> | number
   email?: Prisma.StringFilter<"User"> | string
-  passwordHash?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
+  googleId?: Prisma.StringNullableFilter<"User"> | string | null
   foodEntries?: Prisma.FoodEntryListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   goals?: Prisma.KcalGoalListRelationFilter
@@ -208,7 +216,8 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   foodEntries?: Prisma.FoodEntryOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   goals?: Prisma.KcalGoalOrderByRelationAggregateInput
@@ -217,19 +226,21 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   email?: string
+  googleId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  passwordHash?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   foodEntries?: Prisma.FoodEntryListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   goals?: Prisma.KcalGoalListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -243,12 +254,14 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  googleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
@@ -257,7 +270,8 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
@@ -265,7 +279,8 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
@@ -274,7 +289,8 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
@@ -283,18 +299,21 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserScalarRelationFilter = {
@@ -306,6 +325,7 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -316,12 +336,14 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -356,6 +378,10 @@ export type UserUpdateOneRequiredWithoutGoalsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGoalsInput, Prisma.UserUpdateWithoutGoalsInput>, Prisma.UserUncheckedUpdateWithoutGoalsInput>
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type UserCreateNestedOneWithoutFoodEntriesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutFoodEntriesInput, Prisma.UserUncheckedCreateWithoutFoodEntriesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutFoodEntriesInput
@@ -372,7 +398,8 @@ export type UserUpdateOneRequiredWithoutFoodEntriesNestedInput = {
 
 export type UserCreateWithoutSessionsInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
 }
@@ -380,7 +407,8 @@ export type UserCreateWithoutSessionsInput = {
 export type UserUncheckedCreateWithoutSessionsInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
 }
@@ -403,7 +431,8 @@ export type UserUpdateToOneWithWhereWithoutSessionsInput = {
 
 export type UserUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
 }
@@ -411,14 +440,16 @@ export type UserUpdateWithoutSessionsInput = {
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalsInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
@@ -426,7 +457,8 @@ export type UserCreateWithoutGoalsInput = {
 export type UserUncheckedCreateWithoutGoalsInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -449,7 +481,8 @@ export type UserUpdateToOneWithWhereWithoutGoalsInput = {
 
 export type UserUpdateWithoutGoalsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
@@ -457,14 +490,16 @@ export type UserUpdateWithoutGoalsInput = {
 export type UserUncheckedUpdateWithoutGoalsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFoodEntriesInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
 }
@@ -472,7 +507,8 @@ export type UserCreateWithoutFoodEntriesInput = {
 export type UserUncheckedCreateWithoutFoodEntriesInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
+  googleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
 }
@@ -495,7 +531,8 @@ export type UserUpdateToOneWithWhereWithoutFoodEntriesInput = {
 
 export type UserUpdateWithoutFoodEntriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
 }
@@ -503,7 +540,8 @@ export type UserUpdateWithoutFoodEntriesInput = {
 export type UserUncheckedUpdateWithoutFoodEntriesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -561,6 +599,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   email?: boolean
   passwordHash?: boolean
+  googleId?: boolean
   foodEntries?: boolean | Prisma.User$foodEntriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
@@ -571,21 +610,24 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   passwordHash?: boolean
+  googleId?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   passwordHash?: boolean
+  googleId?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
   passwordHash?: boolean
+  googleId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "googleId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   foodEntries?: boolean | Prisma.User$foodEntriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -605,7 +647,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     email: string
-    passwordHash: string
+    passwordHash: string | null
+    googleId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1035,6 +1078,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'Int'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly googleId: Prisma.FieldRef<"User", 'String'>
 }
     
 

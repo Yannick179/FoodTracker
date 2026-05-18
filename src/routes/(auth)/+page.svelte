@@ -2,7 +2,7 @@
 </script>
 
 <div class="min-h-screen flex flex-col items-center bg-neutral-900 text-white px-6 pt-32 pb-16">
-    <!-- Hero -->
+
     <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-center">
         Track your food.<br />
         <span class="text-zinc-400">See real progress.</span>
@@ -13,11 +13,10 @@
         Log meals in seconds, understand your habits, and actually stick to your goals.
     </p>
 
-    <!-- CTA -->
     <div class="flex gap-4 mb-16">
         <a href="/register"
            class="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-neutral-200 transition">
-            Get Started — Free
+            Get Started - Register
         </a>
 
         <a href="/login"
@@ -26,25 +25,24 @@
         </a>
     </div>
 
-    <!-- Features -->
     <div class="grid md:grid-cols-3 gap-6 max-w-5xl w-full text-center">
 
         <div class="p-6 rounded-2xl bg-neutral-800">
-            <h3 class="text-xl font-semibold mb-2">⚡ Fast logging</h3>
+            <h3 class="text-xl font-semibold mb-2">Fast logging</h3>
             <p class="text-zinc-400 text-sm">
                 Add meals in seconds. No clutter, no friction.
             </p>
         </div>
 
         <div class="p-6 rounded-2xl bg-neutral-800">
-            <h3 class="text-xl font-semibold mb-2">📊 Smart insights</h3>
+            <h3 class="text-xl font-semibold mb-2">Smart insights</h3>
             <p class="text-zinc-400 text-sm">
                 See calories, macros, and trends over time.
             </p>
         </div>
 
         <div class="p-6 rounded-2xl bg-neutral-800">
-            <h3 class="text-xl font-semibold mb-2">🔥 Stay consistent</h3>
+            <h3 class="text-xl font-semibold mb-2">Stay consistent</h3>
             <p class="text-zinc-400 text-sm">
                 Build streaks and keep your habits on track.
             </p>
@@ -52,7 +50,6 @@
 
     </div>
 
-    <!-- How it works -->
     <div class="mt-20 text-center max-w-3xl">
         <h2 class="text-3xl font-bold mb-6">How it works</h2>
 
@@ -76,7 +73,6 @@
         </div>
     </div>
 
-    <!-- Social proof -->
     <div class="mt-20 text-center max-w-xl">
         <p class="text-zinc-500 italic">
             “The first calorie tracker I actually didn’t quit after 3 days.”
@@ -84,7 +80,6 @@
         <p class="text-zinc-600 text-sm mt-2">— probably you soon</p>
     </div>
 
-    <!-- Footer -->
     <div class="mt-24 text-zinc-600 text-sm flex gap-6">
         <a href="#" class="hover:text-zinc-400">About</a>
         <a href="#" class="hover:text-zinc-400">Privacy</a>

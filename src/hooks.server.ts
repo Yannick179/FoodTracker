@@ -73,7 +73,7 @@ import { error, type Handle, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/prisma';
 
 const publicRoutes = ['/', '/login', '/register'];
-const publicApiRoutes = ['/api/login', '/api/register'];
+const publicApiRoutes = ['/api/login', '/api/register', '/api/auth/google', '/api/auth/google/callback'];
 
 export const handle: Handle = async ({ event, resolve }) => {
     const token = event.cookies.get('session');
@@ -118,6 +118,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     const isPublicApi = publicApiRoutes.includes(path);
 
     // 2. Redirect logged-in users away from login/register
+    //TODO: improve this so that a logged in user cannot access routes that arent for the app when logged in
+    //this is bad because it only restraints users from going to /login and /register, but there are more routes
+    //i need a default handler
     if (user && (path === '/login' || path === '/register')) {
         return new Response(null, {
             status: 302,
@@ -136,7 +139,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
         return new Response(null, {
             status: 302,
-            headers: { location: '/login' }
+            headers: { location: '' }
         });
     }
 
