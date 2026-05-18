@@ -21,34 +21,46 @@
 <nav class="w-full bg-navbar shadow-sm flex flex-col ">
 
     <!-- Row 1 -->
-    <div class="flex items-center justify-between w-full px-6 pt-6">
+    <div class="flex items-center justify-between w-full px-6">
 
         <!-- Left -->
         <div class="hidden md:flex gap-6">
-            <a href="/home" class="hover:text-zinc-400 text-3xl font-extrabold">
-                Logo
-            </a>
+            <div class="grid h-20 grid-rows-[6px_1fr_6px] hover:text-zinc-400">
+                    <!-- Top -->
+                    <div></div>
+
+                    <!-- Middle -->
+                    <div class="flex items-center text-3xl font-extrabold">
+                        <a href="/home" class="hover:text-zinc-400">
+                            Logo
+                        </a>
+                    </div>
+
+                     Bottom
+
+                <div class=""></div>
+            </div>
         </div>
 
         <!-- Center -->
         <div class="hidden md:flex h-full gap-8">
         {#each routesAndNames as r}
-            <div class="flex flex-col h-full">
-                <a
-                        href={r.route}
-                        class={r.markActive
-          ? "hover:text-brand font-semibold text-2xl text-brand"
-          : "hover:text-brand font-semibold text-2xl"}
-                >
-                    {r.name}
-                </a>
+            <div class="grid h-20 grid-rows-[6px_1fr_6px] hover:text-zinc-400">
+                <!-- Top -->
+                <div></div>
 
-                <div class="mt-auto w-full flex justify-center">
-                    <div class={r.markActive
-          ? "rounded-2xl bg-brand h-[4px] w-[calc(100%-8px)]"
-          : "w-full bg-navbar h-[4px]"}
-                    ></div>
+                <!-- Middle -->
+                <div class="flex items-center text-3xl font-extrabold">
+                    <a
+                            href={r.route}
+                            class={r.markActive ? "hover:text-brand font-semibold text-2xl text-brand" : "hover:text-brand font-semibold text-2xl"}>
+                        {r.name}
+                    </a>
                 </div>
+
+                <!-- Bottom-->
+                <div class={r.markActive ? "bg-brand rounded-full" : ""}></div>
+
             </div>
         {/each}
     </div>
