@@ -9,7 +9,7 @@
     let error = '';
 
     function validate() {
-        if (password.length < 10) return 'Password must be at least 10 characters';
+        if (password.length < 8) return 'Password must be at least 10 characters';
         return '';
     }
 
@@ -47,63 +47,79 @@
     }
 </script>
 
-<div class="min-h-screen flex items-center justify-center  text-zinc-100 p-6">
+<div class="min-h-screen flex justify-center text-zinc-100 py-6">
 
-    <div class="w-full max-w-sm rounded-2xl bg-neutral-900/80 border border-zinc-800 shadow-xl p-6 space-y-5">
+    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-30">
 
-        <div>
-            <h1 class="text-lg font-semibold">Welcome back</h1>
-            <p class="text-xs text-zinc-500">Log in to your account</p>
+        <div class="text-center">Logo</div>
+
+        <div class="text-center text-[55px] text-zinc-100 font-bold mb-12">Welcome Back</div>
+
+        <!-- prebuilt google button for sign in-->
+        <a class="gsi-material-button" href="/api/auth/google" >
+
+            <div class="gsi-material-button-state"></div>
+            <div class="gsi-material-button-content-wrapper">
+                <div class="gsi-material-button-icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                        <path fill="none" d="M0 0h48v48H0z"></path>
+                    </svg>
+                </div>
+                <span class="gsi-material-button-contents">Sign in with Google</span>
+                <span style="display: none;">Sign in with Google</span>
+            </div>
+        </a>
+
+        <!-- TODO: implement-->
+        <button class="gsi-material-button">
+            Sign up with Meta
+        </button>
+        <button class="gsi-material-button">
+            Sign up with Apple
+        </button>
+
+        <div class="text-center text-zinc-300 text-xl font-semibold">
+            or
         </div>
 
         <form on:submit|preventDefault={login} class="space-y-4">
 
-            <!-- Email -->
             <div>
-                <label class="text-xs text-zinc-400">Email</label>
-                <input
-                        type="email"
-                        bind:value={email}
-                        required
-                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2
-					focus:outline-none focus:ring-2 focus:ring-zinc-500/40"
-                />
+                <label class="text-xl font-semibold">Email address
+                    <input
+                            type="email"
+                            bind:value={email}
+                            required
+                            placeholder="name@domain.com"
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
+                </label>
             </div>
 
-            <!-- Password -->
             <div>
-                <label class="text-xs text-zinc-400">Password</label>
-                <input
-                        type="password"
-                        bind:value={password}
-                        required
-                        class="mt-1 w-full rounded-xl bg-neutral-800/60 border border-zinc-700 px-3 py-2"
-                />
+                <label class="text-xl font-semibold">Password
+                    <input
+                            type="password"
+                            bind:value={password}
+                            required
+                            placeholder="password"
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
+                </label>
             </div>
-            {#if error}
-                <p class="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
-                    {error}
-                </p>
-            {/if}
-
-            {#if success}
-                <p class="text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2">
-                    Successfully logged in.
-                </p>
-            {/if}
 
             <button
-                    class="cursor-pointer w-full rounded-xl py-2 font-medium transition
-				bg-white text-zinc-900 hover:bg-neutral-200 disabled:opacity-50"
-                    disabled={loading}
-            >
-                {loading ? 'Signing in…' : 'Sign in'}
+                    class="mt-4 cursor-pointer w-full rounded-3xl font-semibold
+				bg-brand text-zinc-100 hover:bg-brand-hover  px-4 py-3 text-xl">
+                Sign in
             </button>
 
         </form>
 
-        <p class="text-xs text-zinc-500 text-center">
-            Don’t have an account?
+        <p class="text-xl text-zinc-500 text-center">
+            Already have an account?
             <a href="/register" class="text-zinc-300 hover:underline">Sign up</a>
         </p>
 

@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { prisma } from "$lib/prisma";
 
 function isValidPassword(password: string): boolean {
-    if (password.length < 10) return false;
+    if (password.length < 8) return false;
 
     const hasLower = /[a-z]/.test(password);
     const hasUpper = /[A-Z]/.test(password);

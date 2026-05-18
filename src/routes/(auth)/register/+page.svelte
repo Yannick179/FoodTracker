@@ -10,7 +10,8 @@
     let success = false;
 
     function validate() {
-        if (password.length < 10) return 'Password must be at least 10 characters';
+        if (password.length < 8) return 'Password must be at least 10 characters';
+        //TODO: implement the upper lower special etc and show good error message on invalid
         if (password !== confirmPassword) return 'Passwords do not match';
         return '';
     }
@@ -51,13 +52,13 @@
     }
 </script>
 
-<div class="min-h-screen flex items-center justify-center text-zinc-100 p-6">
+<div class="min-h-screen flex justify-center text-zinc-100 py-6">
 
-    <div class="flex flex-col max-w-md p-6 space-y-5">
+    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-30">
 
-        <div>Logo</div>
+        <div class="text-center mb-12">Logo</div>
 
-        <!-- prebuilt google button for sign in-->
+        <!-- prebuilt google button for sign up-->
         <a class="gsi-material-button" href="/api/auth/google" >
 
             <div class="gsi-material-button-state"></div>
@@ -71,14 +72,18 @@
                         <path fill="none" d="M0 0h48v48H0z"></path>
                     </svg>
                 </div>
-                <span class="gsi-material-button-contents">Sign in with Google</span>
-                <span style="display: none;">Sign in with Google</span>
+                <span class="gsi-material-button-contents">Sign up with Google</span>
+                <span style="display: none;">Sign up with Google</span>
             </div>
         </a>
-
-        <button>
-
+        <!-- TODO: Implement -->
+        <button class="gsi-material-button">
+            Sign up with Meta
         </button>
+        <button class="gsi-material-button">
+            Sign up with Apple
+        </button>
+
         <div class="text-center text-zinc-300 text-xl font-semibold">
             or
         </div>
@@ -92,7 +97,7 @@
                             bind:value={email}
                             required
                             placeholder="name@domain.com"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3"/>
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
@@ -103,7 +108,7 @@
                         bind:value={password}
                         required
                         placeholder="password"
-                        class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3"/>
+                        class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
@@ -115,28 +120,15 @@
                             bind:value={confirmPassword}
                             required
                             placeholder="password"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3"/>
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
                 </label>
 
             </div>
 
-            {#if error}
-                <p class="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
-                    {error}
-                </p>
-            {/if}
-
-            {#if success}
-                <p class="text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2">
-                    Account created ✔
-                </p>
-            {/if}
-
             <button
-                    class="cursor-pointer w-full rounded-3xl font-semibold
-				bg-white text-zinc-900 hover:bg-neutral-200  px-4 py-3 text-xl"
-                    disabled={loading}>
-                {loading ? 'Creating…' : 'Sign up'}
+                    class="mt-4 cursor-pointer w-full rounded-3xl font-semibold
+				bg-brand text-zinc-100 hover:bg-brand-hover  px-4 py-3 text-xl">
+                Sign Up
             </button>
 
         </form>

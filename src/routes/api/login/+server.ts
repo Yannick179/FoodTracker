@@ -4,7 +4,7 @@ import { prisma } from "$lib/prisma";
 import {createSession} from "../auth/sessionCreater";
 
 function isValidPassword(password: string): boolean {
-    if (password.length < 10) return false;
+    if (password.length < 8) return false;
 
     const hasLower = /[a-z]/.test(password);
     const hasUpper = /[A-Z]/.test(password);
@@ -21,7 +21,6 @@ function isValidEmail(email: string) {
 
 export const POST = async ({ request }) => {
     try {
-        console.log("does this reach?");
         const {email, password} = await request.json();
         if (!isValidPassword(password)) return new Response(JSON.stringify({ error: 'Invalid Password' }), { status: 400 });
         let hashedPassword = await argon2.hash(password);
