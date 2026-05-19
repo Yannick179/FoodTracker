@@ -50,10 +50,10 @@
                 <div></div>
 
                 <!-- Middle -->
-                <div class="flex items-center text-3xl font-extrabold">
+                <div class="flex items-center font-extrabold">
                     <a
                             href={r.route}
-                            class={r.markActive ? "hover:text-brand font-semibold text-2xl text-brand" : "hover:text-brand font-semibold text-2xl"}>
+                            class={r.markActive ? "hover:text-brand font-semibold text-xl text-brand" : "hover:text-brand font-semibold text-xl"}>
                         {r.name}
                     </a>
                 </div>

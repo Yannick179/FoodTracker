@@ -42,7 +42,7 @@
                         class="group block p-8 rounded-2xl border-2 border border-neutral-400 hover:bg-neutral-800 transition-all duration-200"
                 >
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-4xl">{app.icon}</span>
+                        <span class="text-3xl">{app.icon}</span>
                         <span class="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">
                             Open →
                         </span>

@@ -1,6 +1,7 @@
 
 todo:
 
+    accomodate zoom
     date is stored in utc but db doesnt store in utc when creating something, local db time - convert datetime entries so its uniform
     design the unauthenticated welcome page
     should a try be used for evert request in frontend and on backend?

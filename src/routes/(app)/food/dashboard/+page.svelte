@@ -163,13 +163,13 @@
 </script>
 
 <div class="pt-16 px-10 flex flex-col">
-    <div class="grid h-full grid-cols-[4fr_12fr_5fr] gap-6 ">
+    <div class="grid h-full grid-cols-[4fr_10fr_5fr] gap-6 ">
         <!-- col 1-->
         <div>
-            <div class="text-2xl text-zinc-400 flex">
+            <div class="text-xl text-zinc-400 flex">
                 {convertNumberToDay(globalDate.date.getDay())}
             </div>
-            <div class="flex text-3xl font-semibold text-white tracking-tight tabular-nums mb-5">
+            <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums mb-5">
                 {getDateNicelyFormatted(globalDate.date)}
             </div>
             <Calendar/>
@@ -177,13 +177,14 @@
 
         <!-- col 2-->
         <div>
-            <div class="grid h-full justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
-                <div class="w-full rounded-2xl border- border-card-border grid grid-rows-[70%_30%]">
-                    <div class="flex items-center justify-center">
+            <div class="overflow-y-auto overflow-x-auto min-w-120 grid p-6 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
+                <div class="w-full grid grid-rows-[70%_2px_30%]">
+                    <div class="flex items-center justify-center pb-3">
                         <div class="grid grid-cols-3 items-center place-items-center">
-                            <div class="grid grid-rows-2 items-center place-items-center">
+                            <div class="grid grid-rows-3 items-center place-items-center">
                                 <div class="flex">Calories</div>
-                                <div class="flex">{kcalGoal}</div>
+                                <div class="flex text-brand text-2xl font-bold">{dayStats.calories}</div>
+                                <div class="flex text-zinc-400 text-base">/ {kcalGoal} kcal</div>
                             </div>
                             <ResultBarKcals value={dayStats.calories} max={kcalGoal}/>
                             <div class="grid grid-rows-2 items-center place-items-center">
@@ -193,23 +194,29 @@
                         </div>
                     </div>
 
-                    <div class="items-center justify-center grid grid-cols-3 gap-2">
-                        <div class="grid grid-rows-3 items-center place-items-center">
-                            <div class="flex">Protein</div>
+                    <div class="w-full h-full px-3 lg:px-3 xl:px-6">
+                        <div class="w-full bg-card-border h-full">
+                        </div>
+                    </div>
+
+
+                    <div class="w-full grid grid-cols-3 px-3 lg:px-3 gap-16 xl:px-6">
+                        <div class="grid grid-rows-3  pt-3 grid grid-rows-3 place-items-center">
+                            <div class="flex w-full">Protein</div>
                             <ResultBarMacros value={dayStats.protein} max={220} />
-                            <div class="flex">{dayStats.protein}/{proteinGoal}</div>
+                            <div class="flex w-full">{dayStats.protein}/{proteinGoal}</div>
                         </div>
 
-                        <div class=" grid items-center grid-rows-3 place-items-center">
-                            <div class="flex">Carbohydrates</div>
+                        <div class=" grid items-center pt-3 grid-rows-3 place-items-center">
+                            <div class="flex w-full">Carbohydrates</div>
                             <ResultBarMacros value={dayStats.carbohydrates} max={400} />
-                            <div class="flex">{dayStats.carbohydrates}/{carbohydrateGoal}</div>
+                            <div class="flex w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</div>
                         </div>
 
-                        <div class="grid items-center grid-rows-3 place-items-center">
-                            <div class="flex">Fats</div>
+                        <div class="grid items-center pt-3 grid-rows-3 place-items-center">
+                            <div class="flex w-full">Fats</div>
                             <ResultBarMacros value={dayStats.fat} max={80} />
-                            <div class="flex">{dayStats.fat}/{fatsGoal}</div>
+                            <div class="flex w-full">{dayStats.fat}/{fatsGoal}</div>
                         </div>
                     </div>
                 </div>
@@ -228,6 +235,9 @@
                                            foodEntry={foodEntry}
                             />
                         {/each}
+                        <div class="px-40">
+                            <div class="cursor-pointer border-brand text-center py-3 border-2 rounded-2xl text-brand"> Add new Food +</div>
+                        </div>
                     </div>
                 </div>
             </div>

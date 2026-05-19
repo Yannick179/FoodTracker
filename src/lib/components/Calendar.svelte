@@ -136,7 +136,7 @@
 
 </script>
 
-<div class="w-full rounded-2xl text-xl border-[2px] border-card-border  bg-card">
+<div class="w-full min-w-65 rounded-2xl text-xl border-[2px] border-card-border bg-card overflow-y-auto overflow-x-auto">
 
     <!-- Header -->
     <div class="flex justify-between items-center m-2">
@@ -152,7 +152,7 @@
         </button>
     </div>
     <!-- weekdays -->
-    <div class="grid grid-cols-7 mx-2 text-xl">
+    <div class="grid grid-cols-7 mx-2 text-lg">
         <div class="p-1 font-mono w-10 text-center">Mon</div>
         <div class="p-1 font-mono w-10 text-center">Tue</div>
         <div class="p-1 font-mono w-10 text-center">Wed</div>
@@ -163,10 +163,10 @@
     </div>
 
     <!-- Days -->
-    <div class="grid grid-cols-7 mx-2 mb-2 text-xl">
+    <div class="grid grid-cols-7 mx-2 mb-2 text-lg">
         {#each daysGrid as cell}
             <button
-                    class={`cursor-pointer px-1.5 py-2 rounded-xl text-center font-mono w-10
+                    class={`cursor-pointer py-0.5 rounded-xl text-center font-mono w-10
     ${
         cell.currentMonth
             ? (
