@@ -52,7 +52,7 @@
     }
 </script>
 
-<div class="min-h-screen flex justify-center text-zinc-100 pt-6">
+<div class="flex justify-center text-zinc-100 pt-6">
 
     <div class="flex flex-col w-[350px] py-6 space-y-4 mt-10">
 
@@ -97,7 +97,7 @@
                             bind:value={email}
                             required
                             placeholder="name@domain.com"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
@@ -108,7 +108,7 @@
                         bind:value={password}
                         required
                         placeholder="password"
-                        class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
+                        class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
@@ -120,14 +120,14 @@
                             bind:value={confirmPassword}
                             required
                             placeholder="password"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
                 </label>
 
             </div>
 
             <button
                     class="mt-4 cursor-pointer w-full rounded-3xl font-semibold
-				bg-brand text-zinc-100 hover:bg-brand-hover  px-3 py-2.5 text-lg">
+				bg-brand text-zinc-100 hover:bg-brand-hover px-3 py-2.5 text-lg">
                 Sign Up
             </button>
 
