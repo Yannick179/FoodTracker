@@ -52,11 +52,11 @@
     }
 </script>
 
-<div class="min-h-screen flex justify-center text-zinc-100 py-6">
+<div class="min-h-screen flex justify-center text-zinc-100 pt-6">
 
-    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-20">
+    <div class="flex flex-col w-[350px] py-6 space-y-4 mt-10">
 
-        <div class="text-center mb-12">Logo</div>
+        <div class="text-center mb-13">Logo</div>
 
         <!-- prebuilt google button for sign up-->
         <a class="gsi-material-button" href="/api/auth/google" >
@@ -84,56 +84,56 @@
             Sign up with Apple
         </button>
 
-        <div class="text-center text-zinc-300 text-xl font-semibold">
+        <div class="text-center text-zinc-300 text-lg font-semibold">
             or
         </div>
 
-        <form on:submit|preventDefault={register} class="space-y-4">
+        <form on:submit|preventDefault={register} class="space-y-3">
 
             <div>
-                <label class="text-xl font-semibold">Email address
+                <label class="text-lg font-semibold">Email address
                     <input
                             type="email"
                             bind:value={email}
                             required
                             placeholder="name@domain.com"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3  focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
             <div>
-                <label class="text-xl font-semibold">Password
+                <label class="text-lg font-semibold">Password
                 <input
                         type="password"
                         bind:value={password}
                         required
                         placeholder="password"
-                        class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3  focus:border-brand focus:outline-none"/>
+                        class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5  focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
             <!-- Confirm -->
             <div>
-                <label class="text-xl font-semibold">Confirm password
+                <label class="text-lg font-semibold">Confirm password
                     <input
                             type="password"
                             bind:value={confirmPassword}
                             required
                             placeholder="password"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
                 </label>
 
             </div>
 
             <button
                     class="mt-4 cursor-pointer w-full rounded-3xl font-semibold
-				bg-brand text-zinc-100 hover:bg-brand-hover  px-4 py-3 text-xl">
+				bg-brand text-zinc-100 hover:bg-brand-hover  px-3 py-2.5 text-lg">
                 Sign Up
             </button>
 
         </form>
 
-        <p class="text-xl text-zinc-500 text-center">
+        <p class="text-base text-zinc-500 text-center">
             Already have an account?
             <a href="/login" class="text-zinc-300 hover:underline">Sign in</a>
         </p>

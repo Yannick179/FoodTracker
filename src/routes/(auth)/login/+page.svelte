@@ -47,13 +47,13 @@
     }
 </script>
 
-<div class="min-h-screen flex justify-center text-zinc-100 py-6">
+<div class="flex justify-center text-zinc-100 pt-6">
 
-    <div class="flex flex-col w-[400px] py-6 space-y-5 mt-20">
+    <div class="flex flex-col w-[350px] py-6 space-y-4 mt-10">
 
         <div class="text-center">Logo</div>
 
-        <div class="text-center text-[55px] text-zinc-100 font-bold mb-12">Welcome Back</div>
+        <div class="text-center text-[50px] text-zinc-100 font-bold mb-12">Welcome Back</div>
 
         <!-- prebuilt google button for sign in-->
         <a class="gsi-material-button" href="/api/auth/google" >
@@ -82,7 +82,7 @@
             Sign up with Apple
         </button>
 
-        <div class="text-center text-zinc-300 text-xl font-semibold">
+        <div class="text-center text-zinc-300 text-lg font-semibold">
             or
         </div>
 
@@ -95,7 +95,7 @@
                             bind:value={email}
                             required
                             placeholder="name@domain.com"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
@@ -106,19 +106,19 @@
                             bind:value={password}
                             required
                             placeholder="password"
-                            class="mt-1 text-xl font-normal w-full rounded border-2 border-zinc-700 px-4 py-3 focus:border-brand focus:outline-none"/>
+                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
                 </label>
             </div>
 
             <button
                     class="mt-4 cursor-pointer w-full rounded-3xl font-semibold
-				bg-brand text-zinc-100 hover:bg-brand-hover  px-4 py-3 text-xl">
+				bg-brand text-zinc-100 hover:bg-brand-hover px-3 py-2.5 text-lg">
                 Sign in
             </button>
 
         </form>
 
-        <p class="text-xl text-zinc-500 text-center">
+        <p class="text-base text-zinc-500 text-center">
             Already have an account?
             <a href="/register" class="text-zinc-300 hover:underline">Sign up</a>
         </p>
