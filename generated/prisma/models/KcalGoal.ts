@@ -268,6 +268,7 @@ export type KcalGoalOrderByWithRelationInput = {
 
 export type KcalGoalWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  userId_createdAt?: Prisma.KcalGoalUserIdCreatedAtCompoundUniqueInput
   AND?: Prisma.KcalGoalWhereInput | Prisma.KcalGoalWhereInput[]
   OR?: Prisma.KcalGoalWhereInput[]
   NOT?: Prisma.KcalGoalWhereInput | Prisma.KcalGoalWhereInput[]
@@ -278,7 +279,7 @@ export type KcalGoalWhereUniqueInput = Prisma.AtLeast<{
   fats?: Prisma.IntFilter<"KcalGoal"> | number
   createdAt?: Prisma.DateTimeFilter<"KcalGoal"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "userId_createdAt">
 
 export type KcalGoalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -313,7 +314,7 @@ export type KcalGoalCreateInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
   user: Prisma.UserCreateNestedOneWithoutGoalsInput
 }
 
@@ -324,7 +325,7 @@ export type KcalGoalUncheckedCreateInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type KcalGoalUpdateInput = {
@@ -353,7 +354,7 @@ export type KcalGoalCreateManyInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type KcalGoalUpdateManyMutationInput = {
@@ -372,6 +373,11 @@ export type KcalGoalUncheckedUpdateManyInput = {
   carbohydrates?: Prisma.IntFieldUpdateOperationsInput | number
   fats?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type KcalGoalUserIdCreatedAtCompoundUniqueInput = {
+  userId: number
+  createdAt: Date | string
 }
 
 export type KcalGoalCountOrderByAggregateInput = {
@@ -479,7 +485,7 @@ export type KcalGoalCreateWithoutUserInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type KcalGoalUncheckedCreateWithoutUserInput = {
@@ -488,7 +494,7 @@ export type KcalGoalUncheckedCreateWithoutUserInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type KcalGoalCreateOrConnectWithoutUserInput = {
@@ -536,7 +542,7 @@ export type KcalGoalCreateManyUserInput = {
   protein: number
   carbohydrates: number
   fats: number
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type KcalGoalUpdateWithoutUserInput = {

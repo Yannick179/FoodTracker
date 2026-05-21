@@ -8,18 +8,20 @@ export const GET = async ({ url, locals }) => {
     try{
         // @ts-ignore
         const date: Date  = new Date(url.searchParams.get('date'));
+        console.log(date);
 
         const res = await prisma.kcalGoal.findFirst({
             where: {
                 userId: user.id,
                 createdAt: {
-                    lt: date
+                    lte: date
                 }
             },
             orderBy: {
                 createdAt: 'desc'
             }
         });
+        console.log(res);
         return json({
             goal: res,
         });

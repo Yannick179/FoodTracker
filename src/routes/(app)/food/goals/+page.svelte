@@ -1,8 +1,12 @@
 <script lang="ts">
+    import {createDate} from "$lib/dataStore.svelte";
+
     let protein = $state(150);
     let carbohydrates = $state(250);
     let fats = $state(70);
     let calories = $derived(Math.trunc(protein * 4.1 + carbohydrates * 4.1 + fats * 9.1));
+    const globalDate = createDate();
+
 
     async function handleSave() {
         try {
@@ -14,6 +18,7 @@
                     protein: protein,
                     carbohydrates: carbohydrates,
                     fats: fats,
+                    date: globalDate.date,
                 })
             });
             console.log(res);

@@ -4,18 +4,33 @@ import { prisma } from "$lib/prisma";
 export const POST = async ({ request, locals }) => {
     const user = requireUser(locals);
     try {
-        const { calories, protein, carbohydrates, fats } =
+        const { calories, protein, carbohydrates, fats, date } =
             await request.json();
-        let now = new Date();
-        console.log(now);
-        const goalEntry = await prisma.kcalGoal.create({
-            data: {
-                userId: user.id,
-                protein: protein,
+        console.log("date");
+        console.log(date);
+
+
+        const goalEntry = await prisma.kcalGoal.upsert({
+            where: {
+                userId_createdAt: {
+                    userId: user.id,
+                    createdAt: new Date(date),
+                },
+            },
+            update: {
+                protein,
                 kcal: calories,
-                carbohydrates: carbohydrates,
-                fats: fats,
-            }
+                carbohydrates,
+                fats,
+            },
+            create: {
+                userId: user.id,
+                protein,
+                kcal: calories,
+                carbohydrates,
+                fats,
+                createdAt: new Date(date),
+            },
         });
         return new Response(null, { status: 201 });
     }

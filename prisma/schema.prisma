@@ -23,9 +23,10 @@ model KcalGoal {
   protein       Int
   carbohydrates Int
   fats          Int
-  createdAt     DateTime @default(now())
+  createdAt     DateTime @db.Date
 
   user User @relation(fields: [userId], references: [id])
+  @@unique([userId, createdAt])
 }
 
 model User {
