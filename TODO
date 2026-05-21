@@ -1,6 +1,8 @@
 
 todo:
 
+    read into html5 tags that are fitting so i dont recreate div hell
+
     accomodate zoom
     date is stored in utc but db doesnt store in utc when creating something, local db time - convert datetime entries so its uniform
     design the unauthenticated welcome page

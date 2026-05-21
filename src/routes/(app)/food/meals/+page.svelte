@@ -15,7 +15,7 @@
                 <div class="h-full">
                     <div class="pb-10">LOGO</div>
                     <h2 class=" text-5xl font-bold pb-10">Create Your Meals</h2>
-                    <p class="pb-10 text-xl text-zinc-400">Search foods, build custom meals, and save your favorites for faster tracking everyday</>
+                    <p class="pb-10 text-xl text-zinc-400">Search foods, build custom meals, and save your favorites for faster tracking everyday/>
                     <p class="pb-10">Icon with Text</p>
                     <p class="pb-10">Icon with Text</p>
                     <p class="pb-10">Icon with Text</p>
