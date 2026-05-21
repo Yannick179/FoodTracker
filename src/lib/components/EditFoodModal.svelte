@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount, tick} from "svelte";
-    import type {FoodEntryDto} from "../../routes/api/food/loadFoodEntriesFromDateX/+server";
     import { Trash2 } from 'lucide-svelte';
+    import type {FoodLogDto} from "../../routes/api/food/loadMealLogFromDateX/+server";
 
 
     let caloriesPer100 = $state(0);
@@ -10,14 +10,13 @@
     let fatPer100 = $state(0);
 
     //TODO: implement more elegant solution that
-    function cloneFoodEntry(food: FoodEntryDto): FoodEntryDto {
+    function cloneFoodEntry(food: FoodLogDto): FoodLogDto {
         return {
-            foodEntryId: food.foodEntryId,
+            foodLogId: food.foodLogId,
             foodId: food.foodId,
             name: food.name,
             amount: food.amount,
             eatenAt: new Date(food.eatenAt),
-
             calories: food.calories,
             protein: food.protein,
             carbohydrates: food.carbohydrates,
@@ -26,16 +25,16 @@
     }
 
     let {
-        selectedFood = $bindable(),
+        selectedFoodLog = $bindable(),
         onClose
     }: {
-        selectedFood: FoodEntryDto;
+        selectedFoodLog: FoodLogDto;
         onClose: () => void;
     } = $props();
 
-    let editableFood: FoodEntryDto = $state({
-        foodEntryId: 0,
+    let editableFood: FoodLogDto = $state({
         foodId: 0,
+        foodLogId: 0,
         name: '',
         amount: 0,
         eatenAt: new Date(),
@@ -46,19 +45,19 @@
     });
 
     $effect(() => {
-        if (selectedFood) {
-            editableFood = cloneFoodEntry(selectedFood);
+        if (selectedFoodLog) {
+            editableFood = cloneFoodEntry(selectedFoodLog);
         }
     });
 
     //TODO: CHANGE THIS TO REFLECT USEFULL STUFF
     async function submitChange() {
         if (editableFood.amount > 0) {
-            const res = await fetch('/api/food/editFoodEntry', {
+            const res = await fetch('/api/food/editMealLog', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    foodEntryId: editableFood.foodEntryId,
+                    foodPortionId: editableFood.foodLogId,
                     amount: editableFood.amount,
                 })
             });
@@ -69,11 +68,11 @@
     }
 
     async function deleteEntry() {
-        const res = await fetch('/api/food/deleteFoodEntry', {
+        const res = await fetch('/api/food/deleteFoodLog', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                foodEntryId: editableFood.foodEntryId,
+                foodLogId: editableFood.foodLogId,
             })
         });
 

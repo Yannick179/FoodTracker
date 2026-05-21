@@ -6,7 +6,7 @@
 </script>
 
 <!-- Bar background -->
-<div class="w-full h-2.5 bg-fillEmpty rounded-full overflow-hidden">
+<div class="w-full mb-1 h-2 bg-fillEmpty rounded-full overflow-hidden">
     <!-- Fill -->
     <div
             class="h-full bg-brand transition-all duration-500"

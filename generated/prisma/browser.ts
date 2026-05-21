@@ -18,25 +18,10 @@ export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
 /**
- * Model Food
- * 
- */
-export type Food = Prisma.FoodModel
-/**
  * Model Session
  * 
  */
 export type Session = Prisma.SessionModel
-/**
- * Model Recipe
- * 
- */
-export type Recipe = Prisma.RecipeModel
-/**
- * Model RecipeFood
- * 
- */
-export type RecipeFood = Prisma.RecipeFoodModel
 /**
  * Model KcalGoal
  * 
@@ -48,7 +33,27 @@ export type KcalGoal = Prisma.KcalGoalModel
  */
 export type User = Prisma.UserModel
 /**
- * Model FoodEntry
+ * Model Food
  * 
  */
-export type FoodEntry = Prisma.FoodEntryModel
+export type Food = Prisma.FoodModel
+/**
+ * Model FoodPortionTemplate
+ * 
+ */
+export type FoodPortionTemplate = Prisma.FoodPortionTemplateModel
+/**
+ * Model FoodLog
+ * 
+ */
+export type FoodLog = Prisma.FoodLogModel
+/**
+ * Model MealLog
+ * 
+ */
+export type MealLog = Prisma.MealLogModel
+/**
+ * Model MealTemplate
+ * 
+ */
+export type MealTemplate = Prisma.MealTemplateModel

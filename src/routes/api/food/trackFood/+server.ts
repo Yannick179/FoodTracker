@@ -15,27 +15,24 @@ export const POST = async ({ request, locals }) => {
         }
         console.log(foodId, amount, userid, date);
 
-        await prisma.$transaction([
-            prisma.foodEntry.create({
+        await prisma.$transaction(async (tx) => {
+            const mealLog = await tx.mealLog.create({
                 data: {
                     userId: user.id,
-                    foodId,
-                    amount,
-                    eatenAt: date
-                }
-            }),
-
-            prisma.food.update({
-                where: {
-                    id: foodId
-                },
-                data: {
-                    usageCount: {
-                        increment: 1
+                    eatenAt: date,
+                    name: "",
+                    foodLogs: {
+                        create: {
+                            foodId,
+                            amount,
+                    }
                     }
                 }
             })
-        ]);
+
+            return mealLog;
+        })
+
         return new Response(null, { status: 204 });
     } catch (err) {
         console.error(err);

@@ -51,13 +51,14 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Food: 'Food',
   Session: 'Session',
-  Recipe: 'Recipe',
-  RecipeFood: 'RecipeFood',
   KcalGoal: 'KcalGoal',
   User: 'User',
-  FoodEntry: 'FoodEntry'
+  Food: 'Food',
+  FoodPortionTemplate: 'FoodPortionTemplate',
+  FoodLog: 'FoodLog',
+  MealLog: 'MealLog',
+  MealTemplate: 'MealTemplate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,20 +77,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const FoodScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  calories: 'calories',
-  protein: 'protein',
-  carbohydrates: 'carbohydrates',
-  fat: 'fat',
-  usageCount: 'usageCount',
-  createdAt: 'createdAt'
-} as const
-
-export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
-
-
 export const SessionScalarFieldEnum = {
   id: 'id',
   token: 'token',
@@ -98,24 +85,6 @@ export const SessionScalarFieldEnum = {
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
-
-
-export const RecipeScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
-} as const
-
-export type RecipeScalarFieldEnum = (typeof RecipeScalarFieldEnum)[keyof typeof RecipeScalarFieldEnum]
-
-
-export const RecipeFoodScalarFieldEnum = {
-  id: 'id',
-  recipeId: 'recipeId',
-  foodId: 'foodId',
-  quantity: 'quantity'
-} as const
-
-export type RecipeFoodScalarFieldEnum = (typeof RecipeFoodScalarFieldEnum)[keyof typeof RecipeFoodScalarFieldEnum]
 
 
 export const KcalGoalScalarFieldEnum = {
@@ -141,15 +110,57 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const FoodEntryScalarFieldEnum = {
+export const FoodScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  foodId: 'foodId',
-  amount: 'amount',
-  eatenAt: 'eatenAt'
+  name: 'name',
+  calories: 'calories',
+  protein: 'protein',
+  carbohydrates: 'carbohydrates',
+  fat: 'fat',
+  usageCount: 'usageCount',
+  createdAt: 'createdAt'
 } as const
 
-export type FoodEntryScalarFieldEnum = (typeof FoodEntryScalarFieldEnum)[keyof typeof FoodEntryScalarFieldEnum]
+export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
+
+
+export const FoodPortionTemplateScalarFieldEnum = {
+  id: 'id',
+  foodId: 'foodId',
+  mealTemplateId: 'mealTemplateId',
+  amount: 'amount'
+} as const
+
+export type FoodPortionTemplateScalarFieldEnum = (typeof FoodPortionTemplateScalarFieldEnum)[keyof typeof FoodPortionTemplateScalarFieldEnum]
+
+
+export const FoodLogScalarFieldEnum = {
+  id: 'id',
+  mealLogId: 'mealLogId',
+  foodId: 'foodId',
+  amount: 'amount'
+} as const
+
+export type FoodLogScalarFieldEnum = (typeof FoodLogScalarFieldEnum)[keyof typeof FoodLogScalarFieldEnum]
+
+
+export const MealLogScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  eatenAt: 'eatenAt',
+  userId: 'userId'
+} as const
+
+export type MealLogScalarFieldEnum = (typeof MealLogScalarFieldEnum)[keyof typeof MealLogScalarFieldEnum]
+
+
+export const MealTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId'
+} as const
+
+export type MealTemplateScalarFieldEnum = (typeof MealTemplateScalarFieldEnum)[keyof typeof MealTemplateScalarFieldEnum]
 
 
 export const SortOrder = {

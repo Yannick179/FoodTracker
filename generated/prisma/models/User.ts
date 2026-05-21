@@ -208,9 +208,10 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   googleId?: Prisma.StringNullableFilter<"User"> | string | null
-  foodEntries?: Prisma.FoodEntryListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   goals?: Prisma.KcalGoalListRelationFilter
+  mealLogs?: Prisma.MealLogListRelationFilter
+  mealTemplates?: Prisma.MealTemplateListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -218,9 +219,10 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
-  foodEntries?: Prisma.FoodEntryOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   goals?: Prisma.KcalGoalOrderByRelationAggregateInput
+  mealLogs?: Prisma.MealLogOrderByRelationAggregateInput
+  mealTemplates?: Prisma.MealTemplateOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -231,9 +233,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  foodEntries?: Prisma.FoodEntryListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   goals?: Prisma.KcalGoalListRelationFilter
+  mealLogs?: Prisma.MealLogListRelationFilter
+  mealTemplates?: Prisma.MealTemplateListRelationFilter
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -262,9 +265,10 @@ export type UserCreateInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -272,18 +276,20 @@ export type UserUncheckedCreateInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogUncheckedCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -291,9 +297,10 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUncheckedUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -382,26 +389,41 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type UserCreateNestedOneWithoutFoodEntriesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFoodEntriesInput, Prisma.UserUncheckedCreateWithoutFoodEntriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFoodEntriesInput
+export type UserCreateNestedOneWithoutMealLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMealLogsInput, Prisma.UserUncheckedCreateWithoutMealLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMealLogsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutFoodEntriesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFoodEntriesInput, Prisma.UserUncheckedCreateWithoutFoodEntriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFoodEntriesInput
-  upsert?: Prisma.UserUpsertWithoutFoodEntriesInput
+export type UserUpdateOneRequiredWithoutMealLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMealLogsInput, Prisma.UserUncheckedCreateWithoutMealLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMealLogsInput
+  upsert?: Prisma.UserUpsertWithoutMealLogsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFoodEntriesInput, Prisma.UserUpdateWithoutFoodEntriesInput>, Prisma.UserUncheckedUpdateWithoutFoodEntriesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMealLogsInput, Prisma.UserUpdateWithoutMealLogsInput>, Prisma.UserUncheckedUpdateWithoutMealLogsInput>
+}
+
+export type UserCreateNestedOneWithoutMealTemplatesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMealTemplatesInput, Prisma.UserUncheckedCreateWithoutMealTemplatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMealTemplatesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMealTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMealTemplatesInput, Prisma.UserUncheckedCreateWithoutMealTemplatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMealTemplatesInput
+  upsert?: Prisma.UserUpsertWithoutMealTemplatesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMealTemplatesInput, Prisma.UserUpdateWithoutMealTemplatesInput>, Prisma.UserUncheckedUpdateWithoutMealTemplatesInput>
 }
 
 export type UserCreateWithoutSessionsInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -409,8 +431,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogUncheckedCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -433,8 +456,9 @@ export type UserUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -442,16 +466,18 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUncheckedUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalsInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalsInput = {
@@ -459,8 +485,9 @@ export type UserUncheckedCreateWithoutGoalsInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
-  foodEntries?: Prisma.FoodEntryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogUncheckedCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalsInput = {
@@ -483,8 +510,9 @@ export type UserUpdateWithoutGoalsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalsInput = {
@@ -492,58 +520,117 @@ export type UserUncheckedUpdateWithoutGoalsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodEntries?: Prisma.FoodEntryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUncheckedUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutFoodEntriesInput = {
+export type UserCreateWithoutMealLogsInput = {
   email: string
   passwordHash?: string | null
   googleId?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutFoodEntriesInput = {
+export type UserUncheckedCreateWithoutMealLogsInput = {
   id?: number
   email: string
   passwordHash?: string | null
   googleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
+  mealTemplates?: Prisma.MealTemplateUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutFoodEntriesInput = {
+export type UserCreateOrConnectWithoutMealLogsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFoodEntriesInput, Prisma.UserUncheckedCreateWithoutFoodEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMealLogsInput, Prisma.UserUncheckedCreateWithoutMealLogsInput>
 }
 
-export type UserUpsertWithoutFoodEntriesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFoodEntriesInput, Prisma.UserUncheckedUpdateWithoutFoodEntriesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFoodEntriesInput, Prisma.UserUncheckedCreateWithoutFoodEntriesInput>
+export type UserUpsertWithoutMealLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMealLogsInput, Prisma.UserUncheckedUpdateWithoutMealLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMealLogsInput, Prisma.UserUncheckedCreateWithoutMealLogsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutFoodEntriesInput = {
+export type UserUpdateToOneWithWhereWithoutMealLogsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFoodEntriesInput, Prisma.UserUncheckedUpdateWithoutFoodEntriesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMealLogsInput, Prisma.UserUncheckedUpdateWithoutMealLogsInput>
 }
 
-export type UserUpdateWithoutFoodEntriesInput = {
+export type UserUpdateWithoutMealLogsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutFoodEntriesInput = {
+export type UserUncheckedUpdateWithoutMealLogsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
+  mealTemplates?: Prisma.MealTemplateUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMealTemplatesInput = {
+  email: string
+  passwordHash?: string | null
+  googleId?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  goals?: Prisma.KcalGoalCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMealTemplatesInput = {
+  id?: number
+  email: string
+  passwordHash?: string | null
+  googleId?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  goals?: Prisma.KcalGoalUncheckedCreateNestedManyWithoutUserInput
+  mealLogs?: Prisma.MealLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMealTemplatesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMealTemplatesInput, Prisma.UserUncheckedCreateWithoutMealTemplatesInput>
+}
+
+export type UserUpsertWithoutMealTemplatesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMealTemplatesInput, Prisma.UserUncheckedUpdateWithoutMealTemplatesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMealTemplatesInput, Prisma.UserUncheckedCreateWithoutMealTemplatesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMealTemplatesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMealTemplatesInput, Prisma.UserUncheckedUpdateWithoutMealTemplatesInput>
+}
+
+export type UserUpdateWithoutMealTemplatesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  goals?: Prisma.KcalGoalUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMealTemplatesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  goals?: Prisma.KcalGoalUncheckedUpdateManyWithoutUserNestedInput
+  mealLogs?: Prisma.MealLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -552,15 +639,17 @@ export type UserUncheckedUpdateWithoutFoodEntriesInput = {
  */
 
 export type UserCountOutputType = {
-  foodEntries: number
   sessions: number
   goals: number
+  mealLogs: number
+  mealTemplates: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  foodEntries?: boolean | UserCountOutputTypeCountFoodEntriesArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   goals?: boolean | UserCountOutputTypeCountGoalsArgs
+  mealLogs?: boolean | UserCountOutputTypeCountMealLogsArgs
+  mealTemplates?: boolean | UserCountOutputTypeCountMealTemplatesArgs
 }
 
 /**
@@ -571,13 +660,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountFoodEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FoodEntryWhereInput
 }
 
 /**
@@ -594,15 +676,30 @@ export type UserCountOutputTypeCountGoalsArgs<ExtArgs extends runtime.Types.Exte
   where?: Prisma.KcalGoalWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMealLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MealLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMealTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MealTemplateWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   passwordHash?: boolean
   googleId?: boolean
-  foodEntries?: boolean | Prisma.User$foodEntriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
+  mealLogs?: boolean | Prisma.User$mealLogsArgs<ExtArgs>
+  mealTemplates?: boolean | Prisma.User$mealTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -629,9 +726,10 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "googleId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  foodEntries?: boolean | Prisma.User$foodEntriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
+  mealLogs?: boolean | Prisma.User$mealLogsArgs<ExtArgs>
+  mealTemplates?: boolean | Prisma.User$mealTemplatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -640,9 +738,10 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    foodEntries: Prisma.$FoodEntryPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     goals: Prisma.$KcalGoalPayload<ExtArgs>[]
+    mealLogs: Prisma.$MealLogPayload<ExtArgs>[]
+    mealTemplates: Prisma.$MealTemplatePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1043,9 +1142,10 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  foodEntries<T extends Prisma.User$foodEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$foodEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FoodEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   goals<T extends Prisma.User$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KcalGoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mealLogs<T extends Prisma.User$mealLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mealLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MealLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mealTemplates<T extends Prisma.User$mealTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mealTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MealTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1472,30 +1572,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.foodEntries
- */
-export type User$foodEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FoodEntry
-   */
-  select?: Prisma.FoodEntrySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FoodEntry
-   */
-  omit?: Prisma.FoodEntryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FoodEntryInclude<ExtArgs> | null
-  where?: Prisma.FoodEntryWhereInput
-  orderBy?: Prisma.FoodEntryOrderByWithRelationInput | Prisma.FoodEntryOrderByWithRelationInput[]
-  cursor?: Prisma.FoodEntryWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FoodEntryScalarFieldEnum | Prisma.FoodEntryScalarFieldEnum[]
-}
-
-/**
  * User.sessions
  */
 export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1541,6 +1617,54 @@ export type User$goalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.KcalGoalScalarFieldEnum | Prisma.KcalGoalScalarFieldEnum[]
+}
+
+/**
+ * User.mealLogs
+ */
+export type User$mealLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MealLog
+   */
+  select?: Prisma.MealLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MealLog
+   */
+  omit?: Prisma.MealLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MealLogInclude<ExtArgs> | null
+  where?: Prisma.MealLogWhereInput
+  orderBy?: Prisma.MealLogOrderByWithRelationInput | Prisma.MealLogOrderByWithRelationInput[]
+  cursor?: Prisma.MealLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MealLogScalarFieldEnum | Prisma.MealLogScalarFieldEnum[]
+}
+
+/**
+ * User.mealTemplates
+ */
+export type User$mealTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MealTemplate
+   */
+  select?: Prisma.MealTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MealTemplate
+   */
+  omit?: Prisma.MealTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MealTemplateInclude<ExtArgs> | null
+  where?: Prisma.MealTemplateWhereInput
+  orderBy?: Prisma.MealTemplateOrderByWithRelationInput | Prisma.MealTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.MealTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MealTemplateScalarFieldEnum | Prisma.MealTemplateScalarFieldEnum[]
 }
 
 /**

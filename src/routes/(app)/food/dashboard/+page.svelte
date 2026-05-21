@@ -3,13 +3,17 @@
     import {onMount} from "svelte";
     import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
     import ResultBarKcals from "$lib/components/ResultBarKcals.svelte";
-    import FoodListEntry from "$lib/components/FoodListEntry.svelte";
+    import FoodLogListEntry from "$lib/components/FoodLogListEntry.svelte";
     import { createDate } from "$lib/dataStore.svelte.js";
     import EditFoodModal from "$lib/components/EditFoodModal.svelte";
-    import type {FoodEntryDto} from "../../../api/food/loadFoodEntriesFromDateX/+server";
+    import type {
+        FoodLogDto,
+        MealLogDto,
+        DayStatsDto
+    } from "../../../api/food/loadMealLogFromDateX/+server";
 
-    let selectedFood: FoodEntryDto = $state({
-        foodEntryId: 0,
+    let selectedFoodLog: FoodLogDto = $state({
+        foodLogId: 0,
         foodId: 0,
         name: '',
         amount: 0,
@@ -19,9 +23,13 @@
         carbohydrates: 0,
         fat: 0
     });
+
+
     let showModal = $state(false);
-    let foodEntries: FoodEntryDto[] = $state([]);
-    let dayStats: DayStats = $state({
+    // let foodEntries: FoodEntryDto[] = $state([]);
+    // let mealLogReponse: MealLogResponseDto[] = $state([]);
+    let mealLogs: MealLogDto[] = $state([]);
+    let dayStats: DayStatsDto = $state({
         calories: 0,
         protein: 0,
         carbohydrates: 0,
@@ -31,12 +39,6 @@
     let proteinGoal = $state(0);
     let carbohydrateGoal = $state(0);
     let fatsGoal = $state(0);
-    type DayStats = {
-        calories: number;
-        protein: number;
-        carbohydrates: number;
-        fat: number;
-    };
 
     const globalDate = createDate();
 
@@ -45,12 +47,12 @@
     let loadingKcalGoal = $state(false);
 
     async function refetchPageInformation() {
-        await LoadFoodEntriesFromDateX();
+        await LoadMealLogFromDateX();
         await LoadKcalGoalFromDateX();
     }
 
-    function open(food: any) {
-        selectedFood = food;
+    function open(food: FoodLogDto) {
+        selectedFoodLog = food;
         showModal = true;
     }
 
@@ -131,19 +133,22 @@
         }
     }
 
-    async function LoadFoodEntriesFromDateX() {
+    async function LoadMealLogFromDateX() {
         try {
             loadingFoodEntries = true;
-            const res = await fetch(`/api/food/loadFoodEntriesFromDateX?date=${encodeURIComponent(globalDate.date)}`);
+            const res = await fetch(`/api/food/loadMealLogFromDateX?date=${encodeURIComponent(globalDate.date)}`);
+
             if (!res.ok) {
                 throw new Error('failed to fetch food entries');
             }
+
             let resJson = await res.json();
-            console.log(resJson.Entries);
+            console.log("meallog + daystats");
             console.log(resJson);
 
-            foodEntries = resJson.foodEntries;
+            mealLogs = resJson.mealLogs;
             dayStats = resJson.dayStats;
+            console.log("daystats", dayStats);
 
         } catch (err: any) {
             error = err.message;
@@ -162,8 +167,8 @@
 
 </script>
 
-<div class="pt-16 px-10 flex flex-col">
-    <div class="grid h-full grid-cols-[4fr_10fr_5fr] gap-6 ">
+<div class="py-6 px-5 flex flex-col">
+    <div class="grid h-full grid-cols-[3fr_10fr_5fr] gap-6 ">
         <!-- col 1-->
         <div>
             <div class="text-xl text-zinc-400 flex">
@@ -177,9 +182,10 @@
 
         <!-- col 2-->
         <div>
-            <div class="overflow-y-auto overflow-x-auto min-w-120 grid p-6 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
+            <div class="overflow-y-auto overflow-x-auto min-w-120 grid px-10 py-4 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
                 <div class="w-full grid grid-rows-[70%_2px_30%]">
-                    <div class="flex items-center justify-center pb-3">
+                    <div class="flex-row items-center justify-center pb-3">
+                        <div class="text-xl font-bold">Nutrition Overview</div>
                         <div class="grid grid-cols-3 items-center place-items-center">
                             <div class="grid grid-rows-3 items-center place-items-center">
                                 <div class="flex">Calories</div>
@@ -194,50 +200,50 @@
                         </div>
                     </div>
 
-                    <div class="w-full h-full px-3 lg:px-3 xl:px-6">
+                    <!-- the line between -->
+                    <div class="w-full h-full">
                         <div class="w-full bg-card-border h-full">
                         </div>
                     </div>
 
 
-                    <div class="w-full grid grid-cols-3 px-3 lg:px-3 gap-16 xl:px-6">
-                        <div class="grid grid-rows-3  pt-3 grid grid-rows-3 place-items-center">
-                            <div class="flex w-full">Protein</div>
+                    <div class="w-full grid grid-cols-3 gap-16">
+                        <div class="pt-3 place-items-center">
+                            <div class="mb-1 flex text-lg w-full">Protein</div>
                             <ResultBarMacros value={dayStats.protein} max={220} />
-                            <div class="flex w-full">{dayStats.protein}/{proteinGoal}</div>
+                            <div class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</div>
                         </div>
 
-                        <div class=" grid items-center pt-3 grid-rows-3 place-items-center">
-                            <div class="flex w-full">Carbohydrates</div>
+                        <div class="items-center pt-3 place-items-center">
+                            <div class="mb-1 flex text-lg w-full">Carbohydrates</div>
                             <ResultBarMacros value={dayStats.carbohydrates} max={400} />
-                            <div class="flex w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</div>
+                            <div class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</div>
                         </div>
 
-                        <div class="grid items-center pt-3 grid-rows-3 place-items-center">
-                            <div class="flex w-full">Fats</div>
+                        <div class="items-center pt-3 place-items-center">
+                            <div class="mb-1 flex text-lg w-full">Fats</div>
                             <ResultBarMacros value={dayStats.fat} max={80} />
-                            <div class="flex w-full">{dayStats.fat}/{fatsGoal}</div>
+                            <div class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full"></div>
-
-            <div class="w-full flex flex-col gap-4 justify-items-center">
-                <div class="p-6 w-full rounded-2xl border-2 border border-neutral-400 justify-items-center">
-                    <h3 class="font-medium mb-4">Logged Items</h3>
-                    <!--                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>-->
-                    <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
-                        {#each foodEntries as foodEntry}
-                            <FoodListEntry onClick={open}
-                                           onDelete={refetchPageInformation}
-                                           foodEntry={foodEntry}
-                            />
+            <div class="w-full flex flex-col px-10 py-6 gap-4 justify-items-center rounded-2xl justify-items-center text-xl border-[2px] border-card-border bg-card mb-6">
+                <h3 class="text-xl font-bold">Logged Items</h3>
+                <!--                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>-->
+                <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
+<!--                    TODO: REFACTOR-->
+                    {#each mealLogs as mealLog}
+                        <div>meallog name</div>
+                        {#each mealLog.foods as foodLog}
+                            <FoodLogListEntry onClick={open}
+                                              onDelete={refetchPageInformation}
+                                              foodLog={foodLog}/>
                         {/each}
-                        <div class="px-40">
-                            <div class="cursor-pointer border-brand text-center py-3 border-2 rounded-2xl text-brand"> Add new Food +</div>
-                        </div>
+                    {/each}
+                    <div class="px-40">
+                        <div class="cursor-pointer border-brand text-lg text-center py-2 border-2 rounded-2xl text-brand"> Add new Food +</div>
                     </div>
                 </div>
             </div>
@@ -245,99 +251,16 @@
 
         <!-- col 3-->
         <div>
-            <div class="flex w-full rounded-2xl">
-                <span class="text-sm rounded-2xl w-full border-2 border border-neutral-400">Recommendations</span>
+            <div class="flex w-full">
+                <div class="border-[2px] px-6 py-3 w-full h-125 rounded-2xl border-card-border bg-card">
+                    <div class="text-xl font-semibold">Recommendations</div>
+                </div>
             </div>
         </div>
 
     </div>
 </div>
 
-<!--<div class="pt-16 px-10 flex flex-col">-->
-<!--    <div class="grid h-full grid-cols-[4fr_10fr_5fr] gap-6 ">-->
-<!--        <div class="w-full grid justify-items-center">-->
-<!--            <div class="grid-rows-2 w-full">-->
-<!--                <div class="text-sm text-zinc-400 flex">-->
-<!--                    {convertNumberToDay(globalDate.date.getDay())}-->
-<!--                </div>-->
-<!--                <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">-->
-<!--                    {getDateNicelyFormatted(globalDate.date)}-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="flex w-full">-->
-<!--                <Calendar/>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="w-full h-full ">-->
-
-<!--        </div>-->
-<!--        <div class="grid h-full justify-items-center">-->
-<!--            <div class="w-full rounded-2xl border-2 border border-neutral-400 grid grid-rows-[70%_30%]">-->
-<!--                <div class="flex items-center justify-center">-->
-<!--                    <div class="grid grid-cols-3 items-center place-items-center">-->
-<!--                        <div class="grid grid-rows-2 items-center place-items-center">-->
-<!--                            <div class="flex">Calories</div>-->
-<!--                            <div class="flex">{kcalGoal}</div>-->
-<!--                        </div>-->
-<!--                        <ResultBarKcals value={dayStats.calories} max={kcalGoal}/>-->
-<!--                        <div class="grid grid-rows-2 items-center place-items-center">-->
-<!--                            <div class="flex">ate</div>-->
-<!--                            <div class="flex">{dayStats.calories}</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="items-center justify-center grid grid-cols-3 gap-2">-->
-<!--                    <div class="grid grid-rows-3 items-center place-items-center">-->
-<!--                        <div class="flex">Protein</div>-->
-<!--                        <ResultBarMacros value={dayStats.protein} max={220} />-->
-<!--                        <div class="flex">{dayStats.protein}/{proteinGoal}</div>-->
-<!--                    </div>-->
-
-<!--                    <div class=" grid items-center grid-rows-3 place-items-center">-->
-<!--                        <div class="flex">Carbohydrates</div>-->
-<!--                        <ResultBarMacros value={dayStats.carbohydrates} max={400} />-->
-<!--                        <div class="flex">{dayStats.carbohydrates}/{carbohydrateGoal}</div>-->
-<!--                    </div>-->
-
-<!--                    <div class="grid items-center grid-rows-3 place-items-center">-->
-<!--                        <div class="flex">Fats</div>-->
-<!--                        <ResultBarMacros value={dayStats.fat} max={80} />-->
-<!--                        <div class="flex">{dayStats.fat}/{fatsGoal}</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="flex h-full rounded-2xl">-->
-<!--            <span class="text-sm rounded-2xl w-full border-2 border border-neutral-400">Recommendations</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="grid grid-cols-[4fr_8fr_5fr] gap-x-8 h-auto ">-->
-<!--        <div class="w-full"></div>-->
-
-<!--        <div class="w-full flex flex-col gap-4 justify-items-center">-->
-<!--            <div class="p-6 w-full rounded-2xl border-2 border border-neutral-400 justify-items-center">-->
-<!--                <h3 class="font-medium mb-4">Logged Items</h3>-->
-<!--&lt;!&ndash;                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>&ndash;&gt;-->
-<!--                <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">-->
-<!--                    {#each foodEntries as foodEntry}-->
-<!--                        <FoodListEntry onClick={open}-->
-<!--                                       onDelete={refetchPageInformation}-->
-<!--                                       foodEntry={foodEntry}-->
-<!--                        />-->
-<!--                    {/each}-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="w-full">-->
-
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 {#if showModal}
-    <EditFoodModal onClose={handleClose} bind:selectedFood={selectedFood}  />
+    <EditFoodModal onClose={handleClose} bind:selectedFoodLog={selectedFoodLog}  />
 {/if}

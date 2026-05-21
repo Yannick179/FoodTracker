@@ -8,44 +8,12 @@ generator client {
   output   = "../generated/prisma"
 }
 
-model Food {
-  id            Int         @id @default(autoincrement())
-  name          String
-  calories      Float
-  protein       Float
-  carbohydrates Float
-  fat           Float
-  usageCount    BigInt      @default(0)
-  createdAt     DateTime    @default(now())
-  foodEntries   FoodEntry[]
-  recipes     RecipeFood[]
-
-}
-
 model Session {
   id      Int      @id @default(autoincrement())
   token   String   @unique
   userId  Int
   user    User     @relation(fields: [userId], references: [id])
   expires DateTime
-}
-
-model Recipe {
-  id          Int            @id @default(autoincrement())
-  name        String
-  ingredients RecipeFood[]
-}
-
-model RecipeFood {
-  id        Int    @id @default(autoincrement())
-
-  recipeId  Int
-  foodId    Int
-
-  recipe    Recipe @relation(fields: [recipeId], references: [id])
-  food      Food   @relation(fields: [foodId], references: [id])
-
-  quantity  Int
 }
 
 model KcalGoal {
@@ -64,25 +32,73 @@ model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
   passwordHash String?
-  googleId     String?  @unique
-  foodEntries  FoodEntry[]
+  googleId     String?     @unique
   sessions     Session[]
   goals        KcalGoal[]
+  mealLogs     MealLog[]
+  mealTemplates MealTemplate[]
+
 }
 
-model FoodEntry {
-  id Int @id @default(autoincrement())
+model Food {
+  id            Int         @id @default(autoincrement())
+  name          String
+  calories      Float
+  protein       Float
+  carbohydrates Float
+  fat           Float
+  usageCount    BigInt      @default(0)
+  createdAt     DateTime    @default(now())
+  foodPortionTemplates  FoodPortionTemplate[]
+  foodLogs              FoodLog[]
 
-  userId Int
-  foodId Int
+}
 
-  amount  Int
-  eatenAt DateTime
+model FoodPortionTemplate {
+  id             Int @id @default(autoincrement())
+  foodId         Int
+  mealTemplateId Int
+  amount         Int
 
-  user User @relation(fields: [userId], references: [id])
   food Food @relation(fields: [foodId], references: [id])
+  mealTemplate MealTemplate @relation(fields: [mealTemplateId], references: [id])
 
-  @@index([userId])
   @@index([foodId])
-  @@index([eatenAt])
+  @@index([mealTemplateId])
+}
+
+
+model FoodLog {
+    id             Int         @id @default(autoincrement())
+    mealLogId      Int
+    foodId         Int
+    amount         Int
+
+    food Food @relation(fields: [foodId], references: [id])
+    mealLog MealLog @relation(fields: [mealLogId], references: [id], onDelete: Cascade)
+
+
+
+}
+
+model MealLog {
+    id                  Int         @id @default(autoincrement())
+    name                String      @default("")
+    eatenAt             DateTime
+    userId              Int
+
+    user User @relation(fields: [userId], references: [id])
+
+    foodLogs    FoodLog[]
+
+}
+
+model MealTemplate {
+    id                      Int         @id @default(autoincrement())
+    name                    String
+    foodPortionTemplates    FoodPortionTemplate[]
+    userId                  Int
+
+    user User @relation(fields: [userId], references: [id])
+
 }

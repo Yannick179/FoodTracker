@@ -13,7 +13,7 @@
 
 <div class="flex items-center justify-center">
 
-    <div class="relative w-64 h-64">
+    <div class="relative w-48 h-48">
 
         <svg viewBox="0 0 128 128" class="w-full h-full">
 
@@ -23,7 +23,7 @@
                     cy="64"
                     r={radius}
                     fill="none"
-                    stroke-width="10"
+                    stroke-width="9"
                     class="stroke-fillEmpty"
             />
 
@@ -33,7 +33,7 @@
                     cy="64"
                     r={radius}
                     fill="none"
-                    stroke-width="10"
+                    stroke-width="9"
                     stroke-linecap="round"
                     stroke-dasharray={circumference}
                     stroke-dashoffset={offset}

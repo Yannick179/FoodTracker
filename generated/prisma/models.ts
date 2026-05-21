@@ -8,11 +8,12 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Food.ts'
 export type * from './models/Session.ts'
-export type * from './models/Recipe.ts'
-export type * from './models/RecipeFood.ts'
 export type * from './models/KcalGoal.ts'
 export type * from './models/User.ts'
-export type * from './models/FoodEntry.ts'
+export type * from './models/Food.ts'
+export type * from './models/FoodPortionTemplate.ts'
+export type * from './models/FoodLog.ts'
+export type * from './models/MealLog.ts'
+export type * from './models/MealTemplate.ts'
 export type * from './commonInputTypes.ts'

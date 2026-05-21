@@ -6,7 +6,7 @@
         { name: "New Food", route: "/food/addFood", markActive: false },
         { name: "Tracker", route: "/food/trackFood", markActive: false },
         { name: "Goals", route: "/food/goals", markActive: false },
-        { name: "Recipes", route: "/food/recipes", markActive: false}
+        { name: "Meals", route: "/food/meals", markActive: false}
     ];
 
     import { page } from '$app/state';

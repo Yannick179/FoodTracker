@@ -5,9 +5,6 @@
         { name: "Dashboard", route: "/workout/dashboard", markActive: false },
         { name: "Edit Workout", route: "/workout/editWorkout", markActive: false }, //change name and access so only coaches can access it
 
-        // { name: "Tracker", route: "/food/trackFood" },
-        // { name: "Goals", route: "/food/goals" },
-        // { name: "Recipes", route: "food/recipes"}
     ];
 </script>
 

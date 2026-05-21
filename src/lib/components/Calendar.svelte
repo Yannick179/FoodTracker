@@ -49,50 +49,6 @@
 
     const TOTAL_CELLS = 42;
 
-    // $: {
-    //     const year = currentMonth.getFullYear();
-    //     const month = currentMonth.getMonth();
-    //
-    //     const firstDayIndex = firstDayOfMonth(currentMonth);
-    //     const daysInCurr = daysInMonth(currentMonth);
-    //
-    //     const prevMonth = new Date(year, month - 1, 1);
-    //     const daysInPrev = daysInMonth(prevMonth);
-    //
-    //     const grid = [];
-    //
-    //     // Previous month filler
-    //     for (let i = firstDayIndex - 1; i >= 0; i--) {
-    //         grid.push({
-    //             day: daysInPrev - i,
-    //             currentMonth: false
-    //         });
-    //     }
-    //
-    //     // Current month
-    //     for (let d = 1; d <= daysInCurr; d++) {
-    //         grid.push({
-    //             day: d,
-    //             currentMonth: true
-    //         });
-    //     }
-    //
-    //     // Next month filler
-    //     let nextDay = 1;
-    //     while (grid.length < TOTAL_CELLS) {
-    //         grid.push({
-    //             day: nextDay++,
-    //             currentMonth: false
-    //         });
-    //     }
-    //
-    //     daysGrid = grid;
-    // }
-    // let daysGrid: { day: number; currentMonth: boolean }[] = $state([]);
-
-    // Assuming currentMonth is state (e.g., from a prop or local state)
-    // let currentMonth = $state(new Date());
-
     // Use $derived.by for complex logic calculation
     let daysGrid = $derived.by(() => {
         const year = currentMonth.getFullYear();
@@ -152,21 +108,21 @@
         </button>
     </div>
     <!-- weekdays -->
-    <div class="grid grid-cols-7 mx-2 text-lg">
-        <div class="p-1 font-mono w-10 text-center">Mon</div>
-        <div class="p-1 font-mono w-10 text-center">Tue</div>
-        <div class="p-1 font-mono w-10 text-center">Wed</div>
-        <div class="p-1 font-mono w-10 text-center">Thu</div>
-        <div class="p-1 font-mono w-10 text-center">Fri</div>
-        <div class="p-1 font-mono w-10 text-center">Sat</div>
-        <div class="p-1 font-mono w-10 text-center">Sun</div>
+    <div class="grid grid-cols-7 text-lg mx-2">
+        <div class=" font-mono w-8 text-center">Mon</div>
+        <div class=" font-mono w-8 text-center">Tue</div>
+        <div class=" font-mono w-8 text-center">Wed</div>
+        <div class=" font-mono w-8 text-center">Thu</div>
+        <div class=" font-mono w-8 text-center">Fri</div>
+        <div class=" font-mono w-8 text-center">Sat</div>
+        <div class=" font-mono w-8 text-center">Sun</div>
     </div>
 
     <!-- Days -->
-    <div class="grid grid-cols-7 mx-2 mb-2 text-lg">
+    <div class="grid grid-cols-7 mb-2 mx-2 text-lg">
         {#each daysGrid as cell}
             <button
-                    class={`cursor-pointer py-0.5 rounded-xl text-center font-mono w-10
+                    class={`cursor-pointer py-0.5 rounded-xl text-center font-mono w-8
     ${
         cell.currentMonth
             ? (

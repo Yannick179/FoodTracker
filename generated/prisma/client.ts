@@ -31,8 +31,8 @@ export * from "./enums.ts"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Foods
- * const foods = await prisma.food.findMany()
+ * // Fetch zero or more Sessions
+ * const sessions = await prisma.session.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,25 +42,10 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model Food
- * 
- */
-export type Food = Prisma.FoodModel
-/**
  * Model Session
  * 
  */
 export type Session = Prisma.SessionModel
-/**
- * Model Recipe
- * 
- */
-export type Recipe = Prisma.RecipeModel
-/**
- * Model RecipeFood
- * 
- */
-export type RecipeFood = Prisma.RecipeFoodModel
 /**
  * Model KcalGoal
  * 
@@ -72,7 +57,27 @@ export type KcalGoal = Prisma.KcalGoalModel
  */
 export type User = Prisma.UserModel
 /**
- * Model FoodEntry
+ * Model Food
  * 
  */
-export type FoodEntry = Prisma.FoodEntryModel
+export type Food = Prisma.FoodModel
+/**
+ * Model FoodPortionTemplate
+ * 
+ */
+export type FoodPortionTemplate = Prisma.FoodPortionTemplateModel
+/**
+ * Model FoodLog
+ * 
+ */
+export type FoodLog = Prisma.FoodLogModel
+/**
+ * Model MealLog
+ * 
+ */
+export type MealLog = Prisma.MealLogModel
+/**
+ * Model MealTemplate
+ * 
+ */
+export type MealTemplate = Prisma.MealTemplateModel
