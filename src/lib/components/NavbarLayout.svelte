@@ -25,7 +25,7 @@
 
         <!-- Left -->
         <div class="hidden md:flex gap-6">
-            <div class="grid h-20 grid-rows-[6px_1fr_6px] hover:text-zinc-400">
+            <div class="grid h-20 grid-rows-[6px_1fr_6px]">
                     <!-- Top -->
                     <div></div>
 
@@ -45,7 +45,7 @@
         <!-- Center -->
         <div class="hidden md:flex h-full gap-8">
         {#each routesAndNames as r}
-            <div class="grid h-20 grid-rows-[6px_1fr_6px] hover:text-zinc-400">
+            <div class="grid h-20 grid-rows-[6px_1fr_6px]">
                 <!-- Top -->
                 <div></div>
 
@@ -79,6 +79,6 @@
     </div>
 
     <!-- Row 2 (empty) -->
-    <div class="w-full h-[1px] bg-line"></div>
+    <div class="w-full h-[2px] bg-line"></div>
 
 </nav>
