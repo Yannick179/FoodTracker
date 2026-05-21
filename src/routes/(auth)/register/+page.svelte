@@ -84,9 +84,9 @@
             Sign up with Apple
         </button>
 
-        <div class="text-center text-zinc-300 text-lg font-semibold">
+        <span class="text-center text-zinc-300 text-lg font-semibold">
             or
-        </div>
+        </span>
 
         <form on:submit|preventDefault={register} class="space-y-3">
 

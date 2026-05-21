@@ -53,7 +53,7 @@
 
         <div class="text-center">Logo</div>
 
-        <div class="text-center text-[50px] text-zinc-100 font-bold mb-12">Welcome Back</div>
+        <h2 class="text-center text-[50px] text-zinc-100 font-bold mb-12">Welcome Back</h2>
 
         <!-- prebuilt google button for sign in-->
         <a class="gsi-material-button" href="/api/auth/google" >
@@ -82,9 +82,9 @@
             Sign up with Apple
         </button>
 
-        <div class="text-center text-zinc-300 text-lg font-semibold">
+        <span class="text-center text-zinc-300 text-lg font-semibold">
             or
-        </div>
+        </span>
 
         <form on:submit|preventDefault={login} class="space-y-4">
 

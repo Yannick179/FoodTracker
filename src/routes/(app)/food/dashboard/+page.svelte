@@ -170,32 +170,32 @@
 <div class="py-6 px-5 flex flex-col">
     <div class="grid h-full grid-cols-[3fr_10fr_5fr] gap-6 ">
         <!-- col 1-->
-        <div>
-            <div class="text-xl text-zinc-400 flex">
+        <section>
+            <span class="text-xl text-zinc-400 flex">
                 {convertNumberToDay(globalDate.date.getDay())}
-            </div>
-            <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums mb-5">
+            </span>
+            <span class="flex text-2xl font-semibold text-white tracking-tight tabular-nums mb-5">
                 {getDateNicelyFormatted(globalDate.date)}
-            </div>
+            </span>
             <Calendar/>
-        </div>
+        </section>
 
         <!-- col 2-->
         <div>
-            <div class="overflow-y-auto overflow-x-auto min-w-120 grid px-10 py-4 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
+            <section class="overflow-y-auto overflow-x-auto min-w-120 grid px-10 py-4 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
                 <div class="w-full grid grid-rows-[70%_2px_30%]">
                     <div class="flex-row items-center justify-center pb-3">
-                        <div class="text-xl font-bold">Nutrition Overview</div>
+                        <h2 class="text-xl font-bold">Nutrition Overview</h2>
                         <div class="grid grid-cols-3 items-center place-items-center">
                             <div class="grid grid-rows-3 items-center place-items-center">
-                                <div class="flex">Calories</div>
-                                <div class="flex text-brand text-2xl font-bold">{dayStats.calories}</div>
-                                <div class="flex text-zinc-400 text-base">/ {kcalGoal} kcal</div>
+                                <h3 class="flex">Calories</h3>
+                                <span class="flex text-brand text-2xl font-bold">{dayStats.calories}</span>
+                                <span class="flex text-zinc-400 text-base">/ {kcalGoal} kcal</span>
                             </div>
                             <ResultBarKcals value={dayStats.calories} max={kcalGoal}/>
                             <div class="grid grid-rows-2 items-center place-items-center">
-                                <div class="flex">ate</div>
-                                <div class="flex">{dayStats.calories}</div>
+                                <h3 class="flex">ate</h3>
+                                <span class="flex">{dayStats.calories}</span>
                             </div>
                         </div>
                     </div>
@@ -209,33 +209,33 @@
 
                     <div class="w-full grid grid-cols-3 gap-16">
                         <div class="pt-3 place-items-center">
-                            <div class="mb-1 flex text-lg w-full">Protein</div>
+                            <h3 class="mb-1 flex text-lg w-full">Protein</h3>
                             <ResultBarMacros value={dayStats.protein} max={220} />
-                            <div class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</div>
+                            <span class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</span>
                         </div>
 
                         <div class="items-center pt-3 place-items-center">
-                            <div class="mb-1 flex text-lg w-full">Carbohydrates</div>
+                            <h3 class="mb-1 flex text-lg w-full">Carbohydrates</h3>
                             <ResultBarMacros value={dayStats.carbohydrates} max={400} />
-                            <div class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</div>
+                            <span class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</span>
                         </div>
 
                         <div class="items-center pt-3 place-items-center">
-                            <div class="mb-1 flex text-lg w-full">Fats</div>
+                            <h3 class="mb-1 flex text-lg w-full">Fats</h3>
                             <ResultBarMacros value={dayStats.fat} max={80} />
-                            <div class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</div>
+                            <span class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="w-full flex flex-col px-10 py-6 gap-4 justify-items-center rounded-2xl justify-items-center text-xl border-[2px] border-card-border bg-card mb-6">
-                <h3 class="text-xl font-bold">Logged Items</h3>
+            <section class="w-full flex flex-col px-10 py-6 gap-4 justify-items-center rounded-2xl justify-items-center text-xl border-[2px] border-card-border bg-card mb-6">
+                <h2 class="text-xl font-bold">Logged Items</h2>
                 <!--                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>-->
                 <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
 <!--                    TODO: REFACTOR-->
                     {#each mealLogs as mealLog}
-                        <div>meallog name</div>
+                        <h3>meallog name</h3>
                         {#each mealLog.foods as foodLog}
                             <FoodLogListEntry onClick={open}
                                               onDelete={refetchPageInformation}
@@ -243,19 +243,19 @@
                         {/each}
                     {/each}
                     <div class="px-40">
-                        <div class="cursor-pointer border-brand text-lg text-center py-2 border-2 rounded-2xl text-brand"> Add new Food +</div>
+                        <span class="cursor-pointer border-brand text-lg text-center py-2 border-2 rounded-2xl text-brand"> Add new Food +</span>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
         <!-- col 3-->
         <div>
-            <div class="flex w-full">
+            <section class="flex w-full">
                 <div class="border-[2px] px-6 py-3 w-full h-125 rounded-2xl border-card-border bg-card">
-                    <div class="text-xl font-semibold">Recommendations</div>
+                    <h2 class="text-xl font-semibold">Recommendations</h2>
                 </div>
-            </div>
+            </section>
         </div>
 
     </div>

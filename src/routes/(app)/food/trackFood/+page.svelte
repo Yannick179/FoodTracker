@@ -103,7 +103,7 @@
 
     <!-- left side-->
     <div>
-        <div class="grid h-96 grid-cols-[4fr_8fr_5fr] gap-x-8 ">
+        <section class="grid h-96 grid-cols-[4fr_8fr_5fr] gap-x-8 ">
             <!-- col-1 -->
             <div class="grid justify-items-center">
                 <!-- date -->
@@ -126,7 +126,7 @@
             <!-- col-2 -->
             <div class="grid  justify-items-center">
                 <!-- Grid for the tracking search -->
-                <div class="max-w-2xl mx-auto">
+                <section class="max-w-2xl mx-auto">
 
                     <!-- Search -->
                     <div class="mb-6">
@@ -166,14 +166,14 @@
                         </div>
                     {/if}
 
-                </div>
+                </section>
             </div>
 
             <!-- col-3 -->
-            <div class="flex rounded-2xl rounded-2xl border-2 border border-neutral-400 p-4">
+            <section class="flex rounded-2xl rounded-2xl border-2 border border-neutral-400 p-4">
                 <span class="text-zinc-500 text-sm">Recommendations</span>
-            </div>
-        </div>
+            </section>
+        </section>
     </div>
 
 

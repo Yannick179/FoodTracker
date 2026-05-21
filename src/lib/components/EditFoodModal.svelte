@@ -122,9 +122,9 @@
             <div></div>
 
             <!-- centered title -->
-            <div class="text-xl font-semibold text-zinc-100 text-center">
+            <h2 class="text-xl font-semibold text-zinc-100 text-center">
                 Editing Entry
-            </div>
+            </h2>
 
             <!-- right action -->
             <div class="flex justify-end">
@@ -139,31 +139,31 @@
         </div>
 
         <!-- Title -->
-        <h2 class="text-lg font-semibold text-zinc-100 mb-1">
+        <h3 class="text-lg font-semibold text-zinc-100 mb-1">
             {editableFood.name}
-        </h2>
+        </h3>
         <p class="text-xs text-zinc-500 mb-5">Nutrition per 100g</p>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 gap-3 text-sm mb-6">
             <div class="rounded-xl  border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Calories</div>
-                <div class="text-zinc-100 font-medium">{(caloriesPer100 * editableFood.amount/100).toFixed(1)} kcal</div>
+                <h4 class="text-zinc-400 text-xs">Calories</h4>
+                <span class="text-zinc-100 font-medium">{(caloriesPer100 * editableFood.amount/100).toFixed(1)} kcal</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Protein</div>
-                <div class="text-zinc-100 font-medium">{(proteinPer100 * editableFood.amount/100).toFixed(1)}g</div>
+                <h4 class="text-zinc-400 text-xs">Protein</h4>
+                <span class="text-zinc-100 font-medium">{(proteinPer100 * editableFood.amount/100).toFixed(1)}g</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Carbohydrates</div>
-                <div class="text-zinc-100 font-medium">{(carbohydratesPer100 * editableFood.amount/100).toFixed(1)}g</div>
+                <h4 class="text-zinc-400 text-xs">Carbohydrates</h4>
+                <span class="text-zinc-100 font-medium">{(carbohydratesPer100 * editableFood.amount/100).toFixed(1)}g</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Fats</div>
-                <div class="text-zinc-100 font-medium">{(fatPer100 * editableFood.amount/100).toFixed(1)}g</div>
+                <h4 class="text-zinc-400 text-xs">Fats</h4>
+                <span class="text-zinc-100 font-medium">{(fatPer100 * editableFood.amount/100).toFixed(1)}g</span>
             </div>
         </div>
 

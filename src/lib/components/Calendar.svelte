@@ -109,13 +109,13 @@
     </div>
     <!-- weekdays -->
     <div class="grid grid-cols-7 text-lg mx-2">
-        <div class=" font-mono w-8 text-center">Mon</div>
-        <div class=" font-mono w-8 text-center">Tue</div>
-        <div class=" font-mono w-8 text-center">Wed</div>
-        <div class=" font-mono w-8 text-center">Thu</div>
-        <div class=" font-mono w-8 text-center">Fri</div>
-        <div class=" font-mono w-8 text-center">Sat</div>
-        <div class=" font-mono w-8 text-center">Sun</div>
+        <span  class=" font-mono w-8 text-center">Mon</span>
+        <span  class=" font-mono w-8 text-center">Tue</span>
+        <span class=" font-mono w-8 text-center">Wed</span>
+        <span class=" font-mono w-8 text-center">Thu</span>
+        <span class=" font-mono w-8 text-center">Fri</span>
+        <span class=" font-mono w-8 text-center">Sat</span>
+        <span class=" font-mono w-8 text-center">Sun</span>
     </div>
 
     <!-- Days -->

@@ -50,28 +50,28 @@
         <h2 class="text-lg font-semibold text-zinc-100 mb-1">
             {selectedFood.name}
         </h2>
-        <p class="text-xs text-zinc-500 mb-5">Nutrition per 100g</p>
+        <span class="text-xs text-zinc-500 mb-5">Nutrition per 100g</span>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 gap-3 text-sm mb-6">
             <div class="rounded-xl  border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Calories</div>
-                <div class="text-zinc-100 font-medium">{(selectedFood.calories * amount/100).toFixed(1)}</div>
+                <h3 class="text-zinc-400 text-xs">Calories</h3>
+                <span class="text-zinc-100 font-medium">{(selectedFood.calories * amount/100).toFixed(1)}</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Protein</div>
-                <div class="text-zinc-100 font-medium">{(selectedFood.protein * amount/100).toFixed(1)}g</div>
+                <h3 class="text-zinc-400 text-xs">Protein</h3>
+                <span class="text-zinc-100 font-medium">{(selectedFood.protein * amount/100).toFixed(1)}g</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Carbohydrates</div>
-                <div class="text-zinc-100 font-medium">{(selectedFood.carbohydrates * amount/100).toFixed(1)}g</div>
+                <h3 class="text-zinc-400 text-xs">Carbohydrates</h3>
+                <span class="text-zinc-100 font-medium">{(selectedFood.carbohydrates * amount/100).toFixed(1)}g</span>
             </div>
 
             <div class="rounded-xl border border-zinc-800 p-3">
-                <div class="text-zinc-400 text-xs">Fats</div>
-                <div class="text-zinc-100 font-medium">{(selectedFood.fat * amount/100).toFixed(1)}g</div>
+                <h3 class="text-zinc-400 text-xs">Fats</h3>
+                <span class="text-zinc-100 font-medium">{(selectedFood.fat * amount/100).toFixed(1)}g</span>
             </div>
         </div>
 

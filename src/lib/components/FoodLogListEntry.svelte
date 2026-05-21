@@ -32,9 +32,9 @@
 
 <div onclick={() => onClick(foodLog)} class="group flex items-center justify-between p-4 m-1 cursor-pointer rounded-2xl border-[2px] border-card-border bg-card transition-all duration-200">
     <div class="flex flex-col gap-1">
-        <h3 class="font-semibold text-zinc-100 group-hover:text-white transition-colors">
+        <h2 class="font-semibold text-zinc-100 group-hover:text-white transition-colors">
             {foodLog.name}
-        </h3>
+        </h2>
         <div class="flex items-center gap-2 text-xs font-medium text-zinc-500">
             <span class=" px-2 py-0.5 rounded text-zinc-300">{foodLog.amount}g</span>
             <span>•</span>

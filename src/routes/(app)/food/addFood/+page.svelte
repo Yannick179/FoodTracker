@@ -88,8 +88,8 @@
 
         <!-- Header -->
         <div>
-            <h1 class="text-lg">Add food</h1>
-            <p class="text-xs text-zinc-500">Track macros per 100g</p>
+            <h2 class="text-lg">Add food</h2>
+            <span class="text-xs text-zinc-500">Track macros per 100g</span>
         </div>
 
         <form on:submit|preventDefault={submitFood} class="space-y-4">

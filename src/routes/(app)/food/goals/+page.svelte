@@ -50,11 +50,11 @@ Fats: ${fats}g`);
 
         <!-- Header -->
         <div>
-            <h1 class="text-3xl font-semibold">Goals</h1>
+            <h2 class="text-3xl font-semibold">Goals</h2>
             <p class="">Adjust your daily nutrition targets</p>
         </div>
 
-        <div class="p-8 rounded-2xl border-2 border border-neutral-400">
+        <section class="p-8 rounded-2xl border-2 border border-neutral-400">
 
 <!--            <div>-->
 <!--                <label class="block text-sm ">Calories (kcal)</label>-->
@@ -99,9 +99,9 @@ Fats: ${fats}g`);
             <!-- Summary -->
             <div class="rounded-xl p-4 text-sm text-gray-300">
                 <p>Total kcal from macros:</p>
-                <p class="text-lg mt-1 font-medium">
+                <span class="text-lg mt-1 font-medium">
                     {calories} kcal
-                </p>
+                </span>
             </div>
 
             <div class="flex justify-end">
@@ -113,6 +113,6 @@ Fats: ${fats}g`);
                 </button>
             </div>
 
-        </div>
+        </section>
     </div>
 </div>
