@@ -3,14 +3,43 @@
     import FoodModal from "$lib/components/FoodModal.svelte";
     import {createDate } from "$lib/dataStore.svelte.js";
     import Calendar from "$lib/components/Calendar.svelte";
+    import type {Food} from "../../../api/food/searchFood/+server";
 
-    let foods: any[] = [];
+    let foods: Food[] = [];
     let query = '';
     let loading = false;
     let error = '';
-    let selectedFood: any = null;
+    let selectedFood: Food = {
+        name: "",
+        id: 0,
+        calories: 0,
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0
+    };
     let showModal = false;
     const globalDate = createDate();
+
+
+    async function submit(amount: number, food: Food) {
+        if (amount > 0) {
+            const res = await fetch('/api/food/trackFood', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    foodId: food.id,
+                    amount: amount,
+                    date: globalDate.date
+                })
+            });
+
+            if (!res.ok) throw new Error('Failed to track food');
+
+            handleClose();
+        } else {
+            console.log("Please enter a valid amount of food");
+        }
+    }
 
     async function loadFoods(q: string = '') {
         loading = true;
@@ -81,14 +110,21 @@
         return formattedDate;
     }
 
-    function open(food: any) {
+    function open(food: Food) {
         selectedFood = food;
         showModal = true;
     }
 
     function handleClose() {
         showModal = false;
-        selectedFood = null;
+        selectedFood = {
+            name: "",
+            id: 0,
+            calories: 0,
+            protein: 0,
+            carbohydrates: 0,
+            fat: 0
+        };
         // loadFoods();
     }
 
@@ -182,5 +218,5 @@
 </div>
 
 {#if showModal}
-    <FoodModal onClose={handleClose} {selectedFood} />
+    <FoodModal onClose={handleClose} submit={submit} {selectedFood} />
 {/if}

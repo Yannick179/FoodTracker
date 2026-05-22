@@ -1,8 +1,9 @@
 
 todo:
 
+    task: pass values used in function as parameter and not use it as global state variable
     read into html5 tags that are fitting so i dont recreate div hell
-
+    refactor the meals zoom
     accomodate zoom
     date is stored in utc but db doesnt store in utc when creating something, local db time - convert datetime entries so its uniform
     design the unauthenticated welcome page

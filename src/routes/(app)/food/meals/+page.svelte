@@ -1,34 +1,216 @@
 <script lang="ts">
-    let hasMeal: boolean = false;
+    import CustomSearch from "$lib/components/Icons/CustomSearch.svelte";
+    import CustomBookmark from "$lib/components/Icons/CustomBookmark.svelte";
+    import CustomMeal from "$lib/components/Icons/CustomMeal.svelte";
+    import {Bookmark} from "lucide-svelte";
+    import type {Food} from "../../../api/food/searchFood/+server";
+    import {onMount} from "svelte";
+    import FoodModal from "$lib/components/FoodModal.svelte";
+    type MealFood = {
+        protein: number,
+        carbohydrates: number,
+        fat: number,
+        calories: number,
+        amount: number,
+        foodId: number,
+        name: string,
+    }
+
+    let hasMeal: boolean = $state(false);
+    let showModal: boolean = $state(false);
+    let triesFirstMeal: boolean = $state(false);
+    let query = $state("");
+    let mealFoods: MealFood[] = $state([]);
+    let searchedFoods: Food[] = $state([]);
+    let selectedFood: Food = $state({
+        name: "",
+        id: 0,
+        calories: 0,
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0
+    });
+
+
+    function onClick() {
+        triesFirstMeal = true;
+    }
+
+    function open(food: Food) {
+        selectedFood = food;
+        showModal = true;
+    }
+
+    function handleClose() {
+        showModal = false;
+
+        selectedFood = {
+            name: "",
+            id: 0,
+            calories: 0,
+            protein: 0,
+            carbohydrates: 0,
+            fat: 0
+        };
+        // loadFoods();
+    }
+
+    function submit(amount: number, food: Food) {
+        let mealFood: MealFood = {
+            protein: food.protein / 100 * amount,
+            carbohydrates: food.carbohydrates / 100 * amount,
+            fat: food.fat / 100 * amount,
+            calories: food.calories / 100 * amount,
+            amount: amount,
+            foodId: food.id,
+            name: food.name,
+
+        }
+        mealFoods.push(mealFood);
+        handleClose();
+    }
+
+    async function loadFoods(q: string = '') {
+        try {
+            const url = q ? `/api/food/searchFood?q=${encodeURIComponent(q)}` : '/api/food/searchFood';
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to fetch foods');
+            searchedFoods = await res.json();
+        } catch (err: any) {
+            console.error("Error loading foods", err);
+        }
+    }
+
+    function handleSearch(query: string): void {
+        loadFoods(query);
+    }
+
+    onMount(() => loadFoods());
 </script>
 
-<!--<div>-->
-<!--    Hey, this is our meal Creation tool. You can search for foods, customize your own meals and save them so you dont have to track stuff you eat everyday manually.-->
-<!--</div>-->
-{#if hasMeal}
 
+{#if hasMeal || triesFirstMeal}
+    <section class="w-full py-6 px-5 h-full">
+
+        <div class="w-full h-full grid grid-cols-[5fr_11fr_4fr] gap-5">
+            <!-- Search bar -->
+            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card">
+                <input
+                        type="text"
+                        placeholder="Search..."
+                        oninput={(e) => handleSearch(e.currentTarget.value)}
+                        class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
+				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
+                />
+                {#each searchedFoods as food}
+                    <button
+                            onclick={() => open(food)}
+                            class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
+						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
+                    >
+                        <span class="text-zinc-100">{food.name}</span>
+                        <span class="text-zinc-500 text-sm">Add</span>
+                    </button>
+                {/each}
+            </div>
+
+            <!-- Meal -->
+            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card">
+                <label class="text-xl font-semibold">Meal name
+                    <input
+                            type="text"
+                            placeholder="Meal Name"
+                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
+                </label>
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th>Food</th>
+                            <th>Amount</th>
+                            <th>Calories</th>
+                            <th>Protein</th>
+                            <th>Carbohydrates</th>
+                            <th>Fat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each mealFoods as food}
+                            <tr>
+                                <td>{food.name}</td>
+                                <td>{food.amount}</td>
+                                <td>{food.calories}</td>
+                                <td>{food.protein}</td>
+                                <td>{food.carbohydrates}</td>
+                                <td>{food.fat}</td>
+                            </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Summary-->
+            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card" ></div>
+        </div>
+    </section>
 {:else}
     <section class="w-full py-12 px-16 h-full">
-        <div class="h-full w-full rounded-2xl text-xl border-[2px] border-card-border bg-card">
-            <div class="h-full w-full grid grid-cols-[35%_2px_65%] px-14 py-12 gap-14">
+        <div class="w-full h-full rounded-2xl text-xl border-[2px] border-card-border bg-card">
+            <div class="grid grid-rows-[80%_20%]] h-full">
 
-                <div class="h-full">
-                    <div class="pb-10">LOGO</div>
-                    <h2 class=" text-5xl font-bold pb-10">Create Your Meals</h2>
-                    <p class="pb-10 text-xl text-zinc-400">Search foods, build custom meals, and save your favorites for faster tracking everyday/>
-                    <p class="pb-10">Icon with Text</p>
-                    <p class="pb-10">Icon with Text</p>
-                    <p class="pb-10">Icon with Text</p>
+                <div class="grid grid-cols-[7fr_2px_13fr] px-14 py-12">
+
+                    <div class="pr-14">
+                        <!--                    <div class="pb-10">LOGO</div>-->
+                        <h2 class="text-4xl font-bold pb-5">Create Your Meals</h2>
+                        <p class="pb-5 text-lg text-zinc-400">Search foods, build custom meals, and save your favorites for faster tracking everyday</p>
+                        <div class="grid grid-rows-[1fr_1fr_1fr]">
+                            <div class="pb-2 grid grid-cols-[auto_1fr] gap-5 items-center">
+                                <CustomSearch size={60}></CustomSearch>
+                                <div class="grid auto-rows-max">
+                                    <h3 class="text-lg">Search Food</h3>
+                                    <p class="text-base text-zinc-400 min-w-0">Our database contains thousands of custom prebuild Meals. Save time and Select a Meal that fits your needs.</p>
+                                </div>
+                            </div>
+                            <div class="pb-2 grid grid-cols-[auto_1fr] gap-5 items-center">
+                                <CustomMeal size={60}></CustomMeal>
+                                <div class="grid auto-rows-max">
+                                    <h3 class="text-lg">Build Custom Meals</h3>
+                                    <p class="text-base text-zinc-400">Add foods, adjust portions and make it your own.</p>
+                                </div>
+                            </div>
+                            <div class="pb-2 grid grid-cols-[auto_1fr] auto-cols-max gap-5 items-center">
+                                <CustomBookmark size={60}></CustomBookmark>
+                                <div class="grid auto-rows-max">
+                                    <h3 class="text-lg">Save & Reuse</h3>
+                                    <p class="text-base text-zinc-400">Save your meals and track them with one tap at any time.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="h-full bg-card-border">
+                    </div>
+
+                    <div class="pl-14 h-full w-full">
+                        <div class="w-full h-full border-[2px] border-card-border">IMAGE</div>
+                    </div>
 
                 </div>
 
-                <div class="h-full bg-card-border">
+                <div class="px-14 pb-12 flex items-center justify-center">
+                    <button onclick={onClick} class="cursor-pointer bg-brand py-3 px-15 rounded-2xl flex gap-4 items-center leading-none">
+                        <Bookmark size={25} />
+                        <span class="leading-none text-[20px]">Create your first meal</span>
+                    </button>
                 </div>
-
-                <div class="h-full"></div>
-
             </div>
         </div>
     </section>
 {/if}
 
+
+{#if showModal}
+    <FoodModal submit={submit} onClose={handleClose} {selectedFood}  />
+{/if}

@@ -26,8 +26,6 @@
 
 
     let showModal = $state(false);
-    // let foodEntries: FoodEntryDto[] = $state([]);
-    // let mealLogReponse: MealLogResponseDto[] = $state([]);
     let mealLogs: MealLogDto[] = $state([]);
     let dayStats: DayStatsDto = $state({
         calories: 0,

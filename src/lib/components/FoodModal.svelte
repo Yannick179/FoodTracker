@@ -1,36 +1,17 @@
 <script lang="ts">
+    import type {Food} from "../../routes/api/food/searchFood/+server";
+
     export let onClose: () => void;
-    export let selectedFood: any;
+    export let selectedFood: Food;
+    export let submit: (amount: number, food: Food) => void;
     import { createDate } from '$lib/dataStore.svelte';
 
     let amount = 100;
     const globalDate = createDate();
 
-    async function submit() {
-        if (amount > 0) {
-            const res = await fetch('/api/food/trackFood', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    foodId: selectedFood.id,
-                    amount: amount,
-                    date: globalDate.date
-                })
-            });
-
-            if (!res.ok) throw new Error('Failed to track food');
-            //TODO: should a wait be here for users to notice?
-
-
-            onClose();
-        } else {
-            console.log("Please enter a valid amount of food");
-        }
-    }
-
     function onKeyDown(e: KeyboardEvent) {
         if (e.key === 'Enter') {
-            submit();
+            submit(amount, selectedFood);
         }
         if (e.key === 'Escape') {
             onClose();
@@ -89,14 +70,14 @@
         <!-- Buttons -->
         <div class="flex justify-end gap-2">
             <button
-                    on:click={onClose}
+                    onclick={onClose}
                     class="cursor-pointer px-4 py-2 rounded-xl text-sm hover:bg-zinc-700 text-zinc-200 transition"
             >
                 Cancel
             </button>
 
             <button
-                    on:click={submit}
+                    onclick={() => submit(amount, selectedFood)}
                     class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
             >
                 Add
