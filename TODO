@@ -1,6 +1,7 @@
 
 todo:
 
+    refactor to forms if possible
     task: pass values used in function as parameter and not use it as global state variable
     read into html5 tags that are fitting so i dont recreate div hell
     refactor the meals zoom

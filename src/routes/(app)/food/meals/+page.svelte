@@ -16,6 +16,11 @@
         name: string,
     }
 
+    type FoodTemplate = {
+        foodId: number;
+        amount: number;
+    };
+
     let hasMeal: boolean = $state(false);
     let showModal: boolean = $state(false);
     let triesFirstMeal: boolean = $state(false);
@@ -68,6 +73,14 @@
         }
         mealFoods.push(mealFood);
         handleClose();
+    }
+
+    async function saveMealAsTemplate() {
+        const foodTemplates: FoodTemplate[] = mealFoods.map(food => ({
+            foodId: food.foodId,
+            amount: food.amount
+        }));
+
     }
 
     async function loadFoods(q: string = '') {
