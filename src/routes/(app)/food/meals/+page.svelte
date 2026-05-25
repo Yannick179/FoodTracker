@@ -27,6 +27,7 @@
     let query = $state("");
     let mealFoods: MealFood[] = $state([]);
     let searchedFoods: Food[] = $state([]);
+    let mealName: string = $state("");
     let selectedFood: Food = $state({
         name: "",
         id: 0,
@@ -75,11 +76,35 @@
         handleClose();
     }
 
-    async function saveMealAsTemplate() {
+    function resetPage() {
+         mealFoods = [];
+         searchedFoods = [];
+         mealName = "";
+    }
+
+    async function saveMealTemplate() {
         const foodTemplates: FoodTemplate[] = mealFoods.map(food => ({
             foodId: food.foodId,
             amount: food.amount
         }));
+        try {
+            const res = await fetch("/api/food/saveMealTemplate", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    foodTemplates: foodTemplates,
+                    mealName: mealName,
+                })
+            });
+            resetPage();
+        }
+        catch (error) {
+            console.log(error);
+            //pass
+        }
+
 
     }
 
@@ -132,6 +157,7 @@
                 <label class="text-xl font-semibold">Meal name
                     <input
                             type="text"
+                            bind:value={mealName}
                             placeholder="Meal Name"
                             class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
                 </label>
@@ -159,6 +185,9 @@
                         {/each}
                     </tbody>
                 </table>
+                <button onclick={saveMealTemplate} class="cursor-pointer w-full text-left rounded-2xl bg-brand">
+                    Save meal template
+                </button>
             </div>
 
             <!-- Summary-->

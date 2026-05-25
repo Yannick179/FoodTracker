@@ -3,21 +3,23 @@
     import FoodModal from "$lib/components/FoodModal.svelte";
     import {createDate } from "$lib/dataStore.svelte.js";
     import Calendar from "$lib/components/Calendar.svelte";
-    import type {Food} from "../../../api/food/searchFood/+server";
+    import type { Food } from "../../../api/food/searchFood/+server";
+    import type { MealTemplateResponseDto } from "../../../api/food/searchMealTemplates/+server";
 
-    let foods: Food[] = [];
-    let query = '';
-    let loading = false;
-    let error = '';
-    let selectedFood: Food = {
+    let foods: Food[] = $state([]);
+    let mealTemplates: MealTemplateResponseDto[] = $state([]);
+    let query = $state('');
+    let loading = $state(false);
+    let error = $state('');
+    let selectedFood: Food = $state({
         name: "",
         id: 0,
         calories: 0,
         protein: 0,
         carbohydrates: 0,
         fat: 0
-    };
-    let showModal = false;
+    });
+    let showFoodModal = $state(false);
     const globalDate = createDate();
 
 
@@ -53,6 +55,17 @@
             error = err.message;
         }
         loading = false;
+    }
+
+    async function loadMeals(q: string = '') {
+        try {
+            const url = q ? `/api/food/searchMealTemplates?q=${encodeURIComponent(q)}` : '/api/food/searchMealTemplates';
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to fetch meal templates');
+            mealTemplates = await res.json();
+        } catch (err: any) {
+            error = err.message;
+        }
     }
 
     function convertNumberToDay(number: number) {
@@ -110,13 +123,19 @@
         return formattedDate;
     }
 
-    function open(food: Food) {
+    function openFood(food: Food) {
         selectedFood = food;
-        showModal = true;
+        showFoodModal = true;
+    }
+
+
+    function openMeal(meal: MealTemplateResponseDto) {
+        // selectedFood = food;
+        // showFoodModal = true;
     }
 
     function handleClose() {
-        showModal = false;
+        showFoodModal = false;
         selectedFood = {
             name: "",
             id: 0,
@@ -125,13 +144,20 @@
             carbohydrates: 0,
             fat: 0
         };
-        // loadFoods();
     }
 
-    onMount(() => loadFoods());
+    onMount(() => {
+        loadFoods();
+        loadMeals();
+        }
+    );
 
-    const handleSearch = (q: string) => {
+    const handleFoodSearch = (q: string) => {
         loadFoods(q);
+    };
+
+    const handleMealSearch = (q: string) => {
+        loadMeals(q);
     };
 </script>
 
@@ -171,7 +197,7 @@
                                 type="text"
                                 bind:value={query}
                                 placeholder="Search..."
-                                on:input={() => handleSearch(query)}
+                                on:input={() => handleFoodSearch(query)}
                                 class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
 				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
                         />
@@ -191,7 +217,7 @@
                         <div class="space-y-2">
                             {#each foods as food}
                                 <button
-                                        on:click={() => open(food)}
+                                        on:click={() => openFood(food)}
                                         class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
 						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
                                 >
@@ -206,8 +232,31 @@
             </div>
 
             <!-- col-3 -->
-            <section class="flex rounded-2xl rounded-2xl border-2 border border-neutral-400 p-4">
-                <span class="text-zinc-500 text-sm">Recommendations</span>
+            <section class="flex">
+                <div class="mb-6">
+                    <label class="text-xs text-zinc-500">Search Meals</label>
+                    <input
+                            type="text"
+                            bind:value={query}
+                            placeholder="Search..."
+                            on:input={() => handleFoodSearch(query)}
+                            class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
+				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
+                    />
+
+                    <div class="space-y-2">
+                        {#each mealTemplates as mealTemplate}
+                            <button
+                                    on:click={() => openMeal(mealTemplate)}
+                                    class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
+						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
+                            >
+                                <span class="text-zinc-100">{mealTemplate.name}</span>
+                                <span class="text-zinc-500 text-sm">Add</span>
+                            </button>
+                        {/each}
+                    </div>
+                </div>
             </section>
         </section>
     </div>
@@ -217,6 +266,6 @@
 
 </div>
 
-{#if showModal}
+{#if showFoodModal}
     <FoodModal onClose={handleClose} submit={submit} {selectedFood} />
 {/if}

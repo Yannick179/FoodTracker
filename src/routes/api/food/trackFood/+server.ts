@@ -25,7 +25,7 @@ export const POST = async ({ request, locals }) => {
                         create: {
                             foodId,
                             amount,
-                    }
+                        }
                     }
                 }
             })
