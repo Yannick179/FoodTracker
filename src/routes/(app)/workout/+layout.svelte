@@ -4,7 +4,7 @@
 </script>
 
 <div class="h-screen flex flex-col overflow-hidden">
-	<header class="shrink-0 text-zinc-100 bg-navbar antialiased">
+	<header class="shrink-0 text-zinc-100 bg-light-accent antialiased">
 		<WorkoutNavbar />
 	</header>
 

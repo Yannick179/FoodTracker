@@ -132,7 +132,7 @@
 
         <div class="w-full h-full grid grid-cols-[5fr_11fr_4fr] gap-5">
             <!-- Search bar -->
-            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card">
+            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">
                 <input
                         type="text"
                         placeholder="Search..."
@@ -153,7 +153,7 @@
             </div>
 
             <!-- Meal -->
-            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card">
+            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">
                 <label class="text-xl font-semibold">Meal name
                     <input
                             type="text"
@@ -191,12 +191,12 @@
             </div>
 
             <!-- Summary-->
-            <div class="w-full h-full rounded-2xl border-[2px] border-card-border bg-card" ></div>
+            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card" ></div>
         </div>
     </section>
 {:else}
     <section class="w-full py-12 px-16 h-full">
-        <div class="w-full h-full rounded-2xl text-xl border-[2px] border-card-border bg-card">
+        <div class="w-full h-full rounded-2xl text-xl border-[2px] border-light-accent-darker1 bg-card">
             <div class="grid grid-rows-[80%_20%]] h-full">
 
                 <div class="grid grid-cols-[7fr_2px_13fr] px-14 py-12">
@@ -232,11 +232,11 @@
 
                     </div>
 
-                    <div class="h-full bg-card-border">
+                    <div class="h-full bg-light-accent-darker1">
                     </div>
 
                     <div class="pl-14 h-full w-full">
-                        <div class="w-full h-full border-[2px] border-card-border">IMAGE</div>
+                        <div class="w-full h-full border-[2px] border-light-accent-darker1">IMAGE</div>
                     </div>
 
                 </div>

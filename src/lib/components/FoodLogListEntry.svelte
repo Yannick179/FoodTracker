@@ -30,36 +30,36 @@
 
 
 
-<div onclick={() => onClick(foodLog)} class="group flex items-center justify-between p-4 m-1 cursor-pointer rounded-2xl border-[2px] border-card-border bg-card transition-all duration-200">
+<div onclick={() => onClick(foodLog)} class="group hover:bg-light-accent-darker1 flex items-center transition-colors duration-150 ease-out hover:transition-none border-light-accent-darker1 border-t-[1px] justify-between p-3  cursor-pointer">
     <div class="flex flex-col gap-1">
-        <h2 class="font-semibold text-zinc-100 group-hover:text-white transition-colors">
+        <h2 class="font-semibold text-dark-accent transition-colors">
             {foodLog.name}
         </h2>
         <div class="flex items-center gap-2 text-xs font-medium text-zinc-500">
-            <span class=" px-2 py-0.5 rounded text-zinc-300">{foodLog.amount}g</span>
+            <span class=" px-2 py-0.5 rounded text-dark-accent">{foodLog.amount}g</span>
             <span>•</span>
-            <span class="text-zinc-400">{foodLog.calories} kcal</span>
+            <span class="text-red-accent">{foodLog.calories} kcal</span>
         </div>
     </div>
 
     <div class="flex items-center gap-4">
         <div class="flex flex-col items-center">
             <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Prot</span>
-            <span class="text-sm font-medium text-blue-400">{foodLog.protein}g</span>
+            <span class="text-sm font-medium text-blue-accent">{foodLog.protein}g</span>
         </div>
 
         <div class="h-8 w-px"></div>
 
         <div class="flex flex-col items-center">
             <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Carb</span>
-            <span class="text-sm font-medium text-amber-400">{foodLog.carbohydrates}g</span>
+            <span class="text-sm font-medium text-orange-accent">{foodLog.carbohydrates}g</span>
         </div>
 
         <div class="h-8 w-px"></div>
 
         <div class="flex flex-col items-center">
             <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Fat</span>
-            <span class="text-sm font-medium text-rose-400">{foodLog.fat}g</span>
+            <span class="text-sm font-medium text-red-accent">{foodLog.fat}g</span>
         </div>
 
         <div class="flex flex-col items-center pl-2">

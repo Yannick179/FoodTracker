@@ -5,11 +5,10 @@
 
     const globalDate = createDate();
 
-    let currentMonth = $state(new Date(
-        globalDate.date.getFullYear(),
-        globalDate.date.getMonth(),
-        1
-    ));
+    let currentMonth = $derived.by(() => {
+        const d = globalDate.date;
+        return new Date(d.getFullYear(), d.getMonth(), 1);
+    });
 
     function daysInMonth(date: Date) {
         return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -92,23 +91,23 @@
 
 </script>
 
-<div class="w-full min-w-65 rounded-2xl text-xl border-[2px] border-card-border bg-card overflow-y-auto overflow-x-auto">
+<div class="bg-light-accent rounded-2xl overflow-hidden text-xl border-[2px] border-light-accent-darker1 date-selector-calendar">
 
     <!-- Header -->
-    <div class="flex justify-between items-center m-2">
+    <div class="flex bg-blue-accent justify-between items-center px-2 py-1">
         <button on:click={prevMonth} class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full hover:bg-neutral-800">
-            <span class="transform -translate-y-[1px] -translate-x-[1px]">&lt;</span>
+            <span class="transform -translate-y-[1px] -translate-x-[1px] text-light-accent">&lt;</span>
         </button>
-        <strong>
-            {currentMonth.toLocaleString('default', { month: 'long' })}
+        <strong class="text-light-accent">
+            {currentMonth.toLocaleString("en-GB", { month: 'long' })}
             {currentMonth.getFullYear()}
         </strong>
         <button class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full hover:bg-neutral-800">
-            <span on:click={nextMonth} class="transform -translate-y-[1px] -translate-x-[-1px]">&gt;</span>
+            <span on:click={nextMonth} class="transform -translate-y-[1px] -translate-x-[-1px] text-light-accent">&gt;</span>
         </button>
     </div>
     <!-- weekdays -->
-    <div class="grid grid-cols-7 text-lg mx-2">
+    <div class="grid grid-cols-7 text-base mx-2 pt-2">
         <span  class=" font-mono w-8 text-center">Mon</span>
         <span  class=" font-mono w-8 text-center">Tue</span>
         <span class=" font-mono w-8 text-center">Wed</span>
@@ -119,10 +118,10 @@
     </div>
 
     <!-- Days -->
-    <div class="grid grid-cols-7 mb-2 mx-2 text-lg">
+    <div class="grid grid-cols-7 mb-2 mx-2 text-base">
         {#each daysGrid as cell}
             <button
-                    class={`cursor-pointer py-0.5 rounded-xl text-center font-mono w-8
+                    class={`py-0.5 rounded-xl text-center font-mono w-8
     ${
         cell.currentMonth
             ? (
@@ -130,9 +129,9 @@
                 globalDate.date.getMonth() === currentMonth.getMonth() &&
                 globalDate.date.getFullYear() === currentMonth.getFullYear()
             )
-                ? 'bg-brand hover:bg-brand-hover text-white'
-                : 'hover:bg-neutral-800'
-            : 'text-zinc-600 cursor-default'
+                ? 'cursor-pointer bg-blue-accent hover:bg-blue-accent text-background text-white'
+                : 'cursor-pointer hover:bg-light-accent-darker1'
+            : 'text-zinc-400 cursor-default'
     }`}
                     on:click={() => selectDay(cell.day, cell.currentMonth)}
                     disabled={!cell.currentMonth}

@@ -1,9 +1,142 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');*/
 
 @layer base {
     html, body {
         @apply h-full overflow-hidden;
     }
+}
+
+.modal-card {
+    /*width: 100%;*/
+    /*max-width: 28rem; !* same as max-w-md *!*/
+
+    background-color: var(--color-light-accent);
+    /*border: 2px solid var(--color-light-accent-darker1);*/
+    border-radius: 16px;
+    padding: 24px;
+
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    /*background-color: rgba(0, 0, 0, 0.6); !* approximation of bg-background/60 *!*/
+    background-color: rgba(0, 0, 0, 0.6);
+
+    /*backdrop-filter: blur(16px); !* close to backdrop-blur-lg *!*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.date-selector-wrapper {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+
+}
+
+.date-selector-popover {
+    position: absolute;
+    top: 100%;
+}
+
+.date-selector-calendar {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    z-index: 200;
+    background: transparent;
+}
+.chevron-button {
+    box-sizing: border-box;
+    background-color: var(--color-light-accent);
+    color: var(--color-dark-accent);
+    cursor: pointer;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+}
+.chevron-button:hover {
+    background-color: var(--color-light-accent-darker1);
+}
+
+.date-selector-date-button {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-dark-accent);
+    cursor: pointer;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    justify-content: center;
+    width: 185px;
+
+}
+
+.card {
+    position: relative;
+    z-index: 50;
+    padding: 24px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.18);
+    border-radius: 16px;
+    background-color: var(--color-light-accent);
+    display: grid;
+
+    /* you need to define rows explicitly */
+    /*grid-template-rows: auto 1fr auto;*/
+}
+
+.date-selector-date-button:hover {
+    background-color: var(--color-light-accent-darker1);
+}
+
+.date-selector-button-grid {
+    display: inline-grid;
+    overflow: hidden;
+    grid-auto-flow: column;
+    /*grid-auto-columns: max-content;*/
+    align-items: center;
+    color: var(--color-dark-accent);
+    font-size: 16px;
+    border: 2px solid var(--color-light-accent-darker1);
+    border-radius: 8px;
+}
+
+.primary-button {
+    box-sizing: border-box;
+    background-color: var(--color-orange-accent);
+    color: var(--color-light-accent);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+}
+
+.primary-button:hover {
+    background: var(--color-orange-accent-darker1);
+}
+
+.secondary-button {
+    box-sizing: border-box;
+    background-color: var(--color-light-accent);
+    color: var(--color-dark-accent);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid var(--color-light-accent-darker1);
+
+}
+
+.secondary-button:hover {
+    background: var(--color-light-accent-darker1);
 }
 
 
@@ -12,13 +145,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #3f3f46; /* zinc-700 */
+    background-color: var(--color-light-accent-darker1); /* zinc-700 */
     border-radius: 9999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background-color: #52525b; /* zinc-600 */
-}
+/*::-webkit-scrollbar-thumb:hover {*/
+/*    background-color: #52525b; !* zinc-600 *!*/
+/*}*/
 
 ::-webkit-scrollbar-track {
     background: transparent;
@@ -31,21 +164,70 @@
 
 
 @theme {
-    --color-navbar: #080C12;
-    --color-background: #090E14;
-    --color-line: #13171D;
-    --color-surface: #111214;
-    --color-fillEmpty: #33373D;
-    --color-card: #0F131A;
-    --color-card-border: #1a212b;
-    --color-border: #232427;
-    --color-muted: #9ca3af;
-    /*--color-brand-text: #ff309b;*/
-    --color-brand: #E42A6E;
-    --color-brand-hover: #a10e5a;
-    --color-brand-text-white: #F8F8F7;
+
+    --color-light-accent-darker1: #DDE2E3;
+    --color-light-accent-background: #F9F9FB; /* used to seperate between light accent as background and a (this) slightly darker background!*/
+    --color-light-accent: #F8F9F9;
+    --color-dark-accent: #252733;
+    --color-blue-accent: #9AABC5;
+    --color-orange-accent: #BA8A7E;
+    --color-orange-accent-darker1: #A87C71;
+    --color-red-accent: #EB716F;
+    /*--font-jakarta: "Plus Jakarta Sans", sans-serif;*/
+    --font-josefin: "Josefin Sans", sans-serif;
 }
 
+/*12px  → small labels, hints*/
+/*14px  → body small / secondary text*/
+/*16px  → default body text (MOST COMMON)*/
+/*18px  → emphasized text / large body*/
+/*20px  → small headings*/
+/*24px  → section headings*/
+/*30px  → page headings*/
+/*36px+ → hero titles*/
+
+
+
+.app-main {
+    top: 10vh;
+    height: 90vh;
+    width: 100vw;
+    background-color: var(--color-light-accent-background);
+
+}
+
+.app-main-food-left {
+    z-index: 50;
+    position: relative;
+    box-shadow: 8px 0 4px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    grid-template-columns: clamp(260px, 20vw, 360px) 1fr;
+    border-right: 2px solid var(--color-light-accent-darker1);
+    background-color: var(--color-light-accent);
+}
+
+.shadow-container {
+    z-index: 50;
+    padding: 1.5rem;
+    position:relative;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.18);
+    border-radius: 1rem;
+    background-color: var(--color-light-accent);
+
+}
+
+.app-navbar {
+
+    height: 10vh;
+    width: 100vw;
+    box-shadow: 0 8px 6px rgba(0, 0, 0, 0.06);
+    background-color: var(--color-light-accent);
+    position:relative;
+    z-index:100;
+    border-bottom: 1px solid var(--color-light-accent-darker1);
+
+
+}
 
 /* google sign in button style prerendered */
 .gsi-material-button {

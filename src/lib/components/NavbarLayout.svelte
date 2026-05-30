@@ -1,5 +1,5 @@
 <script>
-
+    import { LogOut } from 'lucide-svelte';
     import {goto} from "$app/navigation";
     export let routesAndNames;
 
@@ -18,25 +18,24 @@
     }
 </script>
 
-<nav class="w-full bg-navbar shadow-sm flex flex-col ">
+<nav class="app-navbar">
 
     <!-- Row 1 -->
-    <div class="flex items-center justify-between w-full px-6">
+    <div class="flex items-center h-full justify-between w-full px-6">
 
         <!-- Left -->
-        <div class="hidden md:flex gap-6">
-            <div class="grid h-20 grid-rows-[6px_1fr_6px]">
+        <div class="hidden h-full md:flex gap-6">
+            <div class="grid h-full grid-rows-[6px_1fr_6px]">
                     <!-- Top -->
                     <div></div>
 
                     <!-- Middle -->
-                    <div class="flex items-center text-3xl font-extrabold">
+                    <div class="flex items-center text-2xl text-orange-accent font-extrabold">
                         <a href="/home" class="hover:text-zinc-400">
                             Logo
                         </a>
                     </div>
 
-                     Bottom
 
                 <div class=""></div>
             </div>
@@ -45,21 +44,21 @@
         <!-- Center -->
         <div class="hidden md:flex h-full gap-8">
         {#each routesAndNames as r}
-            <div class="grid h-20 grid-rows-[6px_1fr_6px]">
+            <div class="grid h-full grid-rows-[6px_1fr_6px]">
                 <!-- Top -->
                 <div></div>
 
                 <!-- Middle -->
-                <div class="flex items-center font-extrabold">
+                <div class="flex items-center font-sans">
                     <a
                             href={r.route}
-                            class={r.markActive ? "hover:text-brand font-semibold text-xl text-brand" : "hover:text-brand font-semibold text-xl"}>
+                            class={r.markActive ? "hover:text-red-accent font-semibold text-xl text-red-accent" : "hover:text-red-accent text-dark-accent font-semibold text-xl"}>
                         {r.name}
                     </a>
                 </div>
 
                 <!-- Bottom-->
-                <div class={r.markActive ? "bg-brand rounded-full" : ""}></div>
+                <div class={r.markActive ? "bg-red-accent rounded-full" : ""}></div>
 
             </div>
         {/each}
@@ -69,16 +68,14 @@
         <div>
             <button
                     type="button"
-                    class="cursor-pointer inline-block px-2 py-2 bg-red-700 text-lg text-white font-bold rounded-md hover:bg-red-600/70 transition"
+                    class="cursor-pointer grid grid-cols-[auto_1fr] gap-2 px-2 py-2 items-center place-items-center bg-dark-accent text-lg text-white font-bold rounded-md hover:bg-background"
                     on:click={handleLogout}
             >
                 Log out
+                <LogOut size="18"/>
             </button>
         </div>
 
     </div>
-
-    <!-- Row 2 (empty) -->
-    <div class="w-full h-[2px] bg-line"></div>
 
 </nav>

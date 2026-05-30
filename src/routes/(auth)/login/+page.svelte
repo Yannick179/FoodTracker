@@ -51,7 +51,7 @@
 
     <div class="flex flex-col w-[350px] py-6 space-y-4 mt-10">
 
-        <div class="text-center">Logo</div>
+        <div class="text-center ">Logo</div>
 
         <h2 class="text-center text-[50px] text-zinc-100 font-bold mb-12">Welcome Back</h2>
 

@@ -165,46 +165,40 @@
 
 </script>
 
-<div class="py-6 px-5 flex flex-col">
-    <div class="grid h-full grid-cols-[3fr_10fr_5fr] gap-6 ">
-        <!-- col 1-->
-        <section>
-            <span class="text-xl text-zinc-400 flex">
+
+<div class="w-full h-full bg-main-background">
+    <div class="grid grid-cols-[auto_1fr] h-full">
+        <section class="app-main-food-left">
+            <span class="text-2xl text-zinc-400 font-semibold flex">
                 {convertNumberToDay(globalDate.date.getDay())}
             </span>
-            <span class="flex text-2xl font-semibold text-white tracking-tight tabular-nums mb-5">
+                <span class="flex text-2xl font-semibold text-blue-accent tracking-tight tabular-nums mb-5">
                 {getDateNicelyFormatted(globalDate.date)}
             </span>
             <Calendar/>
         </section>
 
-        <!-- col 2-->
-        <div>
-            <section class="overflow-y-auto overflow-x-auto min-w-120 grid px-10 py-4 justify-items-center rounded-2xl text-xl border-[2px] border-card-border bg-card mb-6">
-                <div class="w-full grid grid-rows-[70%_2px_30%]">
-                    <div class="flex-row items-center justify-center pb-3">
-                        <h2 class="text-xl font-bold">Nutrition Overview</h2>
-                        <div class="grid grid-cols-3 items-center place-items-center">
-                            <div class="grid grid-rows-3 items-center place-items-center">
-                                <h3 class="flex">Calories</h3>
-                                <span class="flex text-brand text-2xl font-bold">{dayStats.calories}</span>
-                                <span class="flex text-zinc-400 text-base">/ {kcalGoal} kcal</span>
-                            </div>
+        <div class="overflow-auto w-full grid grid-cols-[auto_1fr] gap-6 px-5 pt-6">
+            <div class="flex flex-col gap-6 h-[80vh] w-full">
+                <section class="shadow-container min-w-[650px] min-h-[380px] h-[65%] max-w-[3000px] grid grid-rows">
+                    <h2 class="text-xl font-semibold">Nutrition Overview</h2>
+                    <div class="grid grid-cols-3 items-center ">
+                        <div class="grid grid-rows items-center place-items-center">
+                            <h3>Calories</h3>
+                            <span class="">{dayStats.calories}</span>
+                            <span class="">/ {kcalGoal} kcal</span>
+                        </div>
+                        <div>
                             <ResultBarKcals value={dayStats.calories} max={kcalGoal}/>
-                            <div class="grid grid-rows-2 items-center place-items-center">
-                                <h3 class="flex">ate</h3>
-                                <span class="flex">{dayStats.calories}</span>
-                            </div>
+
                         </div>
-                    </div>
-
-                    <!-- the line between -->
-                    <div class="w-full h-full">
-                        <div class="w-full bg-card-border h-full">
+                        <div class="grid grid-rows items-center place-items-center">
+                            <h3>Calories Left</h3>
+                            <span class="">{Math.max(kcalGoal - dayStats.calories, 0)}</span>
                         </div>
+
                     </div>
-
-
+                    <hr class="my-4 border-light-accent-darker1 rounded-2xl border-[1px]">
                     <div class="w-full grid grid-cols-3 gap-16">
                         <div class="pt-3 place-items-center">
                             <h3 class="mb-1 flex text-lg w-full">Protein</h3>
@@ -224,40 +218,28 @@
                             <span class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</span>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section class="w-full flex flex-col px-10 py-6 gap-4 justify-items-center rounded-2xl justify-items-center text-xl border-[2px] border-card-border bg-card mb-6">
-                <h2 class="text-xl font-bold">Logged Items</h2>
-                <!--                <p class="text-zinc-600 text-sm">Your input/list content goes here...</p>-->
-                <div class="overflow-y-auto w-full h-70 [scrollbar-gutter:stable]">
-<!--                    TODO: REFACTOR-->
+                </section>
+                <section class="shadow-container max-h-[35%] h-[35%] shrink-0"></section>
+            </div>
+            <section class="shadow-container h-[80vh] flex flex-col max-h-full">
+                <h2 class="text-xl font-semibold mb-3">Logged Items</h2>
+                <div class="flex-1 overflow-y-auto w-full min-h-0 [scrollbar-gutter:stable]">
                     {#each mealLogs as mealLog}
-                        <h3>meallog name</h3>
                         {#each mealLog.foods as foodLog}
                             <FoodLogListEntry onClick={open}
                                               onDelete={refetchPageInformation}
                                               foodLog={foodLog}/>
                         {/each}
                     {/each}
-                    <div class="px-40">
-                        <span class="cursor-pointer border-brand text-lg text-center py-2 border-2 rounded-2xl text-brand"> Add new Food +</span>
-                    </div>
                 </div>
             </section>
-        </div>
 
-        <!-- col 3-->
-        <div>
-            <section class="flex w-full">
-                <div class="border-[2px] px-6 py-3 w-full h-125 rounded-2xl border-card-border bg-card">
-                    <h2 class="text-xl font-semibold">Recommendations</h2>
-                </div>
-            </section>
         </div>
 
     </div>
+
 </div>
+
 
 {#if showModal}
     <EditFoodModal onClose={handleClose} bind:selectedFoodLog={selectedFoodLog}  />

@@ -5,6 +5,8 @@
     export let selectedFood: Food;
     export let submit: (amount: number, food: Food) => void;
     import { createDate } from '$lib/dataStore.svelte';
+    import PrimaryButton from "$lib/components/atoms/PrimaryButton.svelte";
+    import SecondaryButton from "$lib/components/atoms/SecondaryButton.svelte";
 
     let amount = 100;
     const globalDate = createDate();
@@ -69,19 +71,8 @@
 
         <!-- Buttons -->
         <div class="flex justify-end gap-2">
-            <button
-                    onclick={onClose}
-                    class="cursor-pointer px-4 py-2 rounded-xl text-sm hover:bg-zinc-700 text-zinc-200 transition"
-            >
-                Cancel
-            </button>
-
-            <button
-                    onclick={() => submit(amount, selectedFood)}
-                    class="cursor-pointer px-4 py-2 rounded-xl text-sm bg-white text-zinc-900 hover:bg-zinc-200 transition font-medium"
-            >
-                Add
-            </button>
+            <SecondaryButton onClick={onClose} Text="Cancel"/>
+            <PrimaryButton onClick={() => submit(amount,selectedFood)} Text="Submit" />
         </div>
     </div>
 </div>

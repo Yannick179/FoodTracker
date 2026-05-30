@@ -6,10 +6,10 @@
 </script>
 
 <!-- Bar background -->
-<div class="w-full mb-1 h-2 bg-fillEmpty rounded-full overflow-hidden">
+<div class="w-full mb-1 h-2 bg-light-accent-darker1 rounded-full overflow-hidden">
     <!-- Fill -->
     <div
-            class="h-full bg-brand transition-all duration-500"
+            class="h-full bg-red-accent transition-all duration-500"
             style="width: {percent}%"
     ></div>
 </div>

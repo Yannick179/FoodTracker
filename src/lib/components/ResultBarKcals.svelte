@@ -24,7 +24,7 @@
                     r={radius}
                     fill="none"
                     stroke-width="9"
-                    class="stroke-fillEmpty"
+                    class="stroke-light-accent-darker1"
             />
 
             <!-- progress -->
@@ -37,14 +37,14 @@
                     stroke-linecap="round"
                     stroke-dasharray={circumference}
                     stroke-dashoffset={offset}
-                    class="stroke-brand transition-all duration-700 ease-out"
+                    class="stroke-red-accent"
                     transform="rotate(-90 64 64)"
             />
 
         </svg>
 
         <!-- center text -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center gap-1">
+        <div class="absolute inset-0 flex flex-col items-center justify-center ">
             <div class="text-4xl font-bold">
                 {percent.toFixed(0)}%
             </div>
