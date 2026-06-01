@@ -22,7 +22,6 @@
 .modal-overlay {
     position: fixed;
     inset: 0;
-    /*background-color: rgba(0, 0, 0, 0.6); !* approximation of bg-background/60 *!*/
     background-color: rgba(0, 0, 0, 0.6);
 
     /*backdrop-filter: blur(16px); !* close to backdrop-blur-lg *!*/
@@ -42,12 +41,12 @@
 .date-selector-popover {
     position: absolute;
     top: 100%;
+    z-index: 500;
 }
 
 .date-selector-calendar {
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    z-index: 200;
-    background: transparent;
+    z-index: 500;
 }
 .chevron-button {
     box-sizing: border-box;
@@ -79,6 +78,15 @@
 
 }
 
+.card-header {
+    color: var(--color-dark-accent);
+    font-family: var(--font-josefin);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
 .card {
     position: relative;
     z-index: 50;
@@ -87,9 +95,6 @@
     border-radius: 16px;
     background-color: var(--color-light-accent);
     display: grid;
-
-    /* you need to define rows explicitly */
-    /*grid-template-rows: auto 1fr auto;*/
 }
 
 .date-selector-date-button:hover {
@@ -110,6 +115,10 @@
 
 .primary-button {
     box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background-color: var(--color-orange-accent);
     color: var(--color-light-accent);
     padding: 8px 16px;
@@ -123,8 +132,65 @@
     background: var(--color-orange-accent-darker1);
 }
 
+.search-input {
+    background-color: var(--color-light-accent);
+    border: none;
+    padding: 12px 0;
+    box-sizing: border-box;
+    color: var(--color-dark-accent);
+    outline: none;
+}
+
+
+.search {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--color-light-accent);
+    border-radius: 8px;
+    border: 2px solid var(--color-light-accent-darker1);
+    /*padding: 8px 16px;*/
+    box-sizing: border-box;
+    color: var(--color-dark-accent);
+    gap: 12px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.search-find-results-button {
+    cursor: pointer;
+    margin: 8px 0;
+}
+
+.search-cancel-button {
+    cursor: pointer;
+    margin: 8px 0;
+}
+
+/* thin vertical divider between the clear and search buttons, like Google */
+.search-separator {
+    width: 1px;
+    align-self: stretch;
+    margin: 8px 0;
+    background-color: var(--color-light-accent-darker1);
+}
+
+/* keeps the button's/separator's box + gap reserved so the bar width never shifts */
+.search-cancel-button.is-hidden,
+.search-separator.is-hidden {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
 .secondary-button {
     box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background-color: var(--color-light-accent);
     color: var(--color-dark-accent);
     padding: 8px 16px;
@@ -132,7 +198,6 @@
     font-size: 16px;
     cursor: pointer;
     border: 2px solid var(--color-light-accent-darker1);
-
 }
 
 .secondary-button:hover {
@@ -169,6 +234,7 @@
     --color-light-accent-background: #F9F9FB; /* used to seperate between light accent as background and a (this) slightly darker background!*/
     --color-light-accent: #F8F9F9;
     --color-dark-accent: #252733;
+    --color-dark-accent-lighter1: #363b4d;
     --color-blue-accent: #9AABC5;
     --color-orange-accent: #BA8A7E;
     --color-orange-accent-darker1: #A87C71;

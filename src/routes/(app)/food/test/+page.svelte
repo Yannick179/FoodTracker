@@ -3,12 +3,15 @@
     import Card from "$lib/components/organism/Card.svelte";
     import PrimaryButton from "$lib/components/atoms/PrimaryButton.svelte";
     import Modal from "$lib/components/organism/Modal.svelte";
+    import CardHeader from "$lib/components/atoms/CardHeader.svelte";
+    import {LogOut} from "lucide-svelte";
+    import SearchInput from "$lib/components/atoms/SearchInput.svelte";
 </script>
 
 <div class="items-center place-items-center pl-10">
     <DateSelector/>
     <Card>
-        <PrimaryButton onClick={() => {}} Text="Submit" />
+        <PrimaryButton onclick={() => {}}>Submit</PrimaryButton>
     </Card>
 </div>
 
@@ -18,4 +21,12 @@
 <!--    <span>text</span>-->
 <!--    <div class="h-[400px] w-[400px]">wefw</div>-->
 <!--</Modal>-->
+<CardHeader text="Nutrition Overview" />
+<PrimaryButton>
+    Log out
+    <LogOut size="18"/>
+</PrimaryButton>
+
+
+<SearchInput placeholder="hallo" value="" />
 

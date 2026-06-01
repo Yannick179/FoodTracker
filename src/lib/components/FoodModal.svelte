@@ -71,8 +71,8 @@
 
         <!-- Buttons -->
         <div class="flex justify-end gap-2">
-            <SecondaryButton onClick={onClose} Text="Cancel"/>
-            <PrimaryButton onClick={() => submit(amount,selectedFood)} Text="Submit" />
+            <SecondaryButton onclick={onClose}>Cancel</SecondaryButton>
+            <PrimaryButton onclick={() => submit(amount,selectedFood)}>Submit</PrimaryButton>
         </div>
     </div>
 </div>

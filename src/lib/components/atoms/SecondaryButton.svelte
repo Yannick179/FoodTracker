@@ -1,13 +1,14 @@
 <script lang="ts">
+    import type { Snippet } from 'svelte';
+    import type { HTMLButtonAttributes } from 'svelte/elements';
 
     let {
-        Text,
-        onClick
+        children,
+        ...rest
     }: {
-        Text: string;
-        onClick: () => void;
-    } = $props();
+        children: Snippet;
+    } & HTMLButtonAttributes = $props();
 
 </script>
 
-<button onclick={() => onClick()} class="secondary-button">{Text}</button>
+<button class="secondary-button" {...rest}>{@render children()}</button>

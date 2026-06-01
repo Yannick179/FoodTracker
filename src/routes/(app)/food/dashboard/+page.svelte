@@ -11,6 +11,7 @@
         MealLogDto,
         DayStatsDto
     } from "../../../api/food/loadMealLogFromDateX/+server";
+    import CardHeader from "$lib/components/atoms/CardHeader.svelte";
 
     let selectedFoodLog: FoodLogDto = $state({
         foodLogId: 0,
@@ -181,7 +182,7 @@
         <div class="overflow-auto w-full grid grid-cols-[auto_1fr] gap-6 px-5 pt-6">
             <div class="flex flex-col gap-6 h-[80vh] w-full">
                 <section class="shadow-container min-w-[650px] min-h-[380px] h-[65%] max-w-[3000px] grid grid-rows">
-                    <h2 class="text-xl font-semibold">Nutrition Overview</h2>
+                    <CardHeader text="Nutrition Overview"/>
                     <div class="grid grid-cols-3 items-center ">
                         <div class="grid grid-rows items-center place-items-center">
                             <h3>Calories</h3>
@@ -202,19 +203,19 @@
                     <div class="w-full grid grid-cols-3 gap-16">
                         <div class="pt-3 place-items-center">
                             <h3 class="mb-1 flex text-lg w-full">Protein</h3>
-                            <ResultBarMacros value={dayStats.protein} max={220} />
+                            <ResultBarMacros value={dayStats.protein} max={proteinGoal} />
                             <span class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</span>
                         </div>
 
                         <div class="items-center pt-3 place-items-center">
                             <h3 class="mb-1 flex text-lg w-full">Carbohydrates</h3>
-                            <ResultBarMacros value={dayStats.carbohydrates} max={400} />
+                            <ResultBarMacros value={dayStats.carbohydrates} max={carbohydrateGoal} />
                             <span class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</span>
                         </div>
 
                         <div class="items-center pt-3 place-items-center">
                             <h3 class="mb-1 flex text-lg w-full">Fats</h3>
-                            <ResultBarMacros value={dayStats.fat} max={80} />
+                            <ResultBarMacros value={dayStats.fat} max={fatsGoal} />
                             <span class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</span>
                         </div>
                     </div>
