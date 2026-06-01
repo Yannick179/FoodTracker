@@ -5,12 +5,10 @@
 
 
     let {
-        label,
         value = $bindable(''),
         placeholder = 'Search...',
         ...rest
     }: {
-        label?: string;
         value?: string;
         placeholder?: string;
     } & HTMLInputAttributes = $props();

@@ -6,6 +6,7 @@
     import CardHeader from "$lib/components/atoms/CardHeader.svelte";
     import {LogOut} from "lucide-svelte";
     import SearchInput from "$lib/components/atoms/SearchInput.svelte";
+    import ListItemButton from "$lib/components/atoms/ListItemButton.svelte";
 </script>
 
 <div class="items-center place-items-center pl-10">
@@ -22,11 +23,12 @@
 <!--    <div class="h-[400px] w-[400px]">wefw</div>-->
 <!--</Modal>-->
 <CardHeader text="Nutrition Overview" />
-<PrimaryButton>
-    Log out
-    <LogOut size="18"/>
-</PrimaryButton>
+<!--<PrimaryButton>-->
+<!--    Log out-->
+<!--    <LogOut size="18"/>-->
+<!--</PrimaryButton>-->
 
 
 <SearchInput placeholder="hallo" value="" />
+<ListItemButton name="Banana" amount={100} protein={5} carbohydrates={5} fats={5} calories={5} />
 

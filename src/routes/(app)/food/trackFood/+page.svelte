@@ -5,6 +5,9 @@
     import Calendar from "$lib/components/Calendar.svelte";
     import type { Food } from "../../../api/food/searchFood/+server";
     import type { MealTemplateResponseDto } from "../../../api/food/searchMealTemplates/+server";
+    import SearchInput from "$lib/components/atoms/SearchInput.svelte";
+    import ListItemButton from "$lib/components/atoms/ListItemButton.svelte";
+    import SearchableList from "$lib/components/molecules/SearchableList.svelte";
 
     let foods: Food[] = $state([]);
     let mealTemplates: MealTemplateResponseDto[] = $state([]);
@@ -159,104 +162,86 @@
     const handleMealSearch = (q: string) => {
         loadMeals(q);
     };
+
 </script>
 
 <div class="p-10">
 
     <!-- left side-->
     <div>
-        <section class="grid h-96 grid-cols-[4fr_8fr_5fr] gap-x-8 ">
+        <section class="grid grid-cols-[4fr_8fr_5fr] gap-x-8 ">
             <!-- col-1 -->
             <div class="grid justify-items-center">
-                <!-- date -->
-                <div class="mb-6 grid-rows-2">
-                    <div class="text-sm text-zinc-400 mb-1 flex">
-                        {convertNumberToDay(globalDate.date.getDay())}
-                    </div>
+<!--                &lt;!&ndash; date &ndash;&gt;-->
+<!--                <div class="mb-6 grid-rows-2">-->
+<!--                    <div class="text-sm text-zinc-400 mb-1 flex">-->
+<!--                        {convertNumberToDay(globalDate.date.getDay())}-->
+<!--                    </div>-->
 
-                    <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">
-                        {getDateNicelyFormatted(globalDate.date)}
-                    </div>
-                </div>
+<!--                    <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">-->
+<!--                        {getDateNicelyFormatted(globalDate.date)}-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Calender -->
-                <div class="flex">
-                    <Calendar/>
-                </div>
+<!--                &lt;!&ndash; Calender &ndash;&gt;-->
+<!--                <div class="flex">-->
+<!--                    <Calendar/>-->
+<!--                </div>-->
             </div>
 
             <!-- col-2 -->
             <div class="grid  justify-items-center">
-                <!-- Grid for the tracking search -->
-                <section class="max-w-2xl mx-auto">
+<!--                <section class="max-w-2xl mx-auto date-selector-wrapper" bind:this={searchSection} onkeydown={handleListKeydown} role="button"-->
+<!--                         tabindex="0">-->
+<!--                    <SearchInput  type="text" placeholder="Search foods..." oninput={() => handleFoodSearch(query)} bind:value={query} />-->
 
-                    <!-- Search -->
-                    <div class="mb-6">
-                        <label class="text-xs text-zinc-500">Search foods</label>
-                        <input
-                                type="text"
-                                bind:value={query}
-                                placeholder="Search..."
-                                on:input={() => handleFoodSearch(query)}
-                                class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
-				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
-                        />
-                    </div>
+<!--                    {#if loading}-->
+<!--                        <p class="text-zinc-500 text-sm">Loading...</p>-->
+<!--                    {:else if error}-->
+<!--                        <p class="text-red-400 text-sm">{error}</p>-->
+<!--                    {:else if foods.length === 0}-->
+<!--                        <p class="text-zinc-600 text-sm">No results found</p>-->
+<!--                    {:else}-->
+<!--                        <div class="list-container-popover">-->
+<!--                            {#each foods as food}-->
+<!--                                <ListItemButton onclick={() => openFood(food)} calories={food.calories} protein={food.protein} name={food.name} carbohydrates={food.carbohydrates} fats={food.carbohydrates} amount={100}/>-->
+<!--                            {/each}-->
+<!--                        </div>-->
+<!--                    {/if}-->
 
-                    <!-- States -->
-                    {#if loading}
-                        <p class="text-zinc-500 text-sm">Loading...</p>
+<!--                </section>-->
 
-                    {:else if error}
-                        <p class="text-red-400 text-sm">{error}</p>
+                <SearchableList onSelect={openFood} onSearch={handleFoodSearch} items={foods}>
 
-                    {:else if foods.length === 0}
-                        <p class="text-zinc-600 text-sm">No results found</p>
-
-                    {:else}
-                        <div class="space-y-2">
-                            {#each foods as food}
-                                <button
-                                        on:click={() => openFood(food)}
-                                        class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
-						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
-                                >
-                                    <span class="text-zinc-100">{food.name}</span>
-                                    <span class="text-zinc-500 text-sm">Add</span>
-                                </button>
-                            {/each}
-                        </div>
-                    {/if}
-
-                </section>
+                </SearchableList>
             </div>
 
             <!-- col-3 -->
             <section class="flex">
-                <div class="mb-6">
-                    <label class="text-xs text-zinc-500">Search Meals</label>
-                    <input
-                            type="text"
-                            bind:value={query}
-                            placeholder="Search..."
-                            on:input={() => handleFoodSearch(query)}
-                            class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
-				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
-                    />
+<!--                <div class="mb-6">-->
+<!--                    <label class="text-xs text-zinc-500">Search Meals</label>-->
+<!--                    <input-->
+<!--                            type="text"-->
+<!--                            bind:value={query}-->
+<!--                            placeholder="Search..."-->
+<!--                            oninput={() => handleFoodSearch(query)}-->
+<!--                            class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100-->
+<!--				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"-->
+<!--                    />-->
 
-                    <div class="space-y-2">
-                        {#each mealTemplates as mealTemplate}
-                            <button
-                                    on:click={() => openMeal(mealTemplate)}
-                                    class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
-						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
-                            >
-                                <span class="text-zinc-100">{mealTemplate.name}</span>
-                                <span class="text-zinc-500 text-sm">Add</span>
-                            </button>
-                        {/each}
-                    </div>
-                </div>
+<!--                    <div class="space-y-2">-->
+<!--                        {#each mealTemplates as mealTemplate}-->
+<!--                            <button-->
+<!--                                    onclick={() => openMeal(mealTemplate)}-->
+<!--                                    class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200-->
+<!--						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"-->
+<!--                            >-->
+<!--                                <span class="text-zinc-100">{mealTemplate.name}</span>-->
+<!--                                <span class="text-zinc-500 text-sm">Add</span>-->
+<!--                            </button>-->
+<!--                        {/each}-->
+<!--                    </div>-->
+<!--                </div>-->
             </section>
         </section>
     </div>

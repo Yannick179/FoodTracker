@@ -25,7 +25,7 @@
 
 
 <!-- Backdrop -->
-<div class="fixed inset-0 bg-background/60 backdrop-blur-lg flex items-center justify-center z-50">
+<div class="fixed inset-0 bg-background/60 backdrop-blur-lg flex items-center justify-center z-500">
 
     <div class="w-full max-w-md bg-background border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
 

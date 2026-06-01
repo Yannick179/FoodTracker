@@ -3,18 +3,47 @@
     import type { HTMLButtonAttributes } from 'svelte/elements';
 
     let {
-        children,
+        name,
+        protein,
+        carbohydrates,
+        fats,
+        calories,
+        amount,
         ...rest
     }: {
-        children: Snippet;
-    } & HTMLButtonAttributes = $props();
+        name: string;
+        protein: number;
+        carbohydrates: number;
+        fats: number;
+        calories: number;
+        amount: number;
+            } & HTMLButtonAttributes = $props();
 </script>
 
-<button
-        type="button"
-        class="cursor-pointer w-full text-left rounded-2xl border-2 border-neutral-400 px-4 py-3
-			hover:bg-neutral-800 transition flex justify-between items-center"
-        {...rest}
->
-    {@render children()}
+<button type="button"
+        class="list-item-button"
+        {...rest}>
+    <span class="li-main">
+        <span class="li-name">{name}</span>
+        <span class="li-amount">{amount} g</span>
+    </span>
+
+    <span class="li-stats">
+        <span class="li-stat">
+            <span class="li-label">kcal</span>
+            <span class="li-value">{calories}</span>
+        </span>
+        <span class="li-stat">
+            <span class="li-label">PROT</span>
+            <span class="li-value-prot">{protein}g</span>
+        </span>
+        <span class="li-stat">
+            <span class="li-label">CARB</span>
+            <span class="li-value-carb">{carbohydrates}g</span>
+        </span>
+        <span class="li-stat">
+            <span class="li-label">FAT</span>
+            <span class="li-value-fat">{fats}g</span>
+        </span>
+    </span>
 </button>
