@@ -46,9 +46,8 @@
         }
 
         loading = true;
-        //TODO: implement kommazahlen in prot carb and fat
 
-        const res = await fetch('/api/food/addFood', {
+        const res = await fetch('/api/calorie-tracker/foods', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

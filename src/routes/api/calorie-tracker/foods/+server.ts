@@ -12,10 +12,11 @@ export type Food = {
 }
 
 export const GET = async ({ url, locals }) => {
-    const user = requireUser(locals);
+    requireUser(locals);
+
+    //TODO: edit the amount to take because take is hardcoded right now
 
     const query = url.searchParams.get('q');
-    console.log(query);
 
     if (query) {
         const foods = await searchFoods(query);
@@ -23,6 +24,36 @@ export const GET = async ({ url, locals }) => {
     } else {
         const foods = await getDefaultFoods();
         return json(foods);
+    }
+};
+
+export const POST = async ({ request, locals }) => {
+    requireUser(locals);
+
+    try {
+        const { name, calories, protein, carbohydrates, fat } = await request.json();
+
+        if (!name || calories == null || protein == null || carbohydrates == null || fat == null) {
+            return new Response(JSON.stringify({ error: 'All fields are required' }), { status: 400 });
+        }
+
+        const food = await prisma.food.create({
+            data: {
+                name,
+                calories,
+                protein,
+                carbohydrates,
+                fat
+            }
+        });
+
+        return json(food, {
+            status: 201,
+            headers: { Location: `/api/calorie-tracker/foods/${food.id}` }
+        });
+    } catch (err) {
+        console.error(err);
+        return new Response(JSON.stringify({ error: 'Failed to add new food' }), { status: 500 });
     }
 };
 
