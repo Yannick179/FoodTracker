@@ -211,7 +211,7 @@
 
 <!--                </section>-->
 
-                <SearchableList onSelect={openFood} onSearch={handleFoodSearch} items={foods}>
+                <SearchableList onSelect={openFood} onSearch={handleFoodSearch} items={foods} disabled={showFoodModal}>
 
                 </SearchableList>
             </div>

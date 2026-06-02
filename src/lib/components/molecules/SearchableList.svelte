@@ -11,6 +11,7 @@
         // loading = false,
         // error = '',
         placeholder = 'Search...',
+        disabled = false,
         onSearch,
         onSelect,
         // result,
@@ -20,6 +21,7 @@
         // loading?: boolean;
         // error?: string;
         placeholder?: string;
+        disabled?: boolean;
         onSearch: (q: string) => void;
         onSelect: (item: Food) => void;
         // result: Snippet<[T]>;
@@ -30,6 +32,7 @@
     let searchSection: HTMLElement;
 
     function handleListKeydown(e: KeyboardEvent) {
+        if (disabled) return;
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
 
         const items = Array.from(
@@ -53,7 +56,7 @@
     }
 </script>
 
-<div class="search-container" bind:this={searchSection} onkeydown={handleListKeydown} tabindex="0" role="button">
+<div class="search-container" bind:this={searchSection} onkeydown={handleListKeydown} inert={disabled} tabindex="0" role="button">
     <SearchInput {placeholder} bind:value={query} oninput={() => onSearch(query)} />
     {#each items as item}
         <ListItemButton onclick={() => onSelect(item)} protein={item.protein} carbohydrates={item.carbohydrates} fats={item.fat} name={item.name} amount={100} calories={item.calories}/>
