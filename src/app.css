@@ -52,7 +52,7 @@
     color: var(--color-dark-accent);
     cursor: pointer;
     border: none;
-    padding: 12px;
+    padding: 16px;
     border-radius: 4px;
 }
 .chevron-button:hover {
@@ -68,7 +68,7 @@
     color: var(--color-dark-accent);
     cursor: pointer;
     border: none;
-    padding: 12px 16px;
+    padding: 16px;
     border-radius: 4px;
     box-sizing: border-box;
     justify-content: center;
@@ -142,31 +142,56 @@
 }
 
 .search-container {
+    position: relative;
+    width: fit-content;
     border-radius: 8px;
-    /*border: 2px solid var(--color-light-accent-darker1);*/
-    overflow: hidden;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.18);
+    /* one shadow for bar + floating panel together: drop-shadow outlines the combined
+       silhouette of the container and its .search-results child, so there's no seam
+       where the two boxes meet (a box-shadow on each would double up there). */
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.18));
+    background-color: var(--color-light-accent);
     z-index: 200;
+    /* no overflow:hidden here — it would clip the floating .search-results popover */
+}
 
+/* floats below the search input instead of pushing the page content down */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 300;
+    max-height: 400px;
+    overflow-y: auto;
 
+    /* no shadow here — the container's drop-shadow already wraps this panel */
+    background-color: var(--color-light-accent);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    /* divider between the search bar and the list; only shows when items exist,
+       since this panel only renders then */
+    border-top: 1px solid var(--color-light-accent-darker1);
+}
 
+/* when results are showing, square off the bar's bottom so it merges with the panel.
+   .search-results only renders when items exist, so :has() fires exactly then. */
+.search-container:has(.search-results) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 
 .search {
     box-sizing: border-box;
     width: 500px;
+    overflow: hidden; /* only clips its own buttons to the rounded corners — local, safe */
     font-size: 16px;
-    border-bottom: 1px solid var(--color-light-accent-darker1);
     font-weight: 500;
-    background-color: var(--color-light-accent);
-    /*padding: 8px 16px;*/
     color: var(--color-dark-accent);
     gap: 12px;
     padding: 0 16px;
     display: flex;
     align-items: center;
-    overflow: hidden;
 }
 
 .search-cancel-button:hover,
@@ -198,12 +223,6 @@
     visibility: hidden;
     pointer-events: none;
 }
-
-/*.list-container-popover {*/
-/*    z-index: 200;*/
-/*    max-height: 400px;*/
-/*    overflow-y: auto;*/
-/*}*/
 
 .list-item-button {
     box-sizing: border-box;

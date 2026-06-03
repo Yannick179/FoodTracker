@@ -58,7 +58,11 @@
 
 <div class="search-container" bind:this={searchSection} onkeydown={handleListKeydown} inert={disabled} tabindex="0" role="button">
     <SearchInput {placeholder} bind:value={query} oninput={() => onSearch(query)} />
-    {#each items as item}
-        <ListItemButton onclick={() => onSelect(item)} protein={item.protein} carbohydrates={item.carbohydrates} fats={item.fat} name={item.name} amount={100} calories={item.calories}/>
-    {/each}
+    {#if items.length > 0}
+        <div class="search-results">
+            {#each items as item}
+                <ListItemButton onclick={() => onSelect(item)} protein={item.protein} carbohydrates={item.carbohydrates} fats={item.fat} name={item.name} amount={100} calories={item.calories}/>
+            {/each}
+        </div>
+    {/if}
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {createDate} from "$lib/dataStore.svelte";
+    import {createDate} from "$lib/dataStore.svelte.js";
 
     let protein = $state(150);
     let carbohydrates = $state(250);

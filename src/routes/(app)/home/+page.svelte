@@ -4,7 +4,7 @@
             name: 'Food Tracker',
             description: 'Log meals, track calories, and visualize your nutrition.',
             icon: 'Logo',
-            href: '/food/dashboard'
+            href: '/calorie-tracker/dashboard'
         },
         {
             name: 'Bodyweight Tracker',

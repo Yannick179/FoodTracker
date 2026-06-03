@@ -20,7 +20,7 @@ export const GET = async ({ url, locals }) => {
 
     const foods = query
         ? await searchFoods(query, limit)
-        : await getDefaultFoods(limit);
+        : [];
 
     return json(foods);
 };
