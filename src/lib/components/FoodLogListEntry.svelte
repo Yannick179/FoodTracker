@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Trash2} from "lucide-svelte";
-    import type {FoodLogDto} from "../../routes/api/food/loadMealLogFromDateX/+server";
+    import type {FoodLogDto} from "../../routes/api/calorie-tracker/meal-logs/+server";
 
     //TODO: make foodlog Typed as FoodLogDto
     let {
@@ -14,12 +14,8 @@
     } = $props();
 
     async function deleteEntry() {
-        const res = await fetch('/api/food/deleteFoodLog', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                foodLogId: foodLog.foodLogId,
-            })
+        const res = await fetch(`/api/calorie-tracker/food-logs/${foodLog.foodLogId}`, {
+            method: 'DELETE',
         });
 
         if (!res.ok) throw new Error('Failed to delete entry');

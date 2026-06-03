@@ -8,20 +8,25 @@
     const globalDate = createDate();
 
 
+    function toDateParam(d: Date) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
     async function handleSave() {
         try {
-            const res = await fetch('/api/food/goals', {
-                method: 'POST',
+            const res = await fetch(`/api/calorie-tracker/goals/${toDateParam(globalDate.date)}`, {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     calories: calories,
                     protein: protein,
                     carbohydrates: carbohydrates,
                     fats: fats,
-                    date: globalDate.date,
                 })
             });
-            console.log(res);
             if (res.ok) {
                 alert(`Saved:
 Calories: ${calories}

@@ -1,5 +1,6 @@
 import { prisma } from "$lib/prisma";
 import { requireUser } from "$lib/server/authHelper";
+import { parseLimit } from "$lib/server/pagination";
 import { json } from "@sveltejs/kit";
 
 export type FoodPortionTemplateInput = {
@@ -84,6 +85,7 @@ export const GET = async ({ url, locals }) => {
     const user = requireUser(locals);
 
     const query = url.searchParams.get('q');
+    const limit = parseLimit(url);
 
     const results = await prisma.mealTemplate.findMany({
         where: {
@@ -109,7 +111,7 @@ export const GET = async ({ url, locals }) => {
                 },
             },
         },
-        take: 10,
+        take: limit,
     });
 
     const mealTemplates: MealTemplateResponseDto[] = results.map((result) => ({

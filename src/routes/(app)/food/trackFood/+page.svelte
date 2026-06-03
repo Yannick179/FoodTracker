@@ -3,8 +3,8 @@
     import FoodModal from "$lib/components/FoodModal.svelte";
     import {createDate } from "$lib/dataStore.svelte.js";
     import Calendar from "$lib/components/Calendar.svelte";
-    import type { Food } from "../../../api/food/searchFood/+server";
-    import type { MealTemplateResponseDto } from "../../../api/food/searchMealTemplates/+server";
+    import type { Food } from "../../../api/calorie-tracker/foods/+server";
+    import type { MealTemplateResponseDto } from "../../../api/calorie-tracker/meal-templates/+server";
     import SearchInput from "$lib/components/atoms/SearchInput.svelte";
     import ListItemButton from "$lib/components/atoms/ListItemButton.svelte";
     import SearchableList from "$lib/components/molecules/SearchableList.svelte";
@@ -28,13 +28,14 @@
 
     async function submit(amount: number, food: Food) {
         if (amount > 0) {
-            const res = await fetch('/api/food/trackFood', {
+            const res = await fetch('/api/calorie-tracker/meal-logs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    foodId: food.id,
-                    amount: amount,
-                    date: globalDate.date
+                    date: globalDate.date,
+                    foodLogs: [
+                        { foodId: food.id, amount: amount }
+                    ]
                 })
             });
 
@@ -50,7 +51,7 @@
         loading = true;
         error = '';
         try {
-            const url = q ? `/api/food/searchFood?q=${encodeURIComponent(q)}` : '/api/food/searchFood';
+            const url = q ? `/api/calorie-tracker/foods?q=${encodeURIComponent(q)}` : '/api/calorie-tracker/foods';
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch foods');
             foods = await res.json();
@@ -62,7 +63,7 @@
 
     async function loadMeals(q: string = '') {
         try {
-            const url = q ? `/api/food/searchMealTemplates?q=${encodeURIComponent(q)}` : '/api/food/searchMealTemplates';
+            const url = q ? `/api/calorie-tracker/meal-templates?q=${encodeURIComponent(q)}` : '/api/calorie-tracker/meal-templates';
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch meal templates');
             mealTemplates = await res.json();

@@ -1,6 +1,7 @@
 import {json} from "@sveltejs/kit";
 import { prisma } from "$lib/prisma";
 import {requireUser} from "$lib/server/authHelper";
+import { parseLimit } from "$lib/server/pagination";
 
 export type Food = {
     name: string;
@@ -14,17 +15,14 @@ export type Food = {
 export const GET = async ({ url, locals }) => {
     requireUser(locals);
 
-    //TODO: edit the amount to take because take is hardcoded right now
-
     const query = url.searchParams.get('q');
+    const limit = parseLimit(url);
 
-    if (query) {
-        const foods = await searchFoods(query);
-        return json(foods);
-    } else {
-        const foods = await getDefaultFoods();
-        return json(foods);
-    }
+    const foods = query
+        ? await searchFoods(query, limit)
+        : await getDefaultFoods(limit);
+
+    return json(foods);
 };
 
 export const POST = async ({ request, locals }) => {
@@ -58,7 +56,7 @@ export const POST = async ({ request, locals }) => {
 };
 
 
-async function getDefaultFoods() {
+async function getDefaultFoods(limit: number) {
     let result: Food[] = await prisma.food.findMany({
         select: {
             id: true,
@@ -69,13 +67,13 @@ async function getDefaultFoods() {
             fat: true,
         },
         orderBy: { createdAt: "desc" },
-        take: 10
+        take: limit
     });
 
     return result;
 }
 
-async function searchFoods(query: string) {
+async function searchFoods(query: string, limit: number) {
     let result: Food[] = await prisma.food.findMany({
         select: {
             id: true,
@@ -92,7 +90,7 @@ async function searchFoods(query: string) {
             }
         },
         orderBy: { createdAt: 'desc' },
-        take: 30
+        take: limit
     });
 
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {Food} from "../../routes/api/food/searchFood/+server";
+    import type {Food} from "../../routes/api/calorie-tracker/foods/+server";
 
     export let onClose: () => void;
     export let selectedFood: Food;

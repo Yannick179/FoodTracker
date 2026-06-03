@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount, tick} from "svelte";
     import { Trash2 } from 'lucide-svelte';
-    import type {FoodLogDto} from "../../routes/api/food/loadMealLogFromDateX/+server";
+    import type {FoodLogDto} from "../../routes/api/calorie-tracker/meal-logs/+server";
     import Modal from "$lib/components/organism/Modal.svelte";
 
 
@@ -54,27 +54,22 @@
     //TODO: CHANGE THIS TO REFLECT USEFULL STUFF
     async function submitChange() {
         if (editableFood.amount > 0) {
-            const res = await fetch('/api/food/editMealLog', {
-                method: 'POST',
+            const res = await fetch(`/api/calorie-tracker/food-logs/${editableFood.foodLogId}`, {
+                method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    foodPortionId: editableFood.foodLogId,
                     amount: editableFood.amount,
                 })
             });
 
-            if (!res.ok) throw new Error('Failed to fetch foods');
+            if (!res.ok) throw new Error('Failed to update food log');
             onClose();
         }
     }
 
     async function deleteEntry() {
-        const res = await fetch('/api/food/deleteFoodLog', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                foodLogId: editableFood.foodLogId,
-            })
+        const res = await fetch(`/api/calorie-tracker/food-logs/${editableFood.foodLogId}`, {
+            method: 'DELETE',
         });
 
         if (!res.ok) throw new Error('Failed to delete entry');
@@ -83,7 +78,7 @@
     }
 
     async function fetchFoodInformation(id: number) {
-        const res = await fetch(`/api/food/getFoodInformationById/${id}`);
+        const res = await fetch(`/api/calorie-tracker/foods/${id}`);
         if (!res.ok) {
             throw new Error('failed to fetch food information');
         }

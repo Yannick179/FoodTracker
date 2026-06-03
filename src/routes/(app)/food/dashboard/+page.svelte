@@ -10,7 +10,7 @@
         FoodLogDto,
         MealLogDto,
         DayStatsDto
-    } from "../../../api/food/loadMealLogFromDateX/+server";
+    } from "../../../api/calorie-tracker/meal-logs/+server";
     import CardHeader from "$lib/components/atoms/CardHeader.svelte";
 
     let selectedFoodLog: FoodLogDto = $state({
@@ -114,17 +114,25 @@
         }
     }
 
+    function toDateParam(d: Date) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
     async function LoadKcalGoalFromDateX() {
         try {
             loadingKcalGoal = true;
-            const res = await fetch(`/api/food/loadKcalGoalFromDateX?date=${encodeURIComponent(globalDate.date)}`);
+            const res = await fetch(`/api/calorie-tracker/goals/${toDateParam(globalDate.date)}`);
             if (res.ok){
-                let resJson = await res.json();
-                kcalGoal = resJson.goal.kcal;
-                proteinGoal = resJson.goal.protein;
-                carbohydrateGoal = resJson.goal.carbohydrates;
-                fatsGoal = resJson.goal.fats;
-
+                let goal = await res.json();
+                if (goal) {
+                    kcalGoal = goal.kcal;
+                    proteinGoal = goal.protein;
+                    carbohydrateGoal = goal.carbohydrates;
+                    fatsGoal = goal.fats;
+                }
             }
         }
         catch (e) {
@@ -135,19 +143,16 @@
     async function LoadMealLogFromDateX() {
         try {
             loadingFoodEntries = true;
-            const res = await fetch(`/api/food/loadMealLogFromDateX?date=${encodeURIComponent(globalDate.date)}`);
+            const res = await fetch(`/api/calorie-tracker/meal-logs?date=${toDateParam(globalDate.date)}`);
 
             if (!res.ok) {
                 throw new Error('failed to fetch food entries');
             }
 
             let resJson = await res.json();
-            console.log("meallog + daystats");
-            console.log(resJson);
 
             mealLogs = resJson.mealLogs;
             dayStats = resJson.dayStats;
-            console.log("daystats", dayStats);
 
         } catch (err: any) {
             error = err.message;

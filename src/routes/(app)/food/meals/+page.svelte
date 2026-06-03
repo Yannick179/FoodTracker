@@ -3,7 +3,7 @@
     import CustomBookmark from "$lib/components/Icons/CustomBookmark.svelte";
     import CustomMeal from "$lib/components/Icons/CustomMeal.svelte";
     import {Bookmark} from "lucide-svelte";
-    import type {Food} from "../../../api/food/searchFood/+server";
+    import type {Food} from "../../../api/calorie-tracker/foods/+server";
     import {onMount} from "svelte";
     import FoodModal from "$lib/components/FoodModal.svelte";
     type MealFood = {
@@ -88,7 +88,7 @@
             amount: food.amount
         }));
         try {
-            const res = await fetch("/api/food/saveMealTemplate", {
+            const res = await fetch("/api/calorie-tracker/meal-templates", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -110,7 +110,7 @@
 
     async function loadFoods(q: string = '') {
         try {
-            const url = q ? `/api/food/searchFood?q=${encodeURIComponent(q)}` : '/api/food/searchFood';
+            const url = q ? `/api/calorie-tracker/foods?q=${encodeURIComponent(q)}` : '/api/calorie-tracker/foods';
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch foods');
             searchedFoods = await res.json();

@@ -2,7 +2,7 @@
     import type { Snippet } from 'svelte';
     import SearchInput from '$lib/components/atoms/SearchInput.svelte';
     import ListItemButton from '$lib/components/atoms/ListItemButton.svelte';
-    import type {Food} from "../../../routes/api/food/searchFood/+server";
+    import type {Food} from "../../../routes/api/calorie-tracker/foods/+server";
 
 
     let {
