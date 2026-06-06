@@ -8,4 +8,4 @@
 
 </script>
 
-<h2 class="card-header">{text}</h2>
+<h2 class="subheading">{text}</h2>

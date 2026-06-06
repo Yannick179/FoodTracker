@@ -11,7 +11,7 @@
         MealLogDto,
         DayStatsDto
     } from "../../../api/calorie-tracker/meal-logs/+server";
-    import CardHeader from "$lib/components/atoms/CardHeader.svelte";
+    import Header from "$lib/components/atoms/Header.svelte";
     import DateSelector from "$lib/components/organism/DateSelector.svelte";
     import SearchableList from "$lib/components/molecules/SearchableList.svelte";
     import FoodModal from "$lib/components/FoodModal.svelte";
@@ -115,7 +115,7 @@
         }
     }
 
-    function handleFoodModalClose() {
+    async function handleFoodModalClose() {
         showFoodModal = false;
         selectedFood = {
             name: "",
@@ -125,6 +125,7 @@
             carbohydrates: 0,
             fat: 0
         };
+        await refetchPageInformation();
     }
 
     function getDateNicelyFormatted(selectedDate: Date) {
@@ -239,96 +240,23 @@
 
 </script>
 
-
-<!--<div class="w-full h-full bg-main-background">-->
-<!--    <div class="grid grid-cols-[auto_1fr] h-full">-->
-<!--        <section class="app-main-food-left">-->
-<!--            <span class="text-2xl text-zinc-400 font-semibold flex">-->
-<!--                {convertNumberToDay(globalDate.date.getDay())}-->
-<!--            </span>-->
-<!--                <span class="flex text-2xl font-semibold text-blue-accent tracking-tight tabular-nums mb-5">-->
-<!--                {getDateNicelyFormatted(globalDate.date)}-->
-<!--            </span>-->
-<!--            <Calendar/>-->
-<!--        </section>-->
-
-<!--        <div class="overflow-auto w-full grid grid-cols-[auto_1fr] gap-6 px-5 pt-6">-->
-<!--            <div class="flex flex-col gap-6 h-[80vh] w-full">-->
-<!--                <section class="shadow-container min-w-[650px] min-h-[380px] h-[65%] max-w-[3000px] grid grid-rows">-->
-<!--                    <CardHeader text="Nutrition Overview"/>-->
-<!--                    <div class="grid grid-cols-3 items-center ">-->
-<!--                        <div class="grid grid-rows items-center place-items-center">-->
-<!--                            <h3>Calories</h3>-->
-<!--                            <span class="">{dayStats.calories}</span>-->
-<!--                            <span class="">/ {kcalGoal} kcal</span>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <ResultBarKcals value={dayStats.calories} max={kcalGoal}/>-->
-
-<!--                        </div>-->
-<!--                        <div class="grid grid-rows items-center place-items-center">-->
-<!--                            <h3>Calories Left</h3>-->
-<!--                            <span class="">{Math.max(kcalGoal - dayStats.calories, 0)}</span>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                    <hr class="my-4 border-light-accent-darker1 rounded-2xl border-[1px]">-->
-<!--                    <div class="w-full grid grid-cols-3 gap-16">-->
-<!--                        <div class="pt-3 place-items-center">-->
-<!--                            <h3 class="mb-1 flex text-lg w-full">Protein</h3>-->
-<!--                            <ResultBarMacros value={dayStats.protein} max={proteinGoal} />-->
-<!--                            <span class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="items-center pt-3 place-items-center">-->
-<!--                            <h3 class="mb-1 flex text-lg w-full">Carbohydrates</h3>-->
-<!--                            <ResultBarMacros value={dayStats.carbohydrates} max={carbohydrateGoal} />-->
-<!--                            <span class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="items-center pt-3 place-items-center">-->
-<!--                            <h3 class="mb-1 flex text-lg w-full">Fats</h3>-->
-<!--                            <ResultBarMacros value={dayStats.fat} max={fatsGoal} />-->
-<!--                            <span class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </section>-->
-<!--                <section class="shadow-container max-h-[35%] h-[35%] shrink-0"></section>-->
-<!--            </div>-->
-<!--            <section class="shadow-container h-[80vh] flex flex-col max-h-full">-->
-<!--                <h2 class="text-xl font-semibold mb-3">Logged Items</h2>-->
-<!--                <div class="flex-1 overflow-y-auto w-full min-h-0 [scrollbar-gutter:stable]">-->
-<!--                    {#each mealLogs as mealLog}-->
-<!--                        {#each mealLog.foods as foodLog}-->
-<!--                            <FoodLogListEntry onClick={open}-->
-<!--                                              onDelete={refetchPageInformation}-->
-<!--                                              foodLog={foodLog}/>-->
-<!--                        {/each}-->
-<!--                    {/each}-->
-<!--                </div>-->
-<!--            </section>-->
-
-<!--        </div>-->
-
-<!--    </div>-->
-
-<!--</div>-->
-
-
-<div class="w-full h-full bg-main-background p-8">
+<div class="w-full h-full bg-main-background p-8 flex flex-col min-h-0">
     <div class="w-full grid grid-cols-3">
-        <div/>
-        <div class="flex justify-center">
+        <div></div>
+        <div class="flex justify-center items-center">
             <SearchableList onSelect={openFood} onSearch={handleFoodSearch} items={foods} disabled={showFoodModal}/>
         </div>
-        <div class="flex justify-center">
+        <div class="flex justify-center items-center">
             <DateSelector/>
         </div>
     </div>
-    <div class="overflow-auto w-full grid grid-cols-[auto_1fr] gap-6 px-5 pt-6">
-        <div class="flex flex-col gap-6 h-[80vh] w-full">
-            <section class="shadow-container min-w-[650px] min-h-[380px] h-[65%] max-w-[3000px] grid grid-rows">
-                <CardHeader text="Nutrition Overview"/>
+
+    <div class="w-full flex-1  min-h-0 grid grid-cols-[25%_auto_30%] gap-6 pt-6">
+        <div></div>
+
+        <div class="flex flex-col w-full">
+            <section class="overflow-x-auto shadow-container grid grid-rows">
+                <Header text="Nutrition Overview"/>
                 <div class="grid grid-cols-3 items-center ">
                     <div class="grid grid-rows items-center place-items-center">
                         <h3>Calories</h3>
@@ -366,9 +294,9 @@
                     </div>
                 </div>
             </section>
-            <section class="shadow-container max-h-[35%] h-[35%] shrink-0"></section>
         </div>
-        <section class="shadow-container h-[80vh] flex flex-col max-h-full">
+
+        <section class="shadow-container h-full min-h-0 flex flex-col">
             <h2 class="text-xl font-semibold mb-3">Logged Items</h2>
             <div class="flex-1 overflow-y-auto w-full min-h-0 [scrollbar-gutter:stable]">
                 {#each mealLogs as mealLog}

@@ -7,6 +7,11 @@
     import { createDate } from '$lib/dataStore.svelte';
     import PrimaryButton from "$lib/components/atoms/PrimaryButton.svelte";
     import SecondaryButton from "$lib/components/atoms/SecondaryButton.svelte";
+    import Modal from "$lib/components/organism/Modal.svelte";
+    import Header from "$lib/components/atoms/Header.svelte";
+    import Input from "$lib/components/atoms/Input.svelte";
+    import Subheading from "$lib/components/atoms/Subheading.svelte";
+    import MacroNutrientContainer from "$lib/components/atoms/MacroNutrientContainer.svelte";
 
     let amount = 100;
     const globalDate = createDate();
@@ -24,55 +29,30 @@
 <svelte:window onkeydown={onKeyDown} />
 
 
-<!-- Backdrop -->
-<div class="fixed inset-0 bg-background/60 backdrop-blur-lg flex items-center justify-center z-500">
+<Modal>
+    <div class="flex flex-col gap-6">
 
-    <div class="w-full max-w-md bg-background border rounded-2xl border-2 border border-neutral-400 shadow-2xl p-6">
-
-        <!-- Title -->
-        <h2 class="text-lg font-semibold text-zinc-100 mb-1">
-            {selectedFood.name}
-        </h2>
-        <span class="text-xs text-zinc-500 mb-5">Nutrition per 100g</span>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-2 gap-3 text-sm mb-6">
-            <div class="rounded-xl  border border-zinc-800 p-3">
-                <h3 class="text-zinc-400 text-xs">Calories</h3>
-                <span class="text-zinc-100 font-medium">{(selectedFood.calories * amount/100).toFixed(1)}</span>
-            </div>
-
-            <div class="rounded-xl border border-zinc-800 p-3">
-                <h3 class="text-zinc-400 text-xs">Protein</h3>
-                <span class="text-zinc-100 font-medium">{(selectedFood.protein * amount/100).toFixed(1)}g</span>
-            </div>
-
-            <div class="rounded-xl border border-zinc-800 p-3">
-                <h3 class="text-zinc-400 text-xs">Carbohydrates</h3>
-                <span class="text-zinc-100 font-medium">{(selectedFood.carbohydrates * amount/100).toFixed(1)}g</span>
-            </div>
-
-            <div class="rounded-xl border border-zinc-800 p-3">
-                <h3 class="text-zinc-400 text-xs">Fats</h3>
-                <span class="text-zinc-100 font-medium">{(selectedFood.fat * amount/100).toFixed(1)}g</span>
-            </div>
+        <div>
+            <Header text={selectedFood.name} />
+            <Subheading text="Nutrition per amount"/>
         </div>
 
-        <!-- Input -->
-        <label class="block mb-5">
-            <span class="text-xs text-zinc-400">Amount (g)</span>
-            <input
-                    type="number"
-                    bind:value={amount}
-                    class="mt-1 w-full rounded-xl border border-zinc-700 px-3 py-2 text-zinc-100
-				focus:outline-none focus:ring-2 focus:ring-zinc-500/50"
-            />
+
+        <div class="grid grid-cols-4 gap-4">
+            <MacroNutrientContainer header="Calories" amount="{(selectedFood.calories * amount/100).toFixed(0)}"/>
+            <MacroNutrientContainer header="Protein" amount="{(selectedFood.protein * amount/100).toFixed(0)}g"/>
+            <MacroNutrientContainer header="Carbohydrates" amount="{(selectedFood.carbohydrates * amount/100).toFixed(0)}g"/>
+            <MacroNutrientContainer header="Fat" amount="{(selectedFood.fat * amount/100).toFixed(0)}g"/>
+        </div>
+        <label class="grid grid-rows">
+            <Subheading text="Amount (g)"/>
+            <Input bind:value={amount} type="number" />
         </label>
 
-        <!-- Buttons -->
         <div class="flex justify-end gap-2">
             <SecondaryButton onclick={onClose}>Cancel</SecondaryButton>
             <PrimaryButton onclick={() => submit(amount,selectedFood)}>Submit</PrimaryButton>
         </div>
     </div>
-</div>
+
+</Modal>

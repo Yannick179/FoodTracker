@@ -9,13 +9,10 @@
 }
 
 .modal-card {
-    /*width: 100%;*/
-    /*max-width: 28rem; !* same as max-w-md *!*/
 
     background-color: var(--color-light-accent);
-    /*border: 2px solid var(--color-light-accent-darker1);*/
     border-radius: 16px;
-    padding: 24px;
+    padding: 32px;
 
 }
 
@@ -76,7 +73,12 @@
 
 }
 
-.card-header {
+.subheading {
+    font-size: 14px;
+    color: var(--color-gray-accent)
+}
+
+.header {
     color: var(--color-dark-accent);
     font-family: var(--font-josefin);
     font-size: 20px;
@@ -109,6 +111,7 @@
     font-size: 16px;
     border: 2px solid var(--color-light-accent-darker1);
     border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .primary-button {
@@ -148,9 +151,12 @@
     /* one shadow for bar + floating panel together: drop-shadow outlines the combined
        silhouette of the container and its .search-results child, so there's no seam
        where the two boxes meet (a box-shadow on each would double up there). */
-    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.18));
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.12));
     background-color: var(--color-light-accent);
     z-index: 200;
+    box-sizing: border-box;
+
+
     /* no overflow:hidden here — it would clip the floating .search-results popover */
 }
 
@@ -182,8 +188,7 @@
 
 
 .search {
-    box-sizing: border-box;
-    width: 500px;
+    /*width: 500px;*/
     overflow: hidden; /* only clips its own buttons to the rounded corners — local, safe */
     font-size: 16px;
     font-weight: 500;
@@ -192,6 +197,8 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
+    justify-content: center;
+
 }
 
 .search-cancel-button:hover,
@@ -226,7 +233,7 @@
 
 .list-item-button {
     box-sizing: border-box;
-    width: 500px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -254,7 +261,7 @@
 .li-main {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    /*gap: 2px;*/
     margin-right: auto;
     min-width: 0;
     text-align: left;
@@ -306,6 +313,22 @@
     color: var(--color-red-accent);
 }
 
+.input {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--color-light-accent);
+    color: var(--color-dark-accent);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: text;
+    border: 2px solid var(--color-light-accent-darker1);
+    outline: none;
+}
+
 
 
 .secondary-button {
@@ -321,6 +344,23 @@
     font-size: 16px;
     cursor: pointer;
     border: 2px solid var(--color-light-accent-darker1);
+}
+
+.macro-nutrient-container {
+    /*border-radius: 8px;*/
+    /*border: 2px solid var(--color-light-accent-darker1);*/
+    /*padding: 0px 8px;*/
+
+}
+
+.macro-nutrient-header {
+    color: var(--color-gray-accent);
+    font-size: 12px;
+}
+
+.macro-nutrient-content {
+    color: var(--color-dark-accent);
+    font-size: 14px;
 }
 
 .secondary-button:hover {
@@ -355,6 +395,7 @@
 
     --color-light-accent-darker1: #DDE2E3;
     --color-light-accent-background: #F9F9FB; /* used to seperate between light accent as background and a (this) slightly darker background!*/
+    --color-gray-accent: #8B929E;
     --color-light-accent: #F8F9F9;
     --color-dark-accent: #252733;
     --color-dark-accent-lighter1: #363b4d;

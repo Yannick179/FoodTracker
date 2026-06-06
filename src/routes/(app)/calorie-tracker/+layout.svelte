@@ -3,7 +3,7 @@
 	let { children } = $props();
 </script>
 
-<div class="">
+<div class="h-screen">
 	<header class="">
 		<FoodNavbar />
 	</header>

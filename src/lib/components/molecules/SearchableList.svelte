@@ -28,8 +28,17 @@
     } = $props();
 
     let query = $state('');
+    let focused = $state(false);
 
     let searchSection: HTMLElement;
+
+    function handleFocusOut(e: FocusEvent) {
+        // hide the list only when focus leaves the whole widget (not when moving
+        // between the input and the list items). relatedTarget is where focus is going.
+        if (!searchSection.contains(e.relatedTarget as Node)) {
+            focused = false;
+        }
+    }
 
     function handleListKeydown(e: KeyboardEvent) {
         if (disabled) return;
@@ -56,9 +65,9 @@
     }
 </script>
 
-<div class="search-container" bind:this={searchSection} onkeydown={handleListKeydown} inert={disabled} tabindex="0" role="button">
+<div class="search-container" bind:this={searchSection} onkeydown={handleListKeydown} onfocusin={() => focused = true} onfocusout={handleFocusOut} inert={disabled} tabindex="0" role="button">
     <SearchInput {placeholder} bind:value={query} oninput={() => onSearch(query)} />
-    {#if items.length > 0}
+    {#if items.length > 0 && focused}
         <div class="search-results">
             {#each items as item}
                 <ListItemButton onclick={() => onSelect(item)} protein={item.protein} carbohydrates={item.carbohydrates} fats={item.fat} name={item.name} amount={100} calories={item.calories}/>
