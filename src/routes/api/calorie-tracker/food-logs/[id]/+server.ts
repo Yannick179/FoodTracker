@@ -10,7 +10,7 @@ export const PATCH = async ({ params, request, locals }) => {
     }
 
     try {
-        const { amount } = await request.json();
+        const { amount } : { amount: number} = await request.json();
         if (amount == null) {
             return new Response(JSON.stringify({ error: 'amount is required' }), { status: 400 });
         }

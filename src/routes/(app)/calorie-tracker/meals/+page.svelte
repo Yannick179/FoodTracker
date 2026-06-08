@@ -1,4 +1,5 @@
 <script lang="ts">
+    import EditFoodModal from "$lib/components/EditFoodModal.svelte";
     import CustomSearch from "$lib/components/Icons/CustomSearch.svelte";
     import CustomBookmark from "$lib/components/Icons/CustomBookmark.svelte";
     import CustomMeal from "$lib/components/Icons/CustomMeal.svelte";
@@ -6,6 +7,9 @@
     import type {Food} from "../../../api/calorie-tracker/foods/+server";
     import {onMount} from "svelte";
     import FoodModal from "$lib/components/FoodModal.svelte";
+    import SearchableList from "$lib/components/molecules/SearchableList.svelte";
+    import {searchFoods} from "$lib/api/food";
+    import FoodLogListEntry from "$lib/components/FoodLogListEntry.svelte";
     type MealFood = {
         protein: number,
         carbohydrates: number,
@@ -22,7 +26,8 @@
     };
 
     let hasMeal: boolean = $state(false);
-    let showModal: boolean = $state(false);
+    let showFoodModal: boolean = $state(false);
+    let showEditFoodModal: boolean = $state(false);
     let triesFirstMeal: boolean = $state(false);
     let query = $state("");
     let mealFoods: MealFood[] = $state([]);
@@ -42,14 +47,17 @@
         triesFirstMeal = true;
     }
 
-    function open(food: Food) {
+    function openFoodModal(food: Food) {
         selectedFood = food;
-        showModal = true;
+        showFoodModal = true;
     }
 
-    function handleClose() {
-        showModal = false;
+    function openEditFoodModal(food: Food) {
+        showEditFoodModal = true;
+    }
 
+    function handleFoodModalClose() {
+        showFoodModal = false;
         selectedFood = {
             name: "",
             id: 0,
@@ -58,7 +66,10 @@
             carbohydrates: 0,
             fat: 0
         };
-        // loadFoods();
+    }
+
+    function deleteMealLogEntry(foodToDelete: MealFood) {
+        mealFoods = mealFoods.filter(food => food !== foodToDelete);
     }
 
     function submit(amount: number, food: Food) {
@@ -73,7 +84,7 @@
 
         }
         mealFoods.push(mealFood);
-        handleClose();
+        handleFoodModalClose();
     }
 
     function resetPage() {
@@ -102,98 +113,114 @@
         }
         catch (error) {
             console.log(error);
-            //pass
         }
 
 
     }
 
-    async function loadFoods(q: string = '') {
-        try {
-            const url = q ? `/api/calorie-tracker/foods?q=${encodeURIComponent(q)}` : '/api/calorie-tracker/foods';
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('Failed to fetch foods');
-            searchedFoods = await res.json();
-        } catch (err: any) {
-            console.error("Error loading foods", err);
-        }
+    async function handleFoodSearch(query: string = '') {
+        searchedFoods = await searchFoods(query);
+
     }
 
-    function handleSearch(query: string): void {
-        loadFoods(query);
-    }
 
-    onMount(() => loadFoods());
+    onMount(() => handleFoodSearch());
 </script>
 
 
 {#if hasMeal || triesFirstMeal}
-    <section class="w-full py-6 px-5 h-full">
+<!--    <section class="w-full py-6 px-5 h-full">-->
 
+<!--        <div class="w-full h-full grid grid-cols-[5fr_11fr_4fr] gap-5">-->
+<!--            &lt;!&ndash; Search bar &ndash;&gt;-->
+<!--            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">-->
+<!--                <input-->
+<!--                        type="text"-->
+<!--                        placeholder="Search..."-->
+<!--                        oninput={(e) => handleSearch(e.currentTarget.value)}-->
+<!--                        class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100-->
+<!--				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"-->
+<!--                />-->
+<!--                {#each searchedFoods as food}-->
+<!--                    <button-->
+<!--                            onclick={() => open(food)}-->
+<!--                            class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200-->
+<!--						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"-->
+<!--                    >-->
+<!--                        <span class="text-zinc-100">{food.name}</span>-->
+<!--                        <span class="text-zinc-500 text-sm">Add</span>-->
+<!--                    </button>-->
+<!--                {/each}-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Meal &ndash;&gt;-->
+<!--            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">-->
+<!--                <label class="text-xl font-semibold">Meal name-->
+<!--                    <input-->
+<!--                            type="text"-->
+<!--                            bind:value={mealName}-->
+<!--                            placeholder="Meal Name"-->
+<!--                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>-->
+<!--                </label>-->
+<!--                <table class="w-full">-->
+<!--                    <thead>-->
+<!--                        <tr>-->
+<!--                            <th>Food</th>-->
+<!--                            <th>Amount</th>-->
+<!--                            <th>Calories</th>-->
+<!--                            <th>Protein</th>-->
+<!--                            <th>Carbohydrates</th>-->
+<!--                            <th>Fat</th>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                        {#each mealFoods as food}-->
+<!--                            <tr>-->
+<!--                                <td>{food.name}</td>-->
+<!--                                <td>{food.amount}</td>-->
+<!--                                <td>{food.calories}</td>-->
+<!--                                <td>{food.protein}</td>-->
+<!--                                <td>{food.carbohydrates}</td>-->
+<!--                                <td>{food.fat}</td>-->
+<!--                            </tr>-->
+<!--                        {/each}-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--                <button onclick={saveMealTemplate} class="cursor-pointer w-full text-left rounded-2xl bg-brand">-->
+<!--                    Save meal template-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Summary&ndash;&gt;-->
+<!--            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card" ></div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <div class="w-full h-full bg-main-background p-8 flex flex-col min-h-0">
         <div class="w-full h-full grid grid-cols-[5fr_11fr_4fr] gap-5">
-            <!-- Search bar -->
-            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">
-                <input
-                        type="text"
-                        placeholder="Search..."
-                        oninput={(e) => handleSearch(e.currentTarget.value)}
-                        class="mt-1 w-full rounded-2xl border-2 border border-neutral-400 px-4 py-2 text-zinc-100
-				placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-600/40"
-                />
-                {#each searchedFoods as food}
-                    <button
-                            onclick={() => open(food)}
-                            class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200
-						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"
-                    >
-                        <span class="text-zinc-100">{food.name}</span>
-                        <span class="text-zinc-500 text-sm">Add</span>
-                    </button>
+            <div class="invisible-container">
+                <SearchableList onSelect={openFoodModal} onSearch={handleFoodSearch} items={searchedFoods} disabled={showFoodModal}/>
+            </div>
+            <div class="shadow-container">
+                {#each mealFoods as food}
+                    <FoodLogListEntry onClick={openEditFoodModal}
+                                      onDelete={() => deleteMealLogEntry(food)}
+                    />
+                    <!--                    <button-->
+                    <!--                            onclick={() => open(food)}-->
+                    <!--                            class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200-->
+                    <!--						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"-->
+                    <!--                    >-->
+                    <!--                        <span class="text-zinc-100">{food.name}</span>-->
+                    <!--                        <span class="text-zinc-500 text-sm">Add</span>-->
+                    <!--                    </button>-->
                 {/each}
             </div>
+            <div class="shadow-container"></div>
 
-            <!-- Meal -->
-            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card">
-                <label class="text-xl font-semibold">Meal name
-                    <input
-                            type="text"
-                            bind:value={mealName}
-                            placeholder="Meal Name"
-                            class="mt-1 text-lg font-normal w-full rounded border-2 border-zinc-700 px-3 py-2.5 focus:border-brand focus:outline-none"/>
-                </label>
-                <table class="w-full">
-                    <thead>
-                        <tr>
-                            <th>Food</th>
-                            <th>Amount</th>
-                            <th>Calories</th>
-                            <th>Protein</th>
-                            <th>Carbohydrates</th>
-                            <th>Fat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each mealFoods as food}
-                            <tr>
-                                <td>{food.name}</td>
-                                <td>{food.amount}</td>
-                                <td>{food.calories}</td>
-                                <td>{food.protein}</td>
-                                <td>{food.carbohydrates}</td>
-                                <td>{food.fat}</td>
-                            </tr>
-                        {/each}
-                    </tbody>
-                </table>
-                <button onclick={saveMealTemplate} class="cursor-pointer w-full text-left rounded-2xl bg-brand">
-                    Save meal template
-                </button>
-            </div>
-
-            <!-- Summary-->
-            <div class="w-full h-full rounded-2xl border-[2px] border-light-accent-darker1 bg-card" ></div>
         </div>
-    </section>
+    </div>
+
 {:else}
     <section class="w-full py-12 px-16 h-full">
         <div class="w-full h-full rounded-2xl text-xl border-[2px] border-light-accent-darker1 bg-card">
@@ -253,6 +280,9 @@
 {/if}
 
 
-{#if showModal}
-    <FoodModal submit={submit} onClose={handleClose} {selectedFood}  />
+{#if showFoodModal}
+    <FoodModal submit={submit} onClose={handleFoodModalClose} {selectedFood}  />
+{/if}
+{#if showEditFoodModal}
+    <EditFoodModal onClose={handleEditFoodModalClose} bind:selectedFoodLog={selectedFoodLog}  />
 {/if}

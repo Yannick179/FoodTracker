@@ -51,7 +51,7 @@
 
     const current = weights.at(-1).value;
     const start = weights[0].value;
-    const change = (start - current).toFixed(1);
+    const change = Math.trunc(start - current);
 
 
     function getDateNicelyFormatted(selectedDate: Date) {
@@ -226,7 +226,7 @@
                             <span>{w.value} kg</span>
                             <span>
                         {w.value - start > 0 ? "+" : ""}
-                                {(w.value - start).toFixed(1)} kg
+                                {Math.trunc(w.value - start)} kg
                     </span>
 
                         </div>

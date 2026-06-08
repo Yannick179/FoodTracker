@@ -7,7 +7,7 @@
     import {LogOut} from "lucide-svelte";
     import SearchInput from "$lib/components/atoms/SearchInput.svelte";
     import ListItemButton from "$lib/components/atoms/ListItemButton.svelte";
-    import Input from "$lib/components/atoms/Input.svelte";
+    import NumberInput from "$lib/components/atoms/NumberInput.svelte";
     import Subheading from "$lib/components/atoms/Subheading.svelte";
 </script>
 
@@ -35,4 +35,4 @@
 <SearchInput placeholder="hallo" value="" />
 <ListItemButton name="Banana" amount={100} protein={5} carbohydrates={5} fats={5} calories={5} />
 
-<Input text="1234"/>
+<NumberInput value="32"/>

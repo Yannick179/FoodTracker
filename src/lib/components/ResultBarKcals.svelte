@@ -46,7 +46,7 @@
         <!-- center text -->
         <div class="absolute inset-0 flex flex-col items-center justify-center ">
             <div class="text-4xl font-bold">
-                {percent.toFixed(0)}%
+                {Math.trunc(percent)}%
             </div>
             <div class="text-sm text-zinc-400">
                 of calorie goal

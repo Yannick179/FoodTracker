@@ -16,6 +16,7 @@
     import SearchableList from "$lib/components/molecules/SearchableList.svelte";
     import FoodModal from "$lib/components/FoodModal.svelte";
     import type {Food} from "../../../api/calorie-tracker/foods/+server";
+    import {searchFoods} from "$lib/api/food";
 
     let selectedFood: Food = $state({
         name: "",
@@ -63,8 +64,25 @@
         await LoadKcalGoalFromDateX();
     }
 
-    function openFoodLog(food: FoodLogDto) {
-        selectedFoodLog = food;
+    //TODO: implement more elegant solution that
+    function cloneFoodLog(food: FoodLogDto): FoodLogDto {
+        return {
+            foodLogId: food.foodLogId,
+            foodId: food.foodId,
+            name: food.name,
+            amount: food.amount,
+            eatenAt: new Date(food.eatenAt),
+            calories: food.calories,
+            protein: food.protein,
+            carbohydrates: food.carbohydrates,
+            fat: food.fat
+        };
+    }
+
+    function openFoodLog(foodLog: FoodLogDto) {
+        let newFoodLog = cloneFoodLog(foodLog);
+        console.log(newFoodLog)
+        selectedFoodLog = newFoodLog;
         showEditFoodModal = true;
     }
 
@@ -78,20 +96,8 @@
         await refetchPageInformation();
     }
 
-    async function handleFoodSearch(q: string = '') {
-        // error = '';
-        // if (q === '') return;
-        if (q.length === 0) {
-            foods = [];
-        }
-
-        try {
-            const res = await fetch(`/api/calorie-tracker/foods?q=${encodeURIComponent(q)}`);
-            if (!res.ok) throw new Error('Failed to fetch foods');
-            foods = await res.json();
-        } catch (err: any) {
-            // error = err.message;
-        }
+    async function handleFoodSearch(query: string = '') {
+        foods = await searchFoods(query);
     }
 
     async function submitFoodModal(amount: number, food: Food) {
@@ -109,7 +115,7 @@
 
             if (!res.ok) throw new Error('Failed to track food');
 
-            handleFoodModalClose();
+            await handleFoodModalClose();
         } else {
             console.log("Please enter a valid amount of food");
         }
@@ -126,60 +132,6 @@
             fat: 0
         };
         await refetchPageInformation();
-    }
-
-    function getDateNicelyFormatted(selectedDate: Date) {
-        let formattedDate = selectedDate.getDate() + " " + convertNumberToMonth(selectedDate.getMonth()) + " " + selectedDate.getFullYear() ;
-        return formattedDate;
-    }
-
-    function convertNumberToMonth(number: number) {
-        switch (number) {
-            case 0:
-                return "January";
-            case 1:
-                return "February";
-            case 2:
-                return "March";
-            case 3:
-                return "April";
-            case 4:
-                return "May";
-            case 5:
-                return "June";
-            case 6:
-                return "July";
-            case 7:
-                return "August";
-            case 8:
-                return "September";
-            case 9:
-                return "October";
-            case 10:
-                return "November";
-            case 11:
-                return "December";
-        }
-    }
-
-    function convertNumberToDay(number: number) {
-        //starts with 0 as sunday and 1-6 for monday-saturday
-        switch (number) {
-            case 1:
-                return "Monday";
-            case 2:
-                return "Tuesday";
-            case 3:
-                return "Wednesday";
-            case 4:
-                return "Thursday";
-            case 5:
-                return "Friday";
-            case 6:
-                return "Saturday";
-            case 0:
-                return "Sunday";
-        }
     }
 
     function toDateParam(d: Date) {
@@ -208,6 +160,35 @@
         }
     }
 
+    async function deleteEntry(foodLogId: number) {
+        console.log(foodLogId);
+        const res = await fetch(`/api/calorie-tracker/food-logs/${foodLogId}`, {
+            method: 'DELETE',
+        });
+
+        if (!res.ok) throw new Error('Failed to delete entry');
+        await refetchPageInformation();
+    }
+
+    async function saveEditFoodModal() {
+        if (selectedFoodLog.amount > 0) {
+            const res = await fetch(`/api/calorie-tracker/food-logs/${selectedFoodLog.foodLogId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: selectedFoodLog.amount,
+                })
+            });
+
+        if (!res.ok) throw new Error('Failed to update food log');
+        showEditFoodModal = false;
+        await refetchPageInformation();        }
+    }
+
+    function onCancelEditFoodModal() {
+        showEditFoodModal = false;
+    }
+
     async function LoadMealLogFromDateX() {
         try {
             loadingFoodEntries = true;
@@ -231,7 +212,6 @@
 
     onMount( async () => {
         await refetchPageInformation();
-        // await handleFoodSearch();
     });
 
     $effect(() => {
@@ -260,7 +240,7 @@
                 <div class="grid grid-cols-3 items-center ">
                     <div class="grid grid-rows items-center place-items-center">
                         <h3>Calories</h3>
-                        <span class="">{dayStats.calories}</span>
+                        <span class="">{Math.trunc(dayStats.calories)}</span>
                         <span class="">/ {kcalGoal} kcal</span>
                     </div>
                     <div>
@@ -269,7 +249,7 @@
                     </div>
                     <div class="grid grid-rows items-center place-items-center">
                         <h3>Calories Left</h3>
-                        <span class="">{Math.max(kcalGoal - dayStats.calories, 0)}</span>
+                        <span class="">{Math.trunc(Math.max(kcalGoal - dayStats.calories, 0))}</span>
                     </div>
 
                 </div>
@@ -278,19 +258,19 @@
                     <div class="pt-3 place-items-center">
                         <h3 class="mb-1 flex text-lg w-full">Protein</h3>
                         <ResultBarMacros value={dayStats.protein} max={proteinGoal} />
-                        <span class="flex text-base w-full">{dayStats.protein}/{proteinGoal}</span>
+                        <span class="flex text-base w-full">{Math.trunc(dayStats.protein)}{proteinGoal}</span>
                     </div>
 
                     <div class="items-center pt-3 place-items-center">
                         <h3 class="mb-1 flex text-lg w-full">Carbohydrates</h3>
                         <ResultBarMacros value={dayStats.carbohydrates} max={carbohydrateGoal} />
-                        <span class=" flex text-base w-full">{dayStats.carbohydrates}/{carbohydrateGoal}</span>
+                        <span class=" flex text-base w-full">{Math.trunc(dayStats.carbohydrates)}/{carbohydrateGoal}</span>
                     </div>
 
                     <div class="items-center pt-3 place-items-center">
                         <h3 class="mb-1 flex text-lg w-full">Fats</h3>
                         <ResultBarMacros value={dayStats.fat} max={fatsGoal} />
-                        <span class="flex text-base w-full">{dayStats.fat}/{fatsGoal}</span>
+                        <span class="flex text-base w-full">{Math.trunc(dayStats.fat)}/{fatsGoal}</span>
                     </div>
                 </div>
             </section>
@@ -301,9 +281,9 @@
             <div class="flex-1 overflow-y-auto w-full min-h-0 [scrollbar-gutter:stable]">
                 {#each mealLogs as mealLog}
                     {#each mealLog.foods as foodLog}
-                        <FoodLogListEntry onClick={openFoodLog}
-                                          onDelete={refetchPageInformation}
-                                          foodLog={foodLog}/>
+                        <FoodLogListEntry onClick={() => openFoodLog(foodLog)}
+                                          onDelete={() => deleteEntry(foodLog.foodLogId)}
+                                          name={foodLog.name} protein={foodLog.protein} calories={foodLog.calories} amount={foodLog.amount} fat={foodLog.fat} carbohydrates={foodLog.carbohydrates}/>
                     {/each}
                 {/each}
             </div>
@@ -315,7 +295,7 @@
 
 
 {#if showEditFoodModal}
-    <EditFoodModal onClose={handleEditFoodModalClose} bind:selectedFoodLog={selectedFoodLog}  />
+    <EditFoodModal onSave={saveEditFoodModal} onCancel={onCancelEditFoodModal} onDelete={() => deleteEntry(selectedFoodLog.foodLogId)} foodLog={selectedFoodLog}  />
 {/if}
 {#if showFoodModal}
     <FoodModal onClose={handleFoodModalClose} submit={submitFoodModal} {selectedFood} />

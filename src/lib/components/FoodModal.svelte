@@ -9,7 +9,7 @@
     import SecondaryButton from "$lib/components/atoms/SecondaryButton.svelte";
     import Modal from "$lib/components/organism/Modal.svelte";
     import Header from "$lib/components/atoms/Header.svelte";
-    import Input from "$lib/components/atoms/Input.svelte";
+    import NumberInput from "$lib/components/atoms/NumberInput.svelte";
     import Subheading from "$lib/components/atoms/Subheading.svelte";
     import MacroNutrientContainer from "$lib/components/atoms/MacroNutrientContainer.svelte";
 
@@ -39,14 +39,14 @@
 
 
         <div class="grid grid-cols-4 gap-4">
-            <MacroNutrientContainer header="Calories" amount="{(selectedFood.calories * amount/100).toFixed(0)}"/>
-            <MacroNutrientContainer header="Protein" amount="{(selectedFood.protein * amount/100).toFixed(0)}g"/>
-            <MacroNutrientContainer header="Carbohydrates" amount="{(selectedFood.carbohydrates * amount/100).toFixed(0)}g"/>
-            <MacroNutrientContainer header="Fat" amount="{(selectedFood.fat * amount/100).toFixed(0)}g"/>
+            <MacroNutrientContainer header="Calories" text={Math.trunc(selectedFood.calories * amount/100)}/>
+            <MacroNutrientContainer header="Protein" text="{Math.trunc(selectedFood.protein * amount/100)}g"/>
+            <MacroNutrientContainer header="Carbohydrates" text="{Math.trunc(selectedFood.carbohydrates * amount/100)}g"/>
+            <MacroNutrientContainer header="Fat" text="{Math.trunc(selectedFood.fat * amount/100)}g"/>
         </div>
         <label class="grid grid-rows">
             <Subheading text="Amount (g)"/>
-            <Input bind:value={amount} type="number" />
+            <NumberInput bind:value={amount} type="number" />
         </label>
 
         <div class="flex justify-end gap-2">
