@@ -28,7 +28,7 @@
     let hasMeal: boolean = $state(false);
     let showFoodModal: boolean = $state(false);
     let showEditFoodModal: boolean = $state(false);
-    let triesFirstMeal: boolean = $state(false);
+    let createsFirstMeal: boolean = $state(false);
     let query = $state("");
     let mealFoods: MealFood[] = $state([]);
     let searchedFoods: Food[] = $state([]);
@@ -42,9 +42,28 @@
         fat: 0
     });
 
+    let selectedMealFood: MealFood = $state({
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0,
+        calories: 0,
+        amount: 0,
+        foodId: 0,
+        name: "",
+    })
+    let selectedMealFoodDeepCopy: MealFood = $state({
+        protein: 0,
+        carbohydrates: 0,
+        fat: 0,
+        calories: 0,
+        amount: 0,
+        foodId: 0,
+        name: "",
+    })
 
-    function onClick() {
-        triesFirstMeal = true;
+
+    function onCreateFirstMeal() {
+        createsFirstMeal = true;
     }
 
     function openFoodModal(food: Food) {
@@ -52,7 +71,9 @@
         showFoodModal = true;
     }
 
-    function openEditFoodModal(food: Food) {
+    function openEditFoodModal(food: MealFood) {
+        selectedMealFoodDeepCopy = $state.snapshot(food);
+        selectedMealFood = food;
         showEditFoodModal = true;
     }
 
@@ -85,6 +106,19 @@
         }
         mealFoods.push(mealFood);
         handleFoodModalClose();
+    }
+
+    function saveEditFoodModal() {
+        //object stays the same but content changes
+        let amountFactor = selectedMealFoodDeepCopy.amount / selectedMealFood.amount //amount cant be 0!
+        selectedMealFood.amount *= amountFactor;
+        selectedMealFood.calories *= amountFactor;
+        selectedMealFood.protein *= amountFactor;
+        selectedMealFood.carbohydrates *= amountFactor;
+        selectedMealFood.fat *= amountFactor;
+
+        showEditFoodModal = false;
+
     }
 
     function resetPage() {
@@ -120,15 +154,17 @@
 
     async function handleFoodSearch(query: string = '') {
         searchedFoods = await searchFoods(query);
-
     }
 
+    function onCancelEditFoodModal() {
+        showEditFoodModal = false;
+    }
 
     onMount(() => handleFoodSearch());
 </script>
 
 
-{#if hasMeal || triesFirstMeal}
+{#if hasMeal || createsFirstMeal}
 <!--    <section class="w-full py-6 px-5 h-full">-->
 
 <!--        <div class="w-full h-full grid grid-cols-[5fr_11fr_4fr] gap-5">-->
@@ -203,17 +239,9 @@
             </div>
             <div class="shadow-container">
                 {#each mealFoods as food}
-                    <FoodLogListEntry onClick={openEditFoodModal}
+                    <FoodLogListEntry onClick={() => openEditFoodModal(food)}
                                       onDelete={() => deleteMealLogEntry(food)}
-                    />
-                    <!--                    <button-->
-                    <!--                            onclick={() => open(food)}-->
-                    <!--                            class="cursor-pointer w-full text-left rounded-2xl border-2 border border-neutral-400 tansition-200-->
-                    <!--						px-4 py-3 hover:bg-neutral-800 transition flex justify-between items-center"-->
-                    <!--                    >-->
-                    <!--                        <span class="text-zinc-100">{food.name}</span>-->
-                    <!--                        <span class="text-zinc-500 text-sm">Add</span>-->
-                    <!--                    </button>-->
+                                      protein={food.protein} fat={food.fat} carbohydrates={food.carbohydrates} amount={food.amount} calories={food.calories} name={food.name}/>
                 {/each}
             </div>
             <div class="shadow-container"></div>
@@ -269,7 +297,7 @@
                 </div>
 
                 <div class="px-14 pb-12 flex items-center justify-center">
-                    <button onclick={onClick} class="cursor-pointer bg-brand py-3 px-15 rounded-2xl flex gap-4 items-center leading-none">
+                    <button onclick={onCreateFirstMeal} class="cursor-pointer bg-brand py-3 px-15 rounded-2xl flex gap-4 items-center leading-none">
                         <Bookmark size={25} />
                         <span class="leading-none text-[20px]">Create your first meal</span>
                     </button>
@@ -284,5 +312,10 @@
     <FoodModal submit={submit} onClose={handleFoodModalClose} {selectedFood}  />
 {/if}
 {#if showEditFoodModal}
-    <EditFoodModal onClose={handleEditFoodModalClose} bind:selectedFoodLog={selectedFoodLog}  />
+    <EditFoodModal onCancel={onCancelEditFoodModal}
+                   onDelete={() => deleteMealLogEntry(selectedMealFood)}
+                   onSave={saveEditFoodModal}
+                   bind:amount={selectedMealFoodDeepCopy.amount}
+                   name={selectedMealFoodDeepCopy.name}
+                   foodId={selectedMealFoodDeepCopy.foodId} />
 {/if}

@@ -64,23 +64,8 @@
         await LoadKcalGoalFromDateX();
     }
 
-    //TODO: implement more elegant solution that
-    function cloneFoodLog(food: FoodLogDto): FoodLogDto {
-        return {
-            foodLogId: food.foodLogId,
-            foodId: food.foodId,
-            name: food.name,
-            amount: food.amount,
-            eatenAt: new Date(food.eatenAt),
-            calories: food.calories,
-            protein: food.protein,
-            carbohydrates: food.carbohydrates,
-            fat: food.fat
-        };
-    }
-
     function openFoodLog(foodLog: FoodLogDto) {
-        let newFoodLog = cloneFoodLog(foodLog);
+        let newFoodLog = $state.snapshot(foodLog);
         console.log(newFoodLog)
         selectedFoodLog = newFoodLog;
         showEditFoodModal = true;
@@ -161,7 +146,6 @@
     }
 
     async function deleteEntry(foodLogId: number) {
-        console.log(foodLogId);
         const res = await fetch(`/api/calorie-tracker/food-logs/${foodLogId}`, {
             method: 'DELETE',
         });
@@ -171,6 +155,7 @@
     }
 
     async function saveEditFoodModal() {
+        console.log(selectedFoodLog.amount);
         if (selectedFoodLog.amount > 0) {
             const res = await fetch(`/api/calorie-tracker/food-logs/${selectedFoodLog.foodLogId}`, {
                 method: 'PATCH',
@@ -182,7 +167,8 @@
 
         if (!res.ok) throw new Error('Failed to update food log');
         showEditFoodModal = false;
-        await refetchPageInformation();        }
+        await refetchPageInformation();
+        }
     }
 
     function onCancelEditFoodModal() {
@@ -258,7 +244,7 @@
                     <div class="pt-3 place-items-center">
                         <h3 class="mb-1 flex text-lg w-full">Protein</h3>
                         <ResultBarMacros value={dayStats.protein} max={proteinGoal} />
-                        <span class="flex text-base w-full">{Math.trunc(dayStats.protein)}{proteinGoal}</span>
+                        <span class="flex text-base w-full">{Math.trunc(dayStats.protein)}/{proteinGoal}</span>
                     </div>
 
                     <div class="items-center pt-3 place-items-center">
@@ -295,7 +281,8 @@
 
 
 {#if showEditFoodModal}
-    <EditFoodModal onSave={saveEditFoodModal} onCancel={onCancelEditFoodModal} onDelete={() => deleteEntry(selectedFoodLog.foodLogId)} foodLog={selectedFoodLog}  />
+    <EditFoodModal name={selectedFoodLog.name} bind:amount={selectedFoodLog.amount} foodId={selectedFoodLog.foodId}
+            onSave={saveEditFoodModal} onCancel={onCancelEditFoodModal} onDelete={() => deleteEntry(selectedFoodLog.foodLogId)}/>
 {/if}
 {#if showFoodModal}
     <FoodModal onClose={handleFoodModalClose} submit={submitFoodModal} {selectedFood} />

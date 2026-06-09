@@ -3,18 +3,33 @@
 
     let {
         value = $bindable(),
-        min = 1,
         max = 10000,
+        onInput,
         ...rest
-    }: HTMLInputAttributes = $props();
+    }: {
+        value: number;
+        max: number;
+        onInput: () => void;
+    } & HTMLInputAttributes = $props();
+
+    // can be 0 because ui validates possible enter elsewhere, but being able to enter nothing or 0 is more ui friendly
+    let minUiEnterConstraint = 0;
+
+    function clamp() {
+        if (value > max) value = max;
+    }
 </script>
 
 <input
     class="input"
     type="number"
     inputmode="numeric"
-    {min}
-    {max}
+    min={minUiEnterConstraint}
+    max={max}
     bind:value
+    oninput={() => {
+        clamp();
+        onInput();
+    }}
     {...rest}
 />

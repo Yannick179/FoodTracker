@@ -81,9 +81,9 @@
     </div>
 
     <div class="mt-24 text-zinc-600 text-sm flex gap-6">
-        <a href="#" class="hover:text-zinc-400">About</a>
-        <a href="#" class="hover:text-zinc-400">Privacy</a>
-        <a href="#" class="hover:text-zinc-400">Contact</a>
+        <a href="/" class="hover:text-zinc-400">About</a>
+        <a href="/" class="hover:text-zinc-400">Privacy</a>
+        <a href="/" class="hover:text-zinc-400">Contact</a>
     </div>
 
 </div>

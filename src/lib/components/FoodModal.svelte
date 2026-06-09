@@ -1,9 +1,16 @@
 <script lang="ts">
     import type {Food} from "../../routes/api/calorie-tracker/foods/+server";
 
-    export let onClose: () => void;
-    export let selectedFood: Food;
-    export let submit: (amount: number, food: Food) => void;
+    let {
+        selectedFood = $bindable(),
+        onClose,
+        submit,
+    }: {
+        selectedFood: Food,
+        onClose: () => void;
+        submit: (amount: number, food: Food) => void;
+    } = $props();
+
     import { createDate } from '$lib/dataStore.svelte';
     import PrimaryButton from "$lib/components/atoms/PrimaryButton.svelte";
     import SecondaryButton from "$lib/components/atoms/SecondaryButton.svelte";
@@ -15,10 +22,17 @@
 
     let amount = 100;
     const globalDate = createDate();
+    let submitDisabled = $state(false);
+    let minNumberInput = 1;
+    let maxNumberInput = 10000;
+
+    function handleNumberInput() {
+        submitDisabled = amount < minNumberInput || amount > maxNumberInput;
+    }
 
     function onKeyDown(e: KeyboardEvent) {
         if (e.key === 'Enter') {
-            submit(amount, selectedFood);
+            if (!submitDisabled) submit(amount, selectedFood);
         }
         if (e.key === 'Escape') {
             onClose();
@@ -46,12 +60,15 @@
         </div>
         <label class="grid grid-rows">
             <Subheading text="Amount (g)"/>
-            <NumberInput bind:value={amount} type="number" />
+            <NumberInput onInput={handleNumberInput} max={maxNumberInput} bind:value={amount} type="number" />
+            <span class="validation-text" style:visibility={submitDisabled ? "visible" : "hidden"}>
+                Please enter a valid amount
+            </span>
         </label>
 
         <div class="flex justify-end gap-2">
             <SecondaryButton onclick={onClose}>Cancel</SecondaryButton>
-            <PrimaryButton onclick={() => submit(amount,selectedFood)}>Submit</PrimaryButton>
+            <PrimaryButton disabled={submitDisabled} onclick={() => submit(amount,selectedFood)}>Submit</PrimaryButton>
         </div>
     </div>
 

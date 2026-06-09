@@ -4,6 +4,7 @@
 
     let {
         children,
+        disabled = false,
         ...rest
     }: {
         children: Snippet;
@@ -11,4 +12,4 @@
 
 </script>
 
-<button class="primary-button" {...rest}>{@render children()}</button>
+<button class="primary-button" disabled={disabled} {...rest}>{@render children()}</button>

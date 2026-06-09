@@ -1,6 +1,7 @@
-@import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap');*/
 /*@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import "tailwindcss";
 
 @layer base {
     html, body {
@@ -80,7 +81,7 @@
 
 .header {
     color: var(--color-dark-accent);
-    font-family: var(--font-josefin);
+    font-family: var(--font-inter), sans-serif;
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -128,6 +129,18 @@
     cursor: pointer;
     border: none;
 }
+
+.primary-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.primary-button:disabled:hover {
+    background-color: var(--color-orange-accent);
+
+
+}
+
 
 .primary-button:hover {
     background: var(--color-orange-accent-darker1);
@@ -367,6 +380,21 @@
     background: var(--color-light-accent-darker1);
 }
 
+.validation-text {
+    color: var(--color-red-accent);
+    /*border-radius: 8px;*/
+    /*border: 2px solid var(--color-red-accent);*/
+    font-size: 12px;
+    /*padding: 4px 8px;*/
+    width: fit-content;
+    min-height: 12px;
+
+}
+
+.validation-text-placeholder {
+
+}
+
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -404,7 +432,8 @@
     --color-orange-accent-darker1: #A87C71;
     --color-red-accent: #EB716F;
     /*--font-jakarta: "Plus Jakarta Sans", sans-serif;*/
-    --font-josefin: "Josefin Sans", sans-serif;
+    --font-inter: "Inter", sans-serif;
+    /*--font-josefin: "Josefin Sans", sans-serif;*/
 }
 
 /*12px  → small labels, hints*/
