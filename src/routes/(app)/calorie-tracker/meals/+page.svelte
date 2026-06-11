@@ -10,6 +10,8 @@
     import SearchableList from "$lib/components/molecules/SearchableList.svelte";
     import {searchFoods} from "$lib/api/food";
     import FoodLogListEntry from "$lib/components/FoodLogListEntry.svelte";
+    import PrimaryButton from "$lib/components/atoms/PrimaryButton.svelte";
+    import SecondaryButton from "$lib/components/atoms/SecondaryButton.svelte";
     type MealFood = {
         protein: number,
         carbohydrates: number,
@@ -243,6 +245,11 @@
                                       onDelete={() => deleteMealLogEntry(food)}
                                       protein={food.protein} fat={food.fat} carbohydrates={food.carbohydrates} amount={food.amount} calories={food.calories} name={food.name}/>
                 {/each}
+                <button onclick={saveMealTemplate} class="cursor-pointer w-full text-left rounded-2xl bg-brand">
+                    Save meal template
+                </button>
+                <SecondaryButton >Delete</SecondaryButton>
+                <PrimaryButton >Save</PrimaryButton>
             </div>
             <div class="shadow-container"></div>
 

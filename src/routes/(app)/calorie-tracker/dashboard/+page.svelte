@@ -17,6 +17,7 @@
     import FoodModal from "$lib/components/FoodModal.svelte";
     import type {Food} from "../../../api/calorie-tracker/foods/+server";
     import {searchFoods} from "$lib/api/food";
+    import {postMealLog} from "$lib/api/mealLog";
 
     let selectedFood: Food = $state({
         name: "",
@@ -86,24 +87,10 @@
     }
 
     async function submitFoodModal(amount: number, food: Food) {
-        if (amount > 0) {
-            const res = await fetch('/api/calorie-tracker/meal-logs', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    date: globalDate.date,
-                    foodLogs: [
-                        { foodId: food.id, amount: amount }
-                    ]
-                })
-            });
+        let foodLogs = [{ foodId: food.id, amount: amount }];
+        await postMealLog(foodLogs, globalDate.date);
+        await handleFoodModalClose();
 
-            if (!res.ok) throw new Error('Failed to track food');
-
-            await handleFoodModalClose();
-        } else {
-            console.log("Please enter a valid amount of food");
-        }
     }
 
     async function handleFoodModalClose() {
