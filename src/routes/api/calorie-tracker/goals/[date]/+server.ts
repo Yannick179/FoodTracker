@@ -2,6 +2,16 @@ import { requireUser } from "$lib/server/authHelper";
 import { prisma } from "$lib/prisma";
 import { json } from "@sveltejs/kit";
 
+export type MacroGoalResponseDto = {
+    id: number,
+    userId: number,
+    kcal: number,
+    protein: number,
+    carbohydrates: number,
+    fats: number,
+    createdAt: Date,
+}
+
 export const GET = async ({ params, locals }) => {
     const user = requireUser(locals);
 
@@ -44,7 +54,7 @@ export const PUT = async ({ params, request, locals }) => {
             return new Response(JSON.stringify({ error: 'calories, protein, carbohydrates and fats are required' }), { status: 400 });
         }
 
-        const goal = await prisma.kcalGoal.upsert({
+        const goal: MacroGoalResponseDto = await prisma.kcalGoal.upsert({
             where: {
                 userId_createdAt: {
                     userId: user.id,

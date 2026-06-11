@@ -1,5 +1,5 @@
 import type {Food} from "../../routes/api/calorie-tracker/foods/+server";
-import type {FoodLogInput} from "../../routes/api/calorie-tracker/meal-logs/+server";
+import type {FoodLogInput, MealLogResponseDto} from "../../routes/api/calorie-tracker/meal-logs/+server";
 
 
 
@@ -19,7 +19,15 @@ export async function postMealLog(foodLogs: FoodLogInput[], date: Date) {
     });
 
     if (!res.ok) throw new Error('Failed to track meal log');
-    // } else {
-    //     console.log("Please enter a valid amount of food");
-    // }
+
+}
+
+export async function getMealLogs(fetch: typeof window.fetch, date: string): Promise<MealLogResponseDto> {
+
+    const res = await fetch(`/api/calorie-tracker/meal-logs?date=${date}`);
+    if (!res.ok) {
+        throw new Error('failed to fetch meal logs');
+    }
+    let resJson: MealLogResponseDto = await res.json();
+    return resJson;
 }

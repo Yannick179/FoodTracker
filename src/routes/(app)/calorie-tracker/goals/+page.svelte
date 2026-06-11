@@ -1,23 +1,16 @@
 <script lang="ts">
     import {createDate} from "$lib/dataStore.svelte.js";
+    import {page} from "$app/state";
+    import {parseDateFromUrl} from "$lib/utils";
 
     let protein = $state(150);
     let carbohydrates = $state(250);
     let fats = $state(70);
     let calories = $derived(Math.trunc(protein * 4.1 + carbohydrates * 4.1 + fats * 9.1));
-    const globalDate = createDate();
-
-
-    function toDateParam(d: Date) {
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
 
     async function handleSave() {
         try {
-            const res = await fetch(`/api/calorie-tracker/goals/${toDateParam(globalDate.date)}`, {
+            const res = await fetch(`/api/calorie-tracker/goals/${parseDateFromUrl(page.url.searchParams.get('date'))}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

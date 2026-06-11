@@ -109,47 +109,7 @@
     }
 </script>
 
-<!--<div class="h-full flex flex-col p-10">-->
 
-<!--    &lt;!&ndash; ROW 1: Chart &ndash;&gt;-->
-<!--    <div class="h-1/3">-->
-<!--        <TrackingChart entries={weights} />-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; ROW 2: Content &ndash;&gt;-->
-<!--    <div class="p-10 flex flex-col gap-8">-->
-
-<!--        <div class="grid grid-cols-[4fr_11fr_4fr]">-->
-
-<!--            &lt;!&ndash; LEFT COLUMN &ndash;&gt;-->
-<!--            <div class="justify-items-center">-->
-<!--                <div class="mb-6 grid-rows-2">-->
-<!--                    <div class="text-sm text-zinc-400 mb-1 flex">-->
-<!--                        {convertNumberToDay(globalDate.date.getDay())}-->
-<!--                    </div>-->
-
-<!--                    <div class="flex text-2xl font-semibold text-white tracking-tight tabular-nums">-->
-<!--                        {getDateNicelyFormatted(globalDate.date)}-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="flex">-->
-<!--                    <Calendar />-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; MIDDLE COLUMN &ndash;&gt;-->
-<!--            <div class="flex flex-col gap-4 justify-center">-->
-<!--                &lt;!&ndash; your second row content columns go here &ndash;&gt;-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; RIGHT COLUMN &ndash;&gt;-->
-<!--            <div></div>-->
-
-<!--        </div>-->
-
-<!--    </div>-->
-<!--</div>-->
 
 
 <div class="pt-8 pl-10 pr-10 flex flex-col gap-y-6">

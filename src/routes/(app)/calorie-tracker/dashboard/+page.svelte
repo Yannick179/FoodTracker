@@ -1,16 +1,9 @@
 <script lang="ts">
-    import Calendar from '$lib/components/Calendar.svelte';
-    import {onMount} from "svelte";
     import ResultBarMacros from "$lib/components/ResultBarMacros.svelte";
     import ResultBarKcals from "$lib/components/ResultBarKcals.svelte";
     import FoodLogListEntry from "$lib/components/FoodLogListEntry.svelte";
-    import { createDate } from "$lib/dataStore.svelte.js";
     import EditFoodModal from "$lib/components/EditFoodModal.svelte";
-    import type {
-        FoodLogDto,
-        MealLogDto,
-        DayStatsDto
-    } from "../../../api/calorie-tracker/meal-logs/+server";
+    import type { FoodLogDto } from "../../../api/calorie-tracker/meal-logs/+server";
     import Header from "$lib/components/atoms/Header.svelte";
     import DateSelector from "$lib/components/organism/DateSelector.svelte";
     import SearchableList from "$lib/components/molecules/SearchableList.svelte";
@@ -18,6 +11,12 @@
     import type {Food} from "../../../api/calorie-tracker/foods/+server";
     import {searchFoods} from "$lib/api/food";
     import {postMealLog} from "$lib/api/mealLog";
+    import {parseDateFromUrl} from "$lib/utils";
+    import {page} from "$app/state";
+    import {invalidate} from "$app/navigation";
+    import type {PageData} from "./$types";
+
+    let { data }: { data: PageData } = $props();
 
     let selectedFood: Food = $state({
         name: "",
@@ -41,29 +40,15 @@
     });
     let foods: Food[] = $state([]);
     let showEditFoodModal = $state(false);
-    let mealLogs: MealLogDto[] = $state([]);
-    let dayStats: DayStatsDto = $state({
-        calories: 0,
-        protein: 0,
-        carbohydrates: 0,
-        fat: 0
-    });
-    let kcalGoal =  $state(0);
-    let proteinGoal = $state(0);
-    let carbohydrateGoal = $state(0);
-    let fatsGoal = $state(0);
+
+    let mealLogs = $derived(data.mealLogs.mealLogs);
+    let dayStats = $derived(data.mealLogs.dayStats);
+
+    let kcalGoal = $derived(data.macroGoal?.kcal ?? 0);
+    let proteinGoal = $derived(data.macroGoal?.protein ?? 0);
+    let carbohydrateGoal = $derived(data.macroGoal?.carbohydrates ?? 0);
+    let fatsGoal = $derived(data.macroGoal?.fats ?? 0);
     let showFoodModal = $state(false);
-
-    const globalDate = createDate();
-
-    let error = '';
-    let loadingFoodEntries = $state(false);
-    let loadingKcalGoal = $state(false);
-
-    async function refetchPageInformation() {
-        await LoadMealLogFromDateX();
-        await LoadKcalGoalFromDateX();
-    }
 
     function openFoodLog(foodLog: FoodLogDto) {
         let newFoodLog = $state.snapshot(foodLog);
@@ -77,10 +62,7 @@
         showFoodModal = true;
     }
 
-    async function handleEditFoodModalClose() {
-        showEditFoodModal = false;
-        await refetchPageInformation();
-    }
+
 
     async function handleFoodSearch(query: string = '') {
         foods = await searchFoods(query);
@@ -88,7 +70,7 @@
 
     async function submitFoodModal(amount: number, food: Food) {
         let foodLogs = [{ foodId: food.id, amount: amount }];
-        await postMealLog(foodLogs, globalDate.date);
+        await postMealLog(foodLogs, new Date(parseDateFromUrl(page.url.searchParams.get('date'))));
         await handleFoodModalClose();
 
     }
@@ -103,33 +85,7 @@
             carbohydrates: 0,
             fat: 0
         };
-        await refetchPageInformation();
-    }
-
-    function toDateParam(d: Date) {
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-
-    async function LoadKcalGoalFromDateX() {
-        try {
-            loadingKcalGoal = true;
-            const res = await fetch(`/api/calorie-tracker/goals/${toDateParam(globalDate.date)}`);
-            if (res.ok){
-                let goal = await res.json();
-                if (goal) {
-                    kcalGoal = goal.kcal;
-                    proteinGoal = goal.protein;
-                    carbohydrateGoal = goal.carbohydrates;
-                    fatsGoal = goal.fats;
-                }
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
+        await invalidate('calorie-tracker:mealLogs');
     }
 
     async function deleteEntry(foodLogId: number) {
@@ -138,7 +94,8 @@
         });
 
         if (!res.ok) throw new Error('Failed to delete entry');
-        await refetchPageInformation();
+        await invalidate('calorie-tracker:mealLogs');
+
     }
 
     async function saveEditFoodModal() {
@@ -154,43 +111,13 @@
 
         if (!res.ok) throw new Error('Failed to update food log');
         showEditFoodModal = false;
-        await refetchPageInformation();
+        await invalidate('calorie-tracker:mealLogs');
         }
     }
 
     function onCancelEditFoodModal() {
         showEditFoodModal = false;
     }
-
-    async function LoadMealLogFromDateX() {
-        try {
-            loadingFoodEntries = true;
-            const res = await fetch(`/api/calorie-tracker/meal-logs?date=${toDateParam(globalDate.date)}`);
-
-            if (!res.ok) {
-                throw new Error('failed to fetch food entries');
-            }
-
-            let resJson = await res.json();
-
-            mealLogs = resJson.mealLogs;
-            dayStats = resJson.dayStats;
-
-        } catch (err: any) {
-            error = err.message;
-        } finally {
-            loadingFoodEntries = false;
-        }
-    }
-
-    onMount( async () => {
-        await refetchPageInformation();
-    });
-
-    $effect(() => {
-        void refetchPageInformation();
-    });
-
 </script>
 
 <div class="w-full h-full bg-main-background p-8 flex flex-col min-h-0">

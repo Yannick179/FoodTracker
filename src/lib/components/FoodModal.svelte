@@ -21,7 +21,6 @@
     import MacroNutrientContainer from "$lib/components/atoms/MacroNutrientContainer.svelte";
 
     let amount = 100;
-    const globalDate = createDate();
     let submitDisabled = $state(false);
     let minNumberInput = 1;
     let maxNumberInput = 10000;
